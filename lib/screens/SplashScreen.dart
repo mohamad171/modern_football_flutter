@@ -18,11 +18,7 @@ class SplashScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, '/phone-number');
                   },
-                  child: const Image(
-                    image: AssetImage("lib/assets/images/kamyab_logo.png"),
-                    width: 130,
-                    height: 200,
-                  ),
+                  child: Text("Logo is Here"),
                 ),
                 const SizedBox(
                   height: 30,
