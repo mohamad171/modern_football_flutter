@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/phone-number');
+                    Navigator.pushNamed(context, '/intro1');
                   },
                   child: Text("Logo is Here"),
                 ),
