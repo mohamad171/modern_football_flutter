@@ -65,6 +65,7 @@ class Intro3 extends StatelessWidget {
                   size: 40,
                 ),
               ),
+              onTap: () => Navigator.pushNamed(context, "/phone"),
             ),
           )
         ],

@@ -53,30 +53,31 @@ class SplashScreen extends StatelessWidget {
             ),
           ),
           Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const CircularProgressIndicator(
-                    color: Colors.white,
+            alignment: FractionalOffset.bottomCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  height: 10,
+                  width: 10,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: const Text(
+                    "نسخه 1.0",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "IranSans",
+                        decoration: TextDecoration.none,
+                        color: Colors.white),
                   ),
-                  const SizedBox(
-                    height: 10,
-                    width: 10,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: const Text(
-                      "نسخه 1.0",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "IranSans",
-                          decoration: TextDecoration.none,
-                          color: Colors.white),
-                    ),
-                  )
-                ],
-              )),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
