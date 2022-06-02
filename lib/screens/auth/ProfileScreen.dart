@@ -275,7 +275,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () => print("ok"),
+                                      onTap: () =>
+                                          Navigator.pushNamed(context, "/main"),
                                     ),
                                   ],
                                 ),
