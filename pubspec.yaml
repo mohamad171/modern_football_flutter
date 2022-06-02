@@ -63,6 +63,11 @@ flutter:
     - lib/assets/images/calender.png
     - lib/assets/images/news.png
     - lib/assets/images/video.png
+    - lib/assets/images/football.png
+    - lib/assets/images/football_2.png
+    - lib/assets/images/goal.png
+    - lib/assets/images/soccer.png
+    - lib/assets/images/soccer_player.png
     - lib/assets/images/auth.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
