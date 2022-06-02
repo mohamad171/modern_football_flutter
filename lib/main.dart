@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:modern_football/screens/Intro/Intro1.dart';
 import 'package:modern_football/screens/Intro/Intro2.dart';
 import 'package:modern_football/screens/Intro/Intro3.dart';
+import 'package:modern_football/screens/auth/CodeScreen.dart';
 import 'package:modern_football/screens/auth/PhoneScreen.dart';
+import 'package:modern_football/screens/auth/ProfileScreen.dart';
 import 'screens/SplashScreen.dart';
 
 void main() {
@@ -25,6 +27,8 @@ class ModerFootballApp extends StatelessWidget {
           '/intro2': (context) => Intro2(),
           '/intro3': (context) => Intro3(),
           '/phone': (context) => PhoneScreen(),
+          '/code': (context) => CodeScreen(),
+          '/profile': (context) => ProfileScreen(),
         });
   }
 }

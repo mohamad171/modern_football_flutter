@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
 
-class PhoneScreen extends StatefulWidget {
-  const PhoneScreen({Key? key}) : super(key: key);
+class CodeScreen extends StatefulWidget {
+  const CodeScreen({Key? key}) : super(key: key);
 
   @override
-  State<PhoneScreen> createState() => _PhoneScreenState();
+  State<CodeScreen> createState() => _CodeScreenState();
 }
 
-class _PhoneScreenState extends State<PhoneScreen> {
+class _CodeScreenState extends State<CodeScreen> {
   final phone_controller = TextEditingController();
+  bool _onEditing = true;
+  String _code = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -87,7 +90,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                             MediaQuery.of(context).size.height),
                         painter: WhiteWave(),
                         child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 padding: EdgeInsets.only(top: 70),
@@ -97,75 +100,39 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const Text(
-                                      ".شماره موبایل خود را وارد کنید",
-                                      style: TextStyle(fontSize: 16),
+                                      "کد پیامک شده را وارد کنید",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
                                       height: 25,
                                     ),
                                     Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: 250,
-                                          height: 40,
                                           padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.withOpacity(0.3),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(10)),
-                                          ),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              const Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  "+98",
-                                                  style: TextStyle(
-                                                    decoration:
-                                                        TextDecoration.none,
-                                                    fontSize: 18,
-                                                    color: Colors.grey,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              const Expanded(
-                                                flex: 1,
-                                                child: VerticalDivider(
-                                                  color: Colors.grey,
-                                                  indent: 5,
-                                                  endIndent: 5,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: TextField(
-                                                  style: const TextStyle(
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      color: Colors.black),
-                                                  textAlign: TextAlign.center,
-                                                  cursorColor: Colors.black,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    hintStyle: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14,
-                                                    ),
-                                                    contentPadding:
-                                                        EdgeInsets.only(
-                                                            bottom: 10),
-                                                    border: InputBorder.none,
-                                                    hintText:
-                                                        "شماره موبایل خود را وارد کنید",
-                                                  ),
-                                                  controller: phone_controller,
-                                                ),
-                                                flex: 8,
-                                              ),
-                                            ],
+                                          child: VerificationCode(
+                                            fullBorder: true,
+                                            keyboardType: TextInputType.number,
+                                            underlineColor: Colors.black,
+                                            length: 4,
+                                            cursorColor: Colors.blue,
+                                            onCompleted: (String value) {
+                                              setState(() {
+                                                _code = value;
+                                              });
+                                            },
+                                            onEditing: (bool value) {
+                                              setState(() {
+                                                _onEditing = value;
+                                              });
+                                              if (!_onEditing)
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                            },
                                           ),
                                         ),
                                         Container(
@@ -173,7 +140,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                           margin: const EdgeInsets.only(
                                               right: 75, top: 10),
                                           child: const Text(
-                                            ".کد تایید برای شماره بالا ارسال خواهد شد",
+                                            "کد چهار رقمی به شماره 09102457454 ارسال شد",
                                             style: TextStyle(fontSize: 12),
                                           ),
                                         ),
@@ -210,7 +177,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                             ),
                                             child: const Center(
                                               child: Text(
-                                                "ارسال کد تایید",
+                                                "بررسی کد تایید",
                                                 style: TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.white,
@@ -219,7 +186,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                             ),
                                           ),
                                           onTap: () => Navigator.pushNamed(
-                                              context, "/code"),
+                                              context, "/profile"),
                                         ),
                                       ],
                                     ),
@@ -227,47 +194,9 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 50,
+                                height: 10,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10),
-                                alignment: Alignment.bottomCenter,
-                                child: Row(
-                                  textDirection: TextDirection.rtl,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      "شرایط استفاده از خدمات",
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "و",
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "حریم خصوصی",
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "را میپذیرم",
-                                    )
-                                  ],
-                                ),
-                              )
+                              Text("ارسال مجدد کد تایید: 35")
                             ]),
                       ),
                     ),
