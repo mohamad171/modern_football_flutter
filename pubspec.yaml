@@ -76,6 +76,7 @@ flutter:
     - lib/assets/images/football_icon.png
     - lib/assets/images/soccer_ic.png
     - lib/assets/images/ranking.png
+    - lib/assets/images/m_ch.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
