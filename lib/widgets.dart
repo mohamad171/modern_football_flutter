@@ -270,79 +270,82 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 10, bottom: 10, left: 10),
-      padding: const EdgeInsets.all(10),
-      width: 300,
-      height: 110,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-        color: Colors.white,
-        boxShadow: box_shadow,
-      ),
-      child: Stack(
-        textDirection: TextDirection.rtl,
-        children: [
-          Row(
-            textDirection: TextDirection.rtl,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: SizedBox.fromSize(
-                  size: const Size.fromRadius(40),
-                  child: Image.asset('lib/assets/images/m_ch.jpg',
-                      fit: BoxFit.cover),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    "قهرمانی منچستر سیتی",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    "...لورم ایپسوم متنی ساختگی",
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                        color: Color(AppColors.primary),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(6))),
-                    child: const Text(
-                      "ورزش 3",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
+    return GestureDetector(
+      child: Container(
+        margin: const EdgeInsets.only(right: 10, bottom: 10, left: 10),
+        padding: const EdgeInsets.all(10),
+        width: 300,
+        height: 110,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
           ),
-          Container(
-            child: const Text(
-              "5 دقیقه پیش",
+          color: Colors.white,
+          boxShadow: box_shadow,
+        ),
+        child: Stack(
+          textDirection: TextDirection.rtl,
+          children: [
+            Row(
               textDirection: TextDirection.rtl,
-              style: TextStyle(color: Colors.grey, fontSize: 11),
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(40),
+                    child: Image.asset('lib/assets/images/m_ch.jpg',
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text(
+                      "قهرمانی منچستر سیتی",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text(
+                      "...لورم ایپسوم متنی ساختگی",
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                          color: Color(AppColors.primary),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(6))),
+                      child: const Text(
+                        "ورزش 3",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
-            alignment: Alignment.bottomLeft,
-          )
-        ],
+            Container(
+              child: const Text(
+                "5 دقیقه پیش",
+                textDirection: TextDirection.rtl,
+                style: TextStyle(color: Colors.grey, fontSize: 11),
+              ),
+              alignment: Alignment.bottomLeft,
+            )
+          ],
+        ),
       ),
+      onTap: () => Navigator.pushNamed(context, "/news-details"),
     );
   }
 }
