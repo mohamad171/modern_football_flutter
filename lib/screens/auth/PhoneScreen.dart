@@ -1,6 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -218,8 +219,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => Navigator.pushNamed(
-                                              context, "/code"),
+                                          onTap: () => Get.toNamed("/code"),
                                         ),
                                       ],
                                     ),

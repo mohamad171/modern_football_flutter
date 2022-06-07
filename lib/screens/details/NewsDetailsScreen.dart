@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       Icons.arrow_back_ios,
                       size: 25,
                     ),
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Get.back(),
                   ),
                   const Text(
                     "قهرمانی منچستر سیتی",
@@ -52,7 +53,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, "/main"),
+                    onTap: () => Get.toNamed("/main"),
                     child: const Icon(
                       Icons.home_outlined,
                       size: 30,

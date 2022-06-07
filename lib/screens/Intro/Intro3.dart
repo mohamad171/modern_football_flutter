@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 
 class Intro3 extends StatelessWidget {
@@ -15,7 +16,7 @@ class Intro3 extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: const Icon(Icons.arrow_back),
             ),
-            onTap: () => Navigator.pop(context),
+            onTap: () => Get.back(),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 30),
@@ -65,7 +66,7 @@ class Intro3 extends StatelessWidget {
                   size: 40,
                 ),
               ),
-              onTap: () => Navigator.pushNamed(context, "/phone"),
+              onTap: () => Get.toNamed("/phone"),
             ),
           )
         ],

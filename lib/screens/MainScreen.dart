@@ -1,6 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
                       Icons.person_outline_rounded,
                       size: 30,
                     ),
-                    onTap: () => Navigator.pushNamed(context, "/profile"),
+                    onTap: () => Get.toNamed("/profile"),
                   ),
                   const Text(
                     "مدرن فوتبال",

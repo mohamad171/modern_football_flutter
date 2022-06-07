@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../assets/values/AppColors.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -16,9 +17,9 @@ class SplashScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/intro1');
+                    Get.toNamed('/intro1');
                   },
-                  child: Text("Logo is Here"),
+                  child: Image.asset("lib/assets/images/logo.png"),
                 ),
                 const SizedBox(
                   height: 30,

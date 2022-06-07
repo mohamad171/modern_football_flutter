@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:modern_football/widgets.dart';
 
 import '../../assets/values/AppColors.dart';
@@ -54,7 +55,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                       Icons.arrow_back_ios,
                       size: 20,
                     ),
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Get.back(),
                   ),
                   const Text(
                     "برنامه بازی های لیگ جزیره",

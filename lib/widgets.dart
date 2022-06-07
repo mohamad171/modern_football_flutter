@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../assets/values/AppColors.dart';
 
 List<BoxShadow> box_shadow = [
@@ -140,7 +141,7 @@ class MoreWidget extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () => Navigator.pushNamed(context, this.screen_path),
+            onTap: () => Get.toNamed(this.screen_path),
           ),
         ),
         Container(
@@ -345,7 +346,7 @@ class NewsItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => Navigator.pushNamed(context, "/news-details"),
+      onTap: () => Get.toNamed("/news-details"),
     );
   }
 }

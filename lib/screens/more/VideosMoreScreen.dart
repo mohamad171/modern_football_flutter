@@ -1,6 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -51,7 +52,7 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
                       Icons.arrow_back_ios,
                       size: 20,
                     ),
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Get.back(),
                   ),
                   const Text(
                     "ویدئوهای لیگ جزیره",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 
 class Intro2 extends StatelessWidget {
@@ -15,7 +16,7 @@ class Intro2 extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: const Icon(Icons.arrow_back),
             ),
-            onTap: () => Navigator.pop(context),
+            onTap: () => Get.back(),
           ),
           GestureDetector(
             child: Container(
@@ -29,7 +30,7 @@ class Intro2 extends StatelessWidget {
                 ),
               ),
             ),
-            onTap: () => Navigator.pop(context),
+            onTap: () => Get.back(),
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 30),
@@ -79,7 +80,7 @@ class Intro2 extends StatelessWidget {
                   size: 40,
                 ),
               ),
-              onTap: () => Navigator.pushNamed(context, "/intro3"),
+              onTap: () => Get.toNamed("/intro3"),
             ),
           )
         ],

@@ -1,6 +1,7 @@
 // ignore_for_file: sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../assets/values/AppColors.dart';
 
 class Intro1 extends StatelessWidget {
@@ -72,7 +73,7 @@ class Intro1 extends StatelessWidget {
                   size: 40,
                 ),
               ),
-              onTap: () => Navigator.pushNamed(context, "/intro2"),
+              onTap: () => Get.toNamed("/intro2"),
             ),
           )
         ],

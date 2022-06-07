@@ -9,8 +9,9 @@ import 'package:modern_football/screens/auth/ProfileScreen.dart';
 import 'package:modern_football/screens/details/NewsDetailsScreen.dart';
 import 'package:modern_football/screens/more/MatchesMoreScreen.dart';
 import 'package:modern_football/screens/more/NewsMoreScreen.dart';
-import 'package:modern_football/screens/more/VideosMoreScreen%20copy.dart';
+import 'package:modern_football/screens/more/VideosMoreScreen.dart';
 import 'screens/SplashScreen.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const ModerFootballApp());
@@ -22,7 +23,7 @@ class ModerFootballApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         title: 'Modern Football',
         theme: ThemeData(fontFamily: 'IranSans'),
         initialRoute: '/',
