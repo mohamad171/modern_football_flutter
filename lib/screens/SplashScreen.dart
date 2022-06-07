@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed('/intro1');
+                    Get.offNamed('/intro1');
                   },
                   child: Image.asset("lib/assets/images/logo.png"),
                 ),
