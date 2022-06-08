@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/screens/Intro/Intro1.dart';
 import 'package:modern_football/screens/Intro/Intro2.dart';
 import 'package:modern_football/screens/Intro/Intro3.dart';
@@ -13,7 +14,8 @@ import 'package:modern_football/screens/more/VideosMoreScreen.dart';
 import 'screens/SplashScreen.dart';
 import 'package:get/get.dart';
 
-void main() {
+main() async {
+  await GetStorage.init();
   runApp(const ModerFootballApp());
 }
 

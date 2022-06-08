@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../assets/values/AppColors.dart';
 
 class Intro3 extends StatelessWidget {
+  void go_to_phone() {
+    // Go to phone after set is_seen_intro to true in GetStorage
+    GetStorage storage = GetStorage();
+    storage.write("is_seen_intro", true);
+    Get.offNamed('/phone');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +74,7 @@ class Intro3 extends StatelessWidget {
                   size: 40,
                 ),
               ),
-              onTap: () => Get.toNamed("/phone"),
+              onTap: go_to_phone,
             ),
           )
         ],

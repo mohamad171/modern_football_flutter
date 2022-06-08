@@ -22,12 +22,15 @@ class Intro2 extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(top: 30, right: 20),
               alignment: Alignment.topRight,
-              child: const Text(
-                "رد کردن",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
+              child: GestureDetector(
+                child: Text(
+                  "رد کردن",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
                 ),
+                onTap: () => Get.toNamed("/intro3"),
               ),
             ),
             onTap: () => Get.back(),

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/CountDownTimerController.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,11 +17,25 @@ class CodeScreen extends StatefulWidget {
 }
 
 class _CodeScreenState extends State<CodeScreen> {
-  final phone_controller = TextEditingController();
   bool _onEditing = true;
   String _code = "";
+  var data = Get.arguments;
+  var count_controller = Get.put(CountDownTimerController(60));
+  var auth_controller = Get.put(AuthApiController());
+  void CheckCode() {
+    auth_controller.CheckCode(data, _code);
+  }
+
+  @override
+  void dispose() {
+    Get.delete<CountDownTimerController>();
+    Get.delete<AuthApiController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    count_controller.start_timer();
     return SafeArea(
       child: Scaffold(
           backgroundColor: Color(AppColors.primary),
@@ -124,6 +140,7 @@ class _CodeScreenState extends State<CodeScreen> {
                                             onCompleted: (String value) {
                                               setState(() {
                                                 _code = value;
+                                                CheckCode();
                                               });
                                             },
                                             onEditing: (bool value) {
@@ -140,8 +157,8 @@ class _CodeScreenState extends State<CodeScreen> {
                                           alignment: Alignment.topRight,
                                           margin: const EdgeInsets.only(
                                               right: 75, top: 10),
-                                          child: const Text(
-                                            "کد چهار رقمی به شماره 09102457454 ارسال شد",
+                                          child: Text(
+                                            "کد چهار رقمی به شماره 0${data} ارسال شد",
                                             style: TextStyle(fontSize: 12),
                                           ),
                                         ),
@@ -186,7 +203,7 @@ class _CodeScreenState extends State<CodeScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => Get.toNamed("/profile"),
+                                          onTap: () => CheckCode(),
                                         ),
                                       ],
                                     ),
@@ -196,7 +213,8 @@ class _CodeScreenState extends State<CodeScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text("ارسال مجدد کد تایید: 35")
+                              Obx(() => Text(
+                                  "ارسال مجدد کد تایید: ${count_controller.SCount}"))
                             ]),
                       ),
                     ),

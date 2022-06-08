@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,7 +15,39 @@ class PhoneScreen extends StatefulWidget {
 }
 
 class _PhoneScreenState extends State<PhoneScreen> {
-  final phone_controller = TextEditingController();
+  var phone_controller = TextEditingController();
+  var auth_controller = Get.put(AuthApiController());
+
+  void submit_phone() {
+    var phone = phone_controller.text;
+    print(phone);
+    var regex = RegExp(r"9\d{9}");
+    if (regex.hasMatch(phone)) {
+      auth_controller.SendCode(phone);
+      // Get.toNamed('/code', arguments: phone);
+    } else {
+      Get.snackbar('خطا', 'شماره موبایل را صحیح وارد کنید',
+          snackPosition: SnackPosition.BOTTOM,
+          maxWidth: MediaQuery.of(context).size.width - 30,
+          titleText: const Text(
+            "خطا",
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
+          ),
+          messageText: const Text(
+            "شماره موبایل را صحیح وارد کنید",
+            style: TextStyle(color: Colors.black),
+            textAlign: TextAlign.center,
+          ));
+    }
+  }
+
+  @override
+  void dispose() {
+    Get.delete<AuthApiController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -219,7 +252,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () => Get.toNamed("/code"),
+                                          onTap: () => submit_phone(),
                                         ),
                                       ],
                                     ),
