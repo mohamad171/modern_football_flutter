@@ -8,7 +8,7 @@ import 'package:modern_football/models/request_models/send_code.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
 
 class AuthProvider extends GetConnect {
-  var base_url = "http://127.0.0.1:8000/api/v1/";
+  var base_url = "https://modern-football.ir/api/v1/";
   Future<Response> send_code(String phone_number) async {
     var response = await post(
         base_url + "sendCode", SendCodeRequest(phone_number).to_json());

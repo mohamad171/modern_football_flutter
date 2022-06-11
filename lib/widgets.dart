@@ -359,10 +359,10 @@ class VideoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 10, bottom: 10),
+      margin: const EdgeInsets.only(right: 5, bottom: 10, left: 5),
       padding: const EdgeInsets.all(10),
       width: 190,
-      height: 200,
+      height: 210,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
@@ -413,6 +413,9 @@ class VideoItem extends StatelessWidget {
               )
             ],
           ),
+          SizedBox(
+            height: 5,
+          ),
           Row(
             textDirection: TextDirection.rtl,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -443,6 +446,226 @@ class VideoItem extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class PreMatchItem extends StatelessWidget {
+  int home_value;
+  int away_value;
+  String title_value;
+
+  PreMatchItem(this.home_value, this.title_value, this.away_value, {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: box_shadow),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        (home_value > away_value)
+            ? CirclePrematchItem(
+                true,
+                (title_value == "احتمال برد"
+                    ? home_value.toString() + "%"
+                    : home_value.toString()))
+            : CirclePrematchItem(
+                false,
+                (title_value == "احتمال برد"
+                    ? home_value.toString() + "%"
+                    : home_value.toString())),
+        Text(
+          title_value,
+          style: TextStyle(fontSize: 18),
+        ),
+        (home_value < away_value)
+            ? CirclePrematchItem(
+                true,
+                (title_value == "احتمال برد"
+                    ? away_value.toString() + "%"
+                    : away_value.toString()))
+            : CirclePrematchItem(
+                false,
+                (title_value == "احتمال برد"
+                    ? away_value.toString() + "%"
+                    : away_value.toString()))
+      ]),
+    );
+  }
+}
+
+class CirclePrematchItem extends StatelessWidget {
+  bool is_green;
+  String value;
+  CirclePrematchItem(this.is_green, this.value, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: box_shadow,
+          color: (is_green == true)
+              ? Color(AppColors.primary)
+              : Color(AppColors.bg_gray),
+          border: Border.all(color: Colors.white, width: 2)),
+      child: Center(
+        child: Text(
+          value,
+          style: TextStyle(
+              fontSize: 18, color: (is_green) ? Colors.white : Colors.black),
+        ),
+      ),
+    );
+  }
+}
+
+class StandingHeaderItem extends StatelessWidget {
+  const StandingHeaderItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+      margin: EdgeInsets.only(right: 5, left: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: box_shadow,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Row(textDirection: TextDirection.rtl, children: [
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text("#"),
+            SizedBox(
+              width: 10,
+            ),
+            Text("نام تیم"),
+          ]),
+          flex: 3,
+        ),
+        Expanded(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              textDirection: TextDirection.rtl,
+              children: [
+                Text("بازی"),
+                Text("امتیاز"),
+                Text("تفاضل گل"),
+              ]),
+          flex: 2,
+        )
+      ]),
+    );
+  }
+}
+
+class StandingItem extends StatelessWidget {
+  int rank;
+  String team_logo;
+  String team_name;
+  String form;
+  int matches;
+  int score;
+  int diffrence_goals;
+  bool mark;
+  StandingItem(this.rank, this.team_logo, this.team_name, this.form,
+      this.matches, this.score, this.diffrence_goals, this.mark,
+      {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+      margin: EdgeInsets.only(right: 5, left: 5, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        color: (mark) ? Colors.green[100] : Colors.white,
+        boxShadow: box_shadow,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Row(textDirection: TextDirection.rtl, children: [
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text(this.rank.toString()),
+            SizedBox(
+              width: 10,
+            ),
+            Image.network(
+              team_logo,
+              width: 35,
+              height: 35,
+            ),
+            Text(team_name.toString()),
+            SizedBox(
+              width: 10,
+            ),
+            CircleStandingTeamForm("W"),
+            CircleStandingTeamForm("D"),
+            CircleStandingTeamForm("L"),
+            CircleStandingTeamForm("W"),
+            CircleStandingTeamForm("W"),
+          ]),
+          flex: 3,
+        ),
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text(
+              matches.toString(),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              width: 30,
+            ),
+            Text(
+              score.toString(),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 40,
+            ),
+            Text(
+              diffrence_goals.toString(),
+              textAlign: TextAlign.right,
+            ),
+          ]),
+          flex: 2,
+        )
+      ]),
+    );
+  }
+}
+
+class CircleStandingTeamForm extends StatelessWidget {
+  String value;
+  CircleStandingTeamForm(this.value, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 2),
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+          color: (value == "W")
+              ? Colors.green
+              : (value == "D")
+                  ? Colors.yellow
+                  : Colors.red,
+          shape: BoxShape.circle),
     );
   }
 }

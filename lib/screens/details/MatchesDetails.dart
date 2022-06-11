@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/assets/values/AppColors.dart';
+
+import '../../widgets.dart';
 
 class MatchesDetails extends StatefulWidget {
   const MatchesDetails({Key? key}) : super(key: key);
@@ -8,10 +11,20 @@ class MatchesDetails extends StatefulWidget {
   State<MatchesDetails> createState() => _MatchesDetailsState();
 }
 
-class _MatchesDetailsState extends State<MatchesDetails> {
+class _MatchesDetailsState extends State<MatchesDetails>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 3);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(AppColors.bg_gray),
       body: SafeArea(
           child: Column(
         children: [
@@ -62,6 +75,7 @@ class _MatchesDetailsState extends State<MatchesDetails> {
             height: 20,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             textDirection: TextDirection.rtl,
             children: [
               Column(
@@ -142,6 +156,231 @@ class _MatchesDetailsState extends State<MatchesDetails> {
                 ],
               )
             ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.all(5),
+            height: 55,
+            width: MediaQuery.of(context).size.width - 10,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(
+                  15.0,
+                ),
+                boxShadow: box_shadow),
+            child: TabBar(
+              controller: _tabController,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  25.0,
+                ),
+                color: Color(AppColors.primary),
+              ),
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.black,
+              tabs: [
+                Tab(
+                  text: 'جدول لیگ',
+                ),
+                Tab(
+                  text: 'ویدئوها',
+                ),
+                Tab(
+                  text: 'اخبار',
+                ),
+                Tab(
+                  text: 'پیش بازی',
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            endIndent: 30,
+            indent: 30,
+            color: Colors.black,
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                    decoration: BoxDecoration(
+                        boxShadow: box_shadow,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    child: ListView(children: [
+                      StandingHeaderItem(),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          true),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          true),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false),
+                      StandingItem(
+                          1,
+                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
+                          "بارسلونا",
+                          "W,L,L,L,L",
+                          30,
+                          10,
+                          60,
+                          false)
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      children: [
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                        VideoItem(),
+                      ],
+                    )),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                    decoration: BoxDecoration(
+                        boxShadow: box_shadow,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    child: ListView(children: [
+                      NewsItem(),
+                      NewsItem(),
+                      NewsItem(),
+                      NewsItem(),
+                      NewsItem(),
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView(
+                    children: [
+                      PreMatchItem(1, "رتبه", 6),
+                      PreMatchItem(18, "برد", 12),
+                      PreMatchItem(5, "مساوی", 9),
+                      PreMatchItem(0, "باخت", 10),
+                      PreMatchItem(58, "گل زده", 23),
+                      PreMatchItem(12, "گل خورده", 32),
+                      PreMatchItem(65, "امتیاز", 35),
+                      PreMatchItem(90, "احتمال برد", 10),
+                    ],
+                  ),
+                )
+              ],
+              controller: _tabController,
+            ),
           )
         ],
       )),
