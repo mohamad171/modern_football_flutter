@@ -167,102 +167,104 @@ class MatcheItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 10, bottom: 10),
-      padding: EdgeInsets.all(10),
-      width: 350,
-      height: 140,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-        color: Colors.white,
-        boxShadow: box_shadow,
-      ),
-      child: Row(
-        textDirection: TextDirection.rtl,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: SizedBox.fromSize(
-                  size: Size(80, 80),
-                  child: Image.network(
-                      'https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png',
-                      fit: BoxFit.cover),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "رئال مادرید",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
+    return GestureDetector(
+        child: Container(
+          margin: EdgeInsets.only(left: 10, bottom: 10),
+          padding: EdgeInsets.all(10),
+          width: 350,
+          height: 140,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15),
+            ),
+            color: Colors.white,
+            boxShadow: box_shadow,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
+            textDirection: TextDirection.rtl,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Icon(Icons.calendar_month),
-                  SizedBox(
-                    width: 5,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: SizedBox.fromSize(
+                      size: Size(80, 80),
+                      child: Image.network(
+                          'https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png',
+                          fit: BoxFit.cover),
+                    ),
                   ),
-                  Text("1401/04/08")
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text("هفته 5"),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  Icon(Icons.access_time_rounded),
                   SizedBox(
-                    width: 5,
+                    height: 10,
                   ),
                   Text(
-                    "23:30",
-                    textAlign: TextAlign.center,
+                    "رئال مادرید",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      Icon(Icons.calendar_month),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("1401/04/08")
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("هفته 5"),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      Icon(Icons.access_time_rounded),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "23:30",
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  )
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: SizedBox.fromSize(
+                      size: Size(60, 60),
+                      child: Image.network(
+                          'https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png',
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "بارسلونا",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               )
             ],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: SizedBox.fromSize(
-                  size: Size(60, 60),
-                  child: Image.network(
-                      'https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png',
-                      fit: BoxFit.cover),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "بارسلونا",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
-          )
-        ],
-      ),
-    );
+        ),
+        onTap: () => Get.toNamed("/matches-details"));
   }
 }
 
