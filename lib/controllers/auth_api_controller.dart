@@ -5,11 +5,11 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/models/response_models/check_code_response.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
-import 'package:modern_football/providers/auth.dart';
+import 'package:modern_football/providers/api.dart';
 
 class AuthApiController extends GetxController {
   void SendCode(String phone_number) {
-    AuthProvider().send_code(phone_number).then((value) {
+    ApiProvider().send_code(phone_number).then((value) {
       var server_response = ServerResponse.fromJson(value.body);
       if (server_response.status == "ok") {
         Get.toNamed('/code', arguments: phone_number);
@@ -18,7 +18,7 @@ class AuthApiController extends GetxController {
   }
 
   void CheckCode(String phone_number, String code) {
-    AuthProvider().check_code(phone_number, code).then((value) {
+    ApiProvider().check_code(phone_number, code).then((value) {
       var response = CheckCodeResponse.fromJson(value.body);
       if (response.status == "expire" || response.status == "invalid") {
         Get.snackbar('خطا', 'کد وارد شده صحیح نمیباشد',
@@ -39,6 +39,12 @@ class AuthApiController extends GetxController {
         storage.write("token", response.token);
         Get.toNamed("/");
       }
+    });
+  }
+
+  void get_profile() {
+    ApiProvider().profile().then((value) {
+      print(value.body);
     });
   }
 }

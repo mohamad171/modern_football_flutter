@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/controllers/CountDownTimerController.dart';
 import '../assets/values/AppColors.dart';
+import '../controllers/auth_api_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -12,8 +13,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  CountDownTimerController count_controller =
-      Get.put(CountDownTimerController(50));
+  var auth_controller = Get.put(AuthApiController());
+
+  @override
+  void dispose() {
+    Get.delete<AuthApiController>();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -29,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Get.offAllNamed("/phone");
         }
       } else {
-        Get.offAllNamed("/main");
+        auth_controller.get_profile();
       }
     });
 
@@ -121,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ],
         ),
-        onTap: () => count_controller.start_timer(),
+        onTap: () => print("ok"),
       ),
     );
   }
