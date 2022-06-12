@@ -27,8 +27,15 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void league_changed(int index,CarouselPageChangedReason reason){
+    print("${index} --- ${competitions_controller.competitions[index].faName}");
+  }
+
   @override
   Widget build(BuildContext context) {
+    CarouselController cc = CarouselController();
+
+
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: SafeArea(
@@ -116,8 +123,11 @@ class _MainScreenState extends State<MainScreen> {
                       height: 180.0,
                       aspectRatio: 16 / 9,
                       viewportFraction: 0.9,
+                      onPageChanged: league_changed
                     ),
-                  )),
+              carouselController: cc,
+                  ),
+            ),
             const SizedBox(
               height: 30,
             ),
