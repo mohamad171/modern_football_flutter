@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -15,6 +16,16 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  CompetitionsController competitions_controller =
+      Get.put(CompetitionsController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      competitions_controller.get_competitions();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,21 +88,36 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 25,
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                enlargeCenterPage: true,
-                height: 180.0,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.9,
-              ),
-              items: [1, 2, 3, 4, 5].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return const LeaguesItem();
-                  },
-                );
-              }).toList(),
-            ),
+            Obx(() => (competitions_controller.show_loading == true)
+                ? CircularProgressIndicator(color: Color(AppColors.primary))
+                : CarouselSlider.builder(
+                    itemCount: competitions_controller.competitions.length,
+                    itemBuilder:
+                        (BuildContext context, int itemIndex,
+                                int pageViewIndex) =>
+                            LeaguesItem(
+                                competitions_controller
+                                    .competitions[itemIndex].faName
+                                    .toString(),
+                                competitions_controller
+                                    .competitions[itemIndex].foundYear
+                                    .toString(),
+                                competitions_controller
+                                    .competitions[itemIndex].country
+                                    .toString(),
+                                competitions_controller
+                                    .competitions[itemIndex].confedrasion
+                                    .toString(),
+                                competitions_controller
+                                    .competitions[itemIndex].numberOfTeams
+                                    .toString()),
+                    options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      height: 180.0,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 0.9,
+                    ),
+                  )),
             const SizedBox(
               height: 30,
             ),

@@ -12,7 +12,16 @@ List<BoxShadow> box_shadow = [
 ];
 
 class LeaguesItem extends StatelessWidget {
-  const LeaguesItem({Key? key}) : super(key: key);
+  String title;
+  String founded_date;
+  String country;
+  String confedrasion;
+  String teams_count;
+
+  LeaguesItem(this.title, this.founded_date, this.country, this.confedrasion,
+      this.teams_count,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +42,12 @@ class LeaguesItem extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 10,
               ),
               Text(
-                "لیگ برتر انگلیس",
+                this.title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -48,22 +57,22 @@ class LeaguesItem extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "بنیانگذاری: 20 فوریه 1992",
+                "بنیانگذاری: ${founded_date}",
                 style: TextStyle(),
                 textAlign: TextAlign.center,
               ),
               Text(
-                "کشور: انگلستان",
+                "کشور: ${country}",
                 style: TextStyle(),
                 textAlign: TextAlign.right,
               ),
               Text(
-                "کنفدراسیون: یوفا",
+                "کنفدراسیون: ${confedrasion}",
                 style: TextStyle(),
                 textAlign: TextAlign.right,
               ),
               Text(
-                "تعداد تیم های لیگ: 20 تیم",
+                "تعداد تیم های لیگ: ${teams_count} تیم",
                 style: TextStyle(),
                 textAlign: TextAlign.right,
               )

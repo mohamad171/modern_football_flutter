@@ -45,4 +45,13 @@ class ApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+
+  Future<Response> competitions() async {
+    var response = await get(base_url + "Competitions", headers: header);
+    if (response.isOk) {
+      return response;
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
 }

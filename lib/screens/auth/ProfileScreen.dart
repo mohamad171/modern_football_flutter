@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,6 +21,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ProfileController profile_controller = Get.find();
+    first_name_controller.text =
+        profile_controller.user.value.firstName.toString();
+    last_name_controller.text =
+        profile_controller.user.value.lastName.toString();
+    email_controller.text = profile_controller.user.value.email.toString();
     return SafeArea(
       child: Scaffold(
           backgroundColor: Color(AppColors.primary),
@@ -74,8 +81,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(15)),
                                 ),
-                                child: const Text(
-                                  "محمد محمدی",
+                                child: Text(
+                                  (profile_controller.user.value.firstName !=
+                                          "")
+                                      ? "${profile_controller.user.value.firstName.toString()} ${profile_controller.user.value.lastName.toString()}"
+                                      : "نامشخص",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,

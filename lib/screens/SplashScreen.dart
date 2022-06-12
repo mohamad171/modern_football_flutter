@@ -13,11 +13,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var auth_controller = Get.put(AuthApiController());
+  var profile_controller = Get.put(ProfileController());
 
   @override
   void dispose() {
-    Get.delete<AuthApiController>();
     super.dispose();
   }
 
@@ -35,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Get.offAllNamed("/phone");
         }
       } else {
-        auth_controller.get_profile();
+        profile_controller.get_profile();
       }
     });
 

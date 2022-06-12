@@ -7,6 +7,9 @@ import 'package:modern_football/models/response_models/check_code_response.dart'
 import 'package:modern_football/models/response_models/server_response.dart';
 import 'package:modern_football/providers/api.dart';
 
+import '../models/response_models/competition.dart';
+import '../models/response_models/user.dart';
+
 class AuthApiController extends GetxController {
   void SendCode(String phone_number) {
     ApiProvider().send_code(phone_number).then((value) {
@@ -41,10 +44,38 @@ class AuthApiController extends GetxController {
       }
     });
   }
+}
 
+class ProfileController extends GetxController {
+  final user = User().obs;
   void get_profile() {
     ApiProvider().profile().then((value) {
-      print(value.body);
+      user.update((user) {
+        user!.id = value.body["id"];
+        user.username = value.body["username"];
+        user.firstName = value.body["first_name"];
+        user.lastName = value.body["last_name"];
+        user.email = value.body["email"];
+      });
+
+      Get.offNamed("/main");
+    });
+  }
+}
+
+class CompetitionsController extends GetxController {
+  final competitions = <Competition>[].obs;
+  var show_loading = true.obs;
+  void get_competitions() {
+    ApiProvider().competitions().then((value) {
+      value.body.forEach(
+        (element) {
+          competitions.add(Competition.fromJson(element));
+        },
+      );
+
+      show_loading(false);
+      update();
     });
   }
 }
