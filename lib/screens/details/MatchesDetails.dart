@@ -353,13 +353,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                         boxShadow: box_shadow,
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(16))),
-                    child: ListView(children: [
-                      NewsItem(),
-                      NewsItem(),
-                      NewsItem(),
-                      NewsItem(),
-                      NewsItem(),
-                    ]),
+                    child: ListView(children: []),
                   ),
                 ),
                 SizedBox(

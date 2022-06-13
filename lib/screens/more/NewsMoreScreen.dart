@@ -77,19 +77,7 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: ListView(children: [
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-                NewsItem(),
-              ]),
+              child: ListView(children: []),
             )
           ],
         ),

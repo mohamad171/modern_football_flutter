@@ -19,6 +19,8 @@ class _MainScreenState extends State<MainScreen> {
   CompetitionsController competitions_controller =
       Get.put(CompetitionsController());
 
+  NewsController newsController = Get.put(NewsController());
+
   @override
   void initState() {
     super.initState();
@@ -27,14 +29,15 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  void league_changed(int index,CarouselPageChangedReason reason){
+  void league_changed(int index, CarouselPageChangedReason reason) {
     print("${index} --- ${competitions_controller.competitions[index].faName}");
+    newsController
+        .get_news(competitions_controller.competitions[index].id.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     CarouselController cc = CarouselController();
-
 
     return Scaffold(
       key: _scaffoldKey,
@@ -95,38 +98,36 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 25,
             ),
-            Obx(() => (competitions_controller.show_loading == true)
-                ? CircularProgressIndicator(color: Color(AppColors.primary))
-                : CarouselSlider.builder(
-                    itemCount: competitions_controller.competitions.length,
-                    itemBuilder:
-                        (BuildContext context, int itemIndex,
-                                int pageViewIndex) =>
-                            LeaguesItem(
-                                competitions_controller
-                                    .competitions[itemIndex].faName
-                                    .toString(),
-                                competitions_controller
-                                    .competitions[itemIndex].foundYear
-                                    .toString(),
-                                competitions_controller
-                                    .competitions[itemIndex].country
-                                    .toString(),
-                                competitions_controller
-                                    .competitions[itemIndex].confedrasion
-                                    .toString(),
-                                competitions_controller
-                                    .competitions[itemIndex].numberOfTeams
-                                    .toString()),
-                    options: CarouselOptions(
-                      enlargeCenterPage: true,
-                      height: 180.0,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 0.9,
-                      onPageChanged: league_changed
+            Obx(
+              () => (competitions_controller.show_loading == true)
+                  ? CircularProgressIndicator(color: Color(AppColors.primary))
+                  : CarouselSlider.builder(
+                      itemCount: competitions_controller.competitions.length,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                              int pageViewIndex) =>
+                          LeaguesItem(
+                        competitions_controller.competitions[itemIndex].faName
+                            .toString(),
+                        competitions_controller
+                            .competitions[itemIndex].foundYear
+                            .toString(),
+                        competitions_controller.competitions[itemIndex].country
+                            .toString(),
+                        competitions_controller
+                            .competitions[itemIndex].confedrasion
+                            .toString(),
+                        competitions_controller
+                            .competitions[itemIndex].numberOfTeams
+                            .toString(),
+                      ),
+                      options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          height: 180.0,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 0.9,
+                          onPageChanged: league_changed),
+                      carouselController: cc,
                     ),
-              carouselController: cc,
-                  ),
             ),
             const SizedBox(
               height: 30,
@@ -176,18 +177,27 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 120,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                reverse: true,
-                children: [
-                  NewsItem(),
-                  NewsItem(),
-                  NewsItem(),
-                ],
-              ),
-            ),
+            Obx(() => SizedBox(
+                  height: newsController.heigth.toDouble(),
+                  child: (newsController.show_loading == true)
+                      ? SizedBox(
+                          width: 40,
+                          height: 30,
+                          child: CircularProgressIndicator(
+                              color: Color(AppColors.primary)),
+                        )
+                      : ListView.builder(
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: newsController.news.length,
+                          itemBuilder: (context, index) {
+                            return NewsItem(
+                                newsController.news[index].title,
+                                newsController.news[index].description,
+                                newsController.news[index].image);
+                          },
+                        ),
+                )),
             SizedBox(
               height: 20,
             ),

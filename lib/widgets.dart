@@ -278,7 +278,11 @@ class MatcheItem extends StatelessWidget {
 }
 
 class NewsItem extends StatelessWidget {
-  const NewsItem({Key? key}) : super(key: key);
+  NewsItem(this.title, this.short_description, this.image, {Key? key})
+      : super(key: key);
+  String? title;
+  String? short_description;
+  String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +291,7 @@ class NewsItem extends StatelessWidget {
         margin: const EdgeInsets.only(right: 10, bottom: 10, left: 10),
         padding: const EdgeInsets.all(10),
         width: 300,
-        height: 110,
+        height: 140,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(15),
@@ -304,9 +308,8 @@ class NewsItem extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: SizedBox.fromSize(
-                    size: const Size.fromRadius(40),
-                    child: Image.asset('lib/assets/images/m_ch.jpg',
-                        fit: BoxFit.cover),
+                    size: Size(90, 100),
+                    child: Image.network(this.image!, fit: BoxFit.cover),
                   ),
                 ),
                 const SizedBox(
@@ -315,15 +318,27 @@ class NewsItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      "قهرمانی منچستر سیتی",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Container(
+                      width: 180,
+                      child: Text(
+                        this.title!,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                        overflow: TextOverflow.clip,
+                        textAlign: TextAlign.right,
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      "...لورم ایپسوم متنی ساختگی",
+                    Container(
+                      width: 180,
+                      child: Text(
+                        this.short_description!,
+                        style: TextStyle(fontSize: 12),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.right,
+                      ),
                     ),
                     const SizedBox(
                       height: 5,

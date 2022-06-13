@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/models/response_models/check_code_response.dart';
+import 'package:modern_football/models/response_models/news.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
 import 'package:modern_football/providers/api.dart';
 
@@ -75,6 +76,28 @@ class CompetitionsController extends GetxController {
       );
 
       show_loading(false);
+      update();
+    });
+  }
+}
+
+class NewsController extends GetxController {
+  final news = <News>[].obs;
+  var show_loading = true.obs;
+  var heigth = 40.0.obs;
+  void get_news(String com_id) {
+    ApiProvider().news(com_id).then((value) {
+      news.clear();
+      value.body.forEach(
+        (element) {
+          news.add(News.fromJson(element));
+        },
+      );
+      print(value.body);
+
+      show_loading(false);
+      update();
+      heigth(140);
       update();
     });
   }
