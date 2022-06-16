@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
+import '../../models/response_models/news.dart';
 
 class NewsDetailsScreen extends StatefulWidget {
   const NewsDetailsScreen({Key? key}) : super(key: key);
@@ -12,8 +15,17 @@ class NewsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
+  NewsController newsController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    News news = newsController.news[Get.arguments["index"]];
     return Scaffold(
       backgroundColor: Color(AppColors.bg_gray),
       body: SafeArea(
@@ -45,12 +57,18 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     ),
                     onTap: () => Get.back(),
                   ),
-                  const Text(
-                    "قهرمانی منچستر سیتی",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: MediaQuery.of(context).size.width - 120,
+                    child: Text(
+                      news.title!,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      textDirection: TextDirection.rtl,
                     ),
+                    alignment: Alignment.center,
                   ),
                   GestureDetector(
                     onTap: () => Get.toNamed("/main"),
@@ -86,9 +104,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: SizedBox.fromSize(
-                          size: const Size.fromRadius(60),
-                          child: Image.asset('lib/assets/images/m_ch.jpg',
-                              fit: BoxFit.cover),
+                          size: const Size(120, 110),
+                          child: Image.network(news.image!, fit: BoxFit.cover),
                         ),
                       ),
                       const SizedBox(
@@ -102,9 +119,17 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2,
-                            child: Text(
-                              "دومین قهرمانی پیاپی منچسترسیتی در لیگ برتر",
-                              textAlign: TextAlign.right,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 120,
+                              child: Text(
+                                news.title!,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.right,
+                                overflow: TextOverflow.clip,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -139,8 +164,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                                   ),
                                 ),
                                 Container(
-                                  child: const Text(
-                                    "5 دقیقه پیش",
+                                  child: Text(
+                                    news.timeage!,
                                     textDirection: TextDirection.rtl,
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 11),
@@ -159,9 +184,8 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.",
-                      textAlign: TextAlign.right,
+                    child: Html(
+                      data: news.description!,
                     ),
                   )
                 ],

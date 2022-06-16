@@ -326,22 +326,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     height: MediaQuery.of(context).size.height,
                     child: GridView.count(
                       crossAxisCount: 2,
-                      children: [
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                        VideoItem(),
-                      ],
+                      children: [],
                     )),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,

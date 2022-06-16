@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/models/response_models/check_code_response.dart';
 import 'package:modern_football/models/response_models/news.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
+import 'package:modern_football/models/response_models/video.dart';
 import 'package:modern_football/providers/api.dart';
 
 import '../models/response_models/competition.dart';
@@ -93,11 +94,41 @@ class NewsController extends GetxController {
           news.add(News.fromJson(element));
         },
       );
-      print(value.body);
-
       show_loading(false);
       update();
       heigth(140);
+      update();
+    });
+  }
+}
+
+class VideosController extends GetxController {
+  final videos = <Video>[].obs;
+  var show_loading = true.obs;
+  var competition_id = -1.obs;
+  var competition_title = "".obs;
+  var heigth = 40.0.obs;
+  void set_competition_id(competition_id) {
+    competition_id = competition_id;
+    update();
+  }
+
+  void set_competition_title(competition_title) {
+    competition_title = competition_title;
+    update();
+  }
+
+  void get_videos(String com_id) {
+    ApiProvider().videos(com_id).then((value) {
+      videos.clear();
+      value.body.forEach(
+        (element) {
+          videos.add(Video.fromJson(element));
+        },
+      );
+      show_loading(false);
+      update();
+      heigth(200);
       update();
     });
   }

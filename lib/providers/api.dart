@@ -59,7 +59,16 @@ class ApiProvider extends GetConnect {
     var response =
         await get(base_url + "News?com_id=${com_id}", headers: header);
     if (response.isOk) {
-      print(response.body);
+      return response;
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<Response> videos(String com_id) async {
+    var response =
+        await get(base_url + "Videos?com_id=${com_id}", headers: header);
+    if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);

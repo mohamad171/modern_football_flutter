@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -14,6 +15,8 @@ class NewsMoreScreen extends StatefulWidget {
 }
 
 class _NewsMoreScreenState extends State<NewsMoreScreen> {
+  NewsController newsController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +57,13 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
                     ),
                     onTap: () => Get.back(),
                   ),
-                  const Text(
-                    "اخبار لیگ جزیره",
+                  Text(
+                    "${Get.arguments["title"]}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
+                    textDirection: TextDirection.rtl,
                   ),
                   GestureDetector(
                     onTap: () => print("ok"),
@@ -76,8 +80,27 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: ListView(children: []),
+              height: MediaQuery.of(context).size.height / 1.15,
+              child: (newsController.news.length <= 0)
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                          Image.asset(
+                            "lib/assets/images/empty.png",
+                            width: 50,
+                            height: 50,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(".اخباری برای نمایش وجود ندارد")
+                        ])
+                  : ListView.builder(
+                      itemCount: newsController.news.length,
+                      itemBuilder: (context, index) {
+                        return NewsItem(newsController.news[index], index);
+                      },
+                    ),
             )
           ],
         ),

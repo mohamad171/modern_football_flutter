@@ -57,8 +57,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                     ),
                     onTap: () => Get.back(),
                   ),
-                  const Text(
-                    "برنامه بازی های لیگ جزیره",
+                  Text(
+                    "${Get.arguments["title"]}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

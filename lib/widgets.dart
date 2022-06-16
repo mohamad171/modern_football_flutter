@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/models/response_models/video.dart';
 import '../assets/values/AppColors.dart';
+import 'models/response_models/news.dart';
 
 List<BoxShadow> box_shadow = [
   BoxShadow(
@@ -98,29 +100,34 @@ class LeaguesItem extends StatelessWidget {
 class MainButtonsItem extends StatelessWidget {
   String image_path;
   String text;
-  MainButtonsItem(this.image_path, this.text, {Key? key}) : super(key: key);
+  String destination_path;
+  MainButtonsItem(this.image_path, this.text, this.destination_path, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      height: 50,
-      padding: const EdgeInsets.only(right: 5, left: 5, top: 10, bottom: 10),
-      decoration: BoxDecoration(
-          color: Color(AppColors.primary),
-          borderRadius: BorderRadius.all(Radius.circular(18)),
-          boxShadow: box_shadow),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Text(
-            text,
-            style: TextStyle(color: Colors.white),
-            textAlign: TextAlign.center,
-          ),
-          Image.asset(this.image_path),
-        ],
+    return GestureDetector(
+      child: Container(
+        width: 120,
+        height: 50,
+        padding: const EdgeInsets.only(right: 5, left: 5, top: 10, bottom: 10),
+        decoration: BoxDecoration(
+            color: Color(AppColors.primary),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+            boxShadow: box_shadow),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              text,
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+            Image.asset(this.image_path),
+          ],
+        ),
       ),
+      onTap: () => Get.toNamed(destination_path),
     );
   }
 }
@@ -128,7 +135,9 @@ class MainButtonsItem extends StatelessWidget {
 class MoreWidget extends StatelessWidget {
   String text;
   String screen_path;
-  MoreWidget(this.text, this.screen_path, {Key? key}) : super(key: key);
+  String competition_title;
+  MoreWidget(this.text, this.screen_path, this.competition_title, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +159,8 @@ class MoreWidget extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () => Get.toNamed(this.screen_path),
+            onTap: () => Get.toNamed(this.screen_path,
+                arguments: {"title": competition_title}),
           ),
         ),
         Container(
@@ -278,11 +288,9 @@ class MatcheItem extends StatelessWidget {
 }
 
 class NewsItem extends StatelessWidget {
-  NewsItem(this.title, this.short_description, this.image, {Key? key})
-      : super(key: key);
-  String? title;
-  String? short_description;
-  String? image;
+  NewsItem(this.news, this.index, {Key? key}) : super(key: key);
+  News news;
+  int index;
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +298,7 @@ class NewsItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(right: 10, bottom: 10, left: 10),
         padding: const EdgeInsets.all(10),
-        width: 300,
+        width: MediaQuery.of(context).size.width / 1.3,
         height: 140,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
@@ -299,94 +307,100 @@ class NewsItem extends StatelessWidget {
           color: Colors.white,
           boxShadow: box_shadow,
         ),
-        child: Stack(
+        child: Row(
           textDirection: TextDirection.rtl,
           children: [
-            Row(
-              textDirection: TextDirection.rtl,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox.fromSize(
+                size: Size(90, 100),
+                child: Image.network(news.image!, fit: BoxFit.cover),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Flexible(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: SizedBox.fromSize(
-                    size: Size(90, 100),
-                    child: Image.network(this.image!, fit: BoxFit.cover),
+                Container(
+                  child: Text(
+                    news.title!,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    overflow: TextOverflow.clip,
+                    textAlign: TextAlign.right,
+                    textDirection: TextDirection.rtl,
                   ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  height: 5,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: 180,
-                      child: Text(
-                        this.title!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 13),
-                        overflow: TextOverflow.clip,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      width: 180,
-                      child: Text(
-                        this.short_description!,
-                        style: TextStyle(fontSize: 12),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                          color: Color(AppColors.primary),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(6))),
-                      child: const Text(
-                        "ورزش 3",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
+                Container(
+                  child: Text(
+                    news.shortdescription!,
+                    style: TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Flexible(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                            color: Color(AppColors.primary),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6))),
+                        child: const Text(
+                          "ورزش 3",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                      Container(
+                        child: Text(
+                          news.timeage!,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(color: Colors.grey, fontSize: 11),
+                        ),
+                        alignment: Alignment.centerLeft,
+                      )
+                    ],
+                  ),
+                )
               ],
-            ),
-            Container(
-              child: const Text(
-                "5 دقیقه پیش",
-                textDirection: TextDirection.rtl,
-                style: TextStyle(color: Colors.grey, fontSize: 11),
-              ),
-              alignment: Alignment.bottomLeft,
-            )
+            )),
           ],
         ),
       ),
-      onTap: () => Get.toNamed("/news-details"),
+      onTap: () =>
+          Get.toNamed("/news-details", arguments: {"index": this.index}),
     );
   }
 }
 
 class VideoItem extends StatelessWidget {
-  const VideoItem({Key? key}) : super(key: key);
+  Video video;
+  int index;
+  VideoItem(this.video, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(right: 5, bottom: 10, left: 5),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(9),
       width: 190,
-      height: 210,
+      height: 220,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
@@ -394,8 +408,8 @@ class VideoItem extends StatelessWidget {
         color: Colors.white,
         boxShadow: box_shadow,
       ),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
+      child: Flex(
+        direction: Axis.vertical,
         textDirection: TextDirection.rtl,
         children: [
           Column(
@@ -410,8 +424,7 @@ class VideoItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       child: SizedBox.fromSize(
                         size: const Size(190, 110),
-                        child: Image.asset('lib/assets/images/m_ch.jpg',
-                            fit: BoxFit.cover),
+                        child: Image.network(video.image!, fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -421,7 +434,7 @@ class VideoItem extends StatelessWidget {
                     decoration:
                         BoxDecoration(color: Colors.black.withOpacity(0.6)),
                     child: Text(
-                      "3:30 دقیقه",
+                      "${video.duration} دقیقه",
                       style: TextStyle(color: Colors.white, fontSize: 13),
                       textDirection: TextDirection.rtl,
                     ),
@@ -431,9 +444,13 @@ class VideoItem extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Text(
-                "جشن قهرمانی منچسترسیتی",
-                textAlign: TextAlign.center,
+              Container(
+                child: Text(
+                  "${video.title}",
+                  overflow: TextOverflow.ellipsis,
+                  textDirection: TextDirection.rtl,
+                  textAlign: TextAlign.right,
+                ),
               )
             ],
           ),
@@ -462,7 +479,7 @@ class VideoItem extends StatelessWidget {
                 ),
               ),
               Text(
-                "5 دقیقه پیش",
+                "${video.timeago}",
                 textDirection: TextDirection.rtl,
                 style: TextStyle(color: Colors.grey, fontSize: 11),
               )

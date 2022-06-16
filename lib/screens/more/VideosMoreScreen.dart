@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -14,6 +15,8 @@ class VideosMoreScreen extends StatefulWidget {
 }
 
 class _VideosMoreScreenState extends State<VideosMoreScreen> {
+  VideosController videosController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,13 +57,13 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
                     ),
                     onTap: () => Get.back(),
                   ),
-                  const Text(
-                    "ویدئوهای لیگ جزیره",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Obx(() => Text(
+                        "${videosController.competition_title}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                   GestureDetector(
                     onTap: () => print("ok"),
                     child: const Icon(
@@ -75,26 +78,28 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
               height: 20,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height - 100,
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: [
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                ],
-              ),
+              height: MediaQuery.of(context).size.height / 1.15,
+              child: (videosController.videos.length > 0)
+                  ? GridView.count(
+                      crossAxisCount: 2,
+                      children: List.generate(videosController.videos.length,
+                          (index) {
+                        return VideoItem(videosController.videos[index], index);
+                      }),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                          Image.asset(
+                            "lib/assets/images/empty.png",
+                            width: 50,
+                            height: 50,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(".ویدئویی برای نمایش وجود ندارد")
+                        ]),
             ),
             SizedBox(
               height: 80,

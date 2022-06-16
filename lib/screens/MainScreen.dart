@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
+import 'package:modern_football/models/response_models/competition.dart';
 import '../assets/values/AppColors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modern_football/widgets.dart';
@@ -20,6 +21,8 @@ class _MainScreenState extends State<MainScreen> {
       Get.put(CompetitionsController());
 
   NewsController newsController = Get.put(NewsController());
+  VideosController videosController = Get.put(VideosController());
+  String? selected_competition_title;
 
   @override
   void initState() {
@@ -30,9 +33,17 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void league_changed(int index, CarouselPageChangedReason reason) {
-    print("${index} --- ${competitions_controller.competitions[index].faName}");
     newsController
         .get_news(competitions_controller.competitions[index].id.toString());
+
+    videosController
+        .get_videos(competitions_controller.competitions[index].id.toString());
+    selected_competition_title =
+        competitions_controller.competitions[index].faName.toString();
+    videosController
+        .set_competition_id(competitions_controller.competitions[index].id);
+    videosController.set_competition_title(
+        competitions_controller.competitions[index].faName);
   }
 
   @override
@@ -99,35 +110,45 @@ class _MainScreenState extends State<MainScreen> {
               height: 25,
             ),
             Obx(
-              () => (competitions_controller.show_loading == true)
-                  ? CircularProgressIndicator(color: Color(AppColors.primary))
-                  : CarouselSlider.builder(
-                      itemCount: competitions_controller.competitions.length,
-                      itemBuilder: (BuildContext context, int itemIndex,
-                              int pageViewIndex) =>
-                          LeaguesItem(
-                        competitions_controller.competitions[itemIndex].faName
-                            .toString(),
-                        competitions_controller
-                            .competitions[itemIndex].foundYear
-                            .toString(),
-                        competitions_controller.competitions[itemIndex].country
-                            .toString(),
-                        competitions_controller
-                            .competitions[itemIndex].confedrasion
-                            .toString(),
-                        competitions_controller
-                            .competitions[itemIndex].numberOfTeams
-                            .toString(),
-                      ),
-                      options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          height: 180.0,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 0.9,
-                          onPageChanged: league_changed),
-                      carouselController: cc,
+              () {
+                if (competitions_controller.show_loading == true) {
+                  return CircularProgressIndicator(
+                      color: Color(AppColors.primary));
+                } else {
+                  newsController.get_news(
+                      competitions_controller.competitions[0].id.toString());
+
+                  videosController.get_videos(
+                      competitions_controller.competitions[0].id.toString());
+
+                  return CarouselSlider.builder(
+                    itemCount: competitions_controller.competitions.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) =>
+                        LeaguesItem(
+                      competitions_controller.competitions[itemIndex].faName
+                          .toString(),
+                      competitions_controller.competitions[itemIndex].foundYear
+                          .toString(),
+                      competitions_controller.competitions[itemIndex].country
+                          .toString(),
+                      competitions_controller
+                          .competitions[itemIndex].confedrasion
+                          .toString(),
+                      competitions_controller
+                          .competitions[itemIndex].numberOfTeams
+                          .toString(),
                     ),
+                    options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        height: 180.0,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.9,
+                        onPageChanged: league_changed),
+                    carouselController: cc,
+                  );
+                }
+              },
             ),
             const SizedBox(
               height: 30,
@@ -135,24 +156,19 @@ class _MainScreenState extends State<MainScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                MainButtonsItem("lib/assets/images/football_icon.png",
+                    "برترین گلزنان", "/main"),
                 MainButtonsItem(
-                  "lib/assets/images/football_icon.png",
-                  "برترین گلزنان",
-                ),
-                MainButtonsItem(
-                  "lib/assets/images/ranking.png",
-                  "جدول لیگ",
-                ),
-                MainButtonsItem(
-                  "lib/assets/images/soccer_ic.png",
-                  "برنامه بازی ها",
-                )
+                    "lib/assets/images/ranking.png", "جدول لیگ", "/main"),
+                MainButtonsItem("lib/assets/images/soccer_ic.png",
+                    "برنامه بازی ها", "/matches")
               ],
             ),
             const SizedBox(
               height: 20,
             ),
-            MoreWidget("بازی های هفته جاری", "/matches"),
+            MoreWidget("بازی های هفته جاری", "/matches",
+                "برنامه بازی های ${selected_competition_title}"),
             SizedBox(
               height: 10,
             ),
@@ -173,50 +189,103 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 20,
             ),
-            MoreWidget("جدیدترین اخبار لیگ", "/news"),
+            MoreWidget("جدیدترین اخبار لیگ", "/news",
+                "اخبار ${selected_competition_title}"),
             SizedBox(
               height: 10,
             ),
-            Obx(() => SizedBox(
+            Obx(() {
+              if (newsController.show_loading == true) {
+                return SizedBox(
                   height: newsController.heigth.toDouble(),
-                  child: (newsController.show_loading == true)
-                      ? SizedBox(
-                          width: 40,
-                          height: 30,
-                          child: CircularProgressIndicator(
-                              color: Color(AppColors.primary)),
-                        )
-                      : ListView.builder(
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: newsController.news.length,
-                          itemBuilder: (context, index) {
-                            return NewsItem(
-                                newsController.news[index].title,
-                                newsController.news[index].description,
-                                newsController.news[index].image);
-                          },
-                        ),
-                )),
+                  child: CircularProgressIndicator(
+                      color: Color(AppColors.primary)),
+                );
+              } else {
+                if (newsController.news.length > 0) {
+                  return SizedBox(
+                    height: newsController.heigth.toDouble(),
+                    child: ListView.builder(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: newsController.news.length,
+                      itemBuilder: (context, index) {
+                        return NewsItem(newsController.news[index], index);
+                      },
+                    ),
+                  );
+                } else {
+                  return SizedBox(
+                    height: newsController.heigth.toDouble(),
+                    child: Center(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "lib/assets/images/empty.png",
+                              width: 50,
+                              height: 50,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(".اخباری برای نمایش وجود ندارد")
+                          ]),
+                    ),
+                  );
+                }
+              }
+            }),
             SizedBox(
               height: 20,
             ),
-            MoreWidget("جدیدترین ویدئو ها", "/videos"),
+            MoreWidget("جدیدترین ویدئو ها", "/videos",
+                "ویدئوهای ${selected_competition_title}"),
             SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: 200,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                reverse: true,
-                children: [
-                  VideoItem(),
-                  VideoItem(),
-                  VideoItem(),
-                ],
-              ),
-            )
+            Obx((() {
+              if (newsController.show_loading == true) {
+                return SizedBox(
+                  height: videosController.heigth.toDouble(),
+                  child: CircularProgressIndicator(
+                      color: Color(AppColors.primary)),
+                );
+              } else {
+                if (videosController.videos.length > 0) {
+                  return SizedBox(
+                    height: videosController.heigth.toDouble(),
+                    child: ListView.builder(
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: videosController.videos.length,
+                      itemBuilder: (context, index) {
+                        return VideoItem(videosController.videos[index], index);
+                      },
+                    ),
+                  );
+                } else {
+                  return SizedBox(
+                    height: videosController.heigth.toDouble(),
+                    child: Center(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "lib/assets/images/empty.png",
+                              width: 50,
+                              height: 50,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(".ویدئویی برای نمایش وجود ندارد")
+                          ]),
+                    ),
+                  );
+                }
+              }
+            }))
           ],
         ),
       )),
