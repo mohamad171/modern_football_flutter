@@ -185,12 +185,15 @@ class MoreWidget extends StatelessWidget {
 class MatcheItem extends StatelessWidget {
   Team home_team;
   Team away_team;
+  int index;
   int homeTeamScore;
   int awayTeamScore;
   int matchDay;
   String matchDate;
+  String matchtime;
+  String j_matchdate;
 
-  MatcheItem(this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate);
+  MatcheItem(this.index,this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate,this.matchtime,this.j_matchdate);
 
   @override
   Widget build(BuildContext context) {
@@ -237,12 +240,12 @@ class MatcheItem extends StatelessWidget {
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Icon(Icons.calendar_month),
-                      SizedBox(
+                    children:  [
+                      const Icon(Icons.calendar_month),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Text("1401/04/08")
+                      Text("${this.j_matchdate}")
                     ],
                   ),
                   SizedBox(
@@ -254,13 +257,13 @@ class MatcheItem extends StatelessWidget {
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Icon(Icons.access_time_rounded),
-                      SizedBox(
+                    children: [
+                      const Icon(Icons.access_time_rounded),
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "23:30",
+                        "${this.matchtime}",
                         textAlign: TextAlign.center,
                       )
                     ],
@@ -291,7 +294,7 @@ class MatcheItem extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () => Get.toNamed("/matches-details"));
+        onTap: () => Get.toNamed("/matches-details",arguments: {"index": this.index}));
   }
 }
 

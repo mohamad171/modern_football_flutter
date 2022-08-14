@@ -7,6 +7,8 @@ class Match {
   int? homeTeamScore;
   int? awayTeamScore;
   String? matchDate;
+  String? j_matchdate;
+  String? matchtime;
   int? matchDay;
 
   Match(
@@ -16,7 +18,9 @@ class Match {
         this.homeTeamScore,
         this.awayTeamScore,
         this.matchDate,
-        this.matchDay});
+        this.matchDay,
+        this.matchtime,
+        this.j_matchdate});
 
   Match.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -30,6 +34,8 @@ class Match {
     awayTeamScore = json['away_team_score'];
     matchDate = json['match_date'];
     matchDay = json['match_day'];
+    matchtime = json['matchtime'];
+    j_matchdate = json['j_matchdate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +51,8 @@ class Match {
     data['away_team_score'] = this.awayTeamScore;
     data['match_date'] = this.matchDate;
     data['match_day'] = this.matchDay;
+    data['matchtime'] = this.matchtime;
+    data['j_matchdate'] = this.j_matchdate;
     return data;
   }
 }

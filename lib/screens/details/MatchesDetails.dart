@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
+import 'package:modern_football/models/response_models/match.dart';
 
 import '../../widgets.dart';
 
@@ -14,6 +16,7 @@ class MatchesDetails extends StatefulWidget {
 class _MatchesDetailsState extends State<MatchesDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  MatchesController matchesController = Get.find();
 
   @override
   void initState() {
@@ -23,6 +26,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
 
   @override
   Widget build(BuildContext context) {
+    Match match = matchesController.matches[Get.arguments["index"]];
     return Scaffold(
       backgroundColor: Color(AppColors.bg_gray),
       body: SafeArea(
@@ -54,8 +58,8 @@ class _MatchesDetailsState extends State<MatchesDetails>
                   ),
                   onTap: () => Get.back(),
                 ),
-                const Text(
-                  "رئال مادرید - بارسلونا",
+                Text(
+                  "${match.homeTeam!.faName} - ${match.awayTeam!.faName}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -86,7 +90,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     child: SizedBox.fromSize(
                       size: Size(100, 100),
                       child: Image.network(
-                          'https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png',
+                          match.homeTeam!.image!,
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -94,7 +98,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     height: 10,
                   ),
                   Text(
-                    "رئال مادرید",
+                    "${match.homeTeam!.faName}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
@@ -104,30 +108,30 @@ class _MatchesDetailsState extends State<MatchesDetails>
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Icon(Icons.calendar_month),
-                      SizedBox(
+                    children:  [
+                      const Icon(Icons.calendar_month),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Text("1401/04/08")
+                      Text("${match.j_matchdate}")
                     ],
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  Text("هفته 5"),
+                  Text("هفته ${match.matchDay}"),
                   SizedBox(
                     height: 5,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      Icon(Icons.access_time_rounded),
-                      SizedBox(
+                    children:  [
+                      const Icon(Icons.access_time_rounded),
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "23:30",
+                        "${match.matchtime}",
                         textAlign: TextAlign.center,
                       )
                     ],
@@ -142,7 +146,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     child: SizedBox.fromSize(
                       size: Size(90, 90),
                       child: Image.network(
-                          'https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png',
+                          match.awayTeam!.image!,
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -150,7 +154,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     height: 10,
                   ),
                   Text(
-                    "بارسلونا",
+                    "${match.awayTeam!.faName}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],

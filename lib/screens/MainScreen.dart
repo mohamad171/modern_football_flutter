@@ -190,12 +190,15 @@ class _MainScreenState extends State<MainScreen> {
                     itemBuilder: (BuildContext context, int itemIndex,
                         int pageViewIndex) =>
                         MatcheItem(
+                            itemIndex,
                             matchesController.matches[itemIndex].homeTeam!,
                             matchesController.matches[itemIndex].awayTeam!,
                             matchesController.matches[itemIndex].homeTeamScore!,
                             matchesController.matches[itemIndex].awayTeamScore!,
                             matchesController.matches[itemIndex].matchDay!,
-                            matchesController.matches[itemIndex].matchDate!
+                            matchesController.matches[itemIndex].matchDate!,
+                            matchesController.matches[itemIndex].matchtime!,
+                            matchesController.matches[itemIndex].j_matchdate!
                         ),
                     options: CarouselOptions(
                       height: 150.0,
