@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/models/response_models/team.dart';
 import 'package:modern_football/models/response_models/video.dart';
 import '../assets/values/AppColors.dart';
 import 'models/response_models/news.dart';
@@ -182,7 +183,14 @@ class MoreWidget extends StatelessWidget {
 }
 
 class MatcheItem extends StatelessWidget {
-  const MatcheItem({Key? key}) : super(key: key);
+  Team home_team;
+  Team away_team;
+  int homeTeamScore;
+  int awayTeamScore;
+  int matchDay;
+  String matchDate;
+
+  MatcheItem(this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate);
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +219,7 @@ class MatcheItem extends StatelessWidget {
                     child: SizedBox.fromSize(
                       size: Size(80, 80),
                       child: Image.network(
-                          'https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png',
+                          this.home_team.image!,
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -219,7 +227,7 @@ class MatcheItem extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "رئال مادرید",
+                    "${this.home_team.faName}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
@@ -240,7 +248,7 @@ class MatcheItem extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text("هفته 5"),
+                  Text("هفته ${this.matchDay}"),
                   SizedBox(
                     height: 5,
                   ),
@@ -267,7 +275,7 @@ class MatcheItem extends StatelessWidget {
                     child: SizedBox.fromSize(
                       size: Size(60, 60),
                       child: Image.network(
-                          'https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png',
+                          this.away_team.image!,
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -275,7 +283,7 @@ class MatcheItem extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "بارسلونا",
+                    "${this.away_team.faName}",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],

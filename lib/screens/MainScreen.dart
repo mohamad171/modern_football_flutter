@@ -22,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
 
   NewsController newsController = Get.put(NewsController());
   VideosController videosController = Get.put(VideosController());
+  MatchesController matchesController = Get.put(MatchesController());
   String? selected_competition_title;
 
   @override
@@ -33,17 +34,20 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void league_changed(int index, CarouselPageChangedReason reason) {
+    Competition competition = competitions_controller.competitions[index];
     newsController
         .get_news(competitions_controller.competitions[index].id.toString());
 
+    matchesController.get_matches(competition.id.toString(), competition.currentMatchday.toString());
+
     videosController
-        .get_videos(competitions_controller.competitions[index].id.toString());
+        .get_videos(competition.id.toString());
     selected_competition_title =
-        competitions_controller.competitions[index].faName.toString();
+        competition.faName.toString();
     videosController
-        .set_competition_id(competitions_controller.competitions[index].id);
+        .set_competition_id(competition.id);
     videosController.set_competition_title(
-        competitions_controller.competitions[index].faName);
+        competition.faName);
   }
 
   @override
@@ -121,6 +125,9 @@ class _MainScreenState extends State<MainScreen> {
                   videosController.get_videos(
                       competitions_controller.competitions[0].id.toString());
 
+                  matchesController.get_matches(
+                      competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString());
+
                   return CarouselSlider.builder(
                     itemCount: competitions_controller.competitions.length,
                     itemBuilder: (BuildContext context, int itemIndex,
@@ -172,20 +179,35 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 10,
             ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 150.0,
-                aspectRatio: 16 / 9,
-                viewportFraction: 0.9,
-              ),
-              items: [1, 2, 3, 4, 5].map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return const MatcheItem();
-                  },
-                );
-              }).toList(),
+            Obx(
+                  () {
+                if (matchesController.show_loading == true) {
+                  return CircularProgressIndicator(
+                      color: Color(AppColors.primary));
+                } else {
+                  return CarouselSlider.builder(
+                    itemCount: matchesController.matches.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                        int pageViewIndex) =>
+                        MatcheItem(
+                            matchesController.matches[itemIndex].homeTeam!,
+                            matchesController.matches[itemIndex].awayTeam!,
+                            matchesController.matches[itemIndex].homeTeamScore!,
+                            matchesController.matches[itemIndex].awayTeamScore!,
+                            matchesController.matches[itemIndex].matchDay!,
+                            matchesController.matches[itemIndex].matchDate!
+                        ),
+                    options: CarouselOptions(
+                      height: 150.0,
+                      aspectRatio: 16 / 9,
+                      viewportFraction: 0.9,
+                    ),
+                    carouselController: cc,
+                  );
+                }
+              },
             ),
+
             SizedBox(
               height: 20,
             ),

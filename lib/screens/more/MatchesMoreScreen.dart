@@ -128,32 +128,23 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: ListView(children: [
-                      MatcheItem(),
-                      MatcheItem(),
-                      MatcheItem(),
-                      MatcheItem(),
-                      MatcheItem(),
+                      // MatcheItem(),
+
                     ]),
                   ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: ListView(children: [
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
+                        // MatcheItem(),
+
                       ])),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: ListView(children: [
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
-                        MatcheItem(),
+                        // MatcheItem(),
+
                       ]))
                 ],
                 controller: _tabController,

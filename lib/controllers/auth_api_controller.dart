@@ -6,11 +6,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/models/response_models/check_code_response.dart';
 import 'package:modern_football/models/response_models/news.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
+import 'package:modern_football/models/response_models/standing.dart';
 import 'package:modern_football/models/response_models/video.dart';
 import 'package:modern_football/providers/api.dart';
 
 import '../models/response_models/competition.dart';
 import '../models/response_models/user.dart';
+import 'package:modern_football/models/response_models/match.dart' as matchmodel;
 
 class AuthApiController extends GetxController {
   void SendCode(String phone_number) {
@@ -92,6 +94,47 @@ class NewsController extends GetxController {
       value.body.forEach(
         (element) {
           news.add(News.fromJson(element));
+        },
+      );
+      show_loading(false);
+      update();
+      heigth(140);
+      update();
+    });
+  }
+}
+
+
+class MatchesController extends GetxController {
+  final matches = <matchmodel.Match>[].obs;
+  var show_loading = true.obs;
+  var heigth = 40.0.obs;
+  void get_matches(String com_id,String match_day) {
+    ApiProvider().matches(com_id,match_day).then((value) {
+      matches.clear();
+      value.body.forEach(
+            (element) {
+          matches.add(matchmodel.Match.fromJson(element));
+        },
+      );
+      show_loading(false);
+      update();
+      heigth(150);
+      update();
+    });
+  }
+}
+
+class StandingsController extends GetxController {
+  final standings = <Standing>[].obs;
+  var show_loading = true.obs;
+  var heigth = 40.0.obs;
+  void get_standings(String com_id) {
+    ApiProvider().standings(com_id).then((value) {
+      standings.clear();
+      value.body.forEach(
+            (element) {
+              standings.add(Standing.fromJson(element));
         },
       );
       show_loading(false);
