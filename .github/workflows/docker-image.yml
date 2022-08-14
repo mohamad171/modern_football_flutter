@@ -14,5 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Login to ghcr
+      run: export CR_PAT=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 ; echo $CR_PAT | docker login ghcr.io -u mohamad171 --password-stdin
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag modernfootball
+      run: docker build . --file Dockerfile --tag ghcr.io/mohamad171/modernfootball_flutter:latest
+    - name: push image
+      run: docker push ghcr.io/mohamad171/modernfootball_flutter:latest
