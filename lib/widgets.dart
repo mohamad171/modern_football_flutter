@@ -658,18 +658,16 @@ class StandingItem extends StatelessWidget {
             ),
             Image.network(
               team_logo,
-              width: 35,
-              height: 35,
+              width: 20,
+              height: 20,
             ),
             Text(team_name.toString()),
             SizedBox(
               width: 10,
             ),
-            CircleStandingTeamForm("W"),
-            CircleStandingTeamForm("D"),
-            CircleStandingTeamForm("L"),
-            CircleStandingTeamForm("W"),
-            CircleStandingTeamForm("W"),
+            for(var i in this.form.split("")) CircleStandingTeamForm(i)
+
+
           ]),
           flex: 3,
         ),
@@ -703,6 +701,7 @@ class StandingItem extends StatelessWidget {
 
 class CircleStandingTeamForm extends StatelessWidget {
   String value;
+
   CircleStandingTeamForm(this.value, {Key? key}) : super(key: key);
 
   @override
@@ -712,9 +711,9 @@ class CircleStandingTeamForm extends StatelessWidget {
       width: 8,
       height: 8,
       decoration: BoxDecoration(
-          color: (value == "W")
+          color: (value == "W" || value == "w")
               ? Colors.green
-              : (value == "D")
+              : (value == "D" || value == "d")
                   ? Colors.yellow
                   : Colors.red,
           shape: BoxShape.circle),

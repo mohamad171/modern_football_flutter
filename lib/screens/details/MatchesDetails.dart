@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import 'package:modern_football/models/response_models/match.dart';
+import 'package:modern_football/models/response_models/standing.dart';
 
 import '../../widgets.dart';
 
@@ -17,16 +18,31 @@ class _MatchesDetailsState extends State<MatchesDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
   MatchesController matchesController = Get.find();
+  StandingsController standingsController = Get.put(StandingsController());
+  late Match match;
+
+  void getStandings(){
+
+    standingsController.get_standings(match.homeTeam!.competition!.id.toString());
+
+
+  }
 
   @override
   void initState() {
+    match = matchesController.matches[Get.arguments["index"]];
     _tabController = TabController(length: 4, vsync: this, initialIndex: 3);
+    _tabController.addListener(() {
+      if(_tabController.index == 0){
+        getStandings();
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Match match = matchesController.matches[Get.arguments["index"]];
+
     return Scaffold(
       backgroundColor: Color(AppColors.bg_gray),
       body: SafeArea(
@@ -183,6 +199,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                 color: Color(AppColors.primary),
               ),
               labelColor: Colors.white,
+
               unselectedLabelColor: Colors.black,
               tabs: [
                 Tab(
@@ -221,108 +238,44 @@ class _MatchesDetailsState extends State<MatchesDetails>
                         boxShadow: box_shadow,
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(16))),
-                    child: ListView(children: [
-                      StandingHeaderItem(),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          true),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          true),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false),
-                      StandingItem(
-                          1,
-                          "https://logos-world.net/wp-content/uploads/2020/04/Barcelona-Logo.png",
-                          "بارسلونا",
-                          "W,L,L,L,L",
-                          30,
-                          10,
-                          60,
-                          false)
-                    ]),
+                    child:
+                    Obx((){
+                      return  ListView.builder(
+
+                        scrollDirection: Axis.vertical,
+                        itemCount: standingsController.standings.length+1,
+                        itemBuilder: (context, index) {
+                          if(index == 0){
+                            return StandingHeaderItem();
+                          }
+                          Standing standing = standingsController.standings[index-1];
+                          if(standing.team!.id == match.homeTeam!.id ||  standing.team!.id == match.awayTeam!.id){
+                            return StandingItem(
+                                standing.position!,
+                                standing.team!.image!,
+                                "${standing.team!.faName}",
+                                "${standing.recentMatch}",
+                                standing.played!,
+                                standing.points!,
+                                standing.goalDifference!,
+                                true);
+                          }else{
+                            return StandingItem(
+                                standing.position!,
+                                standing.team!.image!,
+                                "${standing.team!.faName}",
+                                "${standing.recentMatch}",
+                                standing.played!,
+                                standing.points!,
+                                standing.goalDifference!,
+                                false);
+                          }
+
+                        },
+                      );
+                    }),
+
+
                   ),
                 ),
                 SizedBox(

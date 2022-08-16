@@ -4,7 +4,7 @@ class Competition {
   String? faName;
   String? code;
   int? currentMatchday;
-  Null? image;
+  String? image;
   int? numberOfTeams;
   int? foundYear;
   String? confedrasion;
