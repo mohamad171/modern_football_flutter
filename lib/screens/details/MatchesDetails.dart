@@ -31,6 +31,12 @@ class _MatchesDetailsState extends State<MatchesDetails>
   }
 
   @override
+  void dispose() {
+    Get.delete<StandingsController>();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     match = matchesController.matches[Get.arguments["index"]];
     _tabController = TabController(length: 4, vsync: this, initialIndex: 3);

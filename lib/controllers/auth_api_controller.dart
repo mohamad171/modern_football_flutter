@@ -70,6 +70,22 @@ class ProfileController extends GetxController {
 class CompetitionsController extends GetxController {
   final competitions = <Competition>[].obs;
   var show_loading = true.obs;
+  final competition = Competition().obs;
+
+  void set_selected_competition(Competition com){
+    competition.update((co){
+      co!.faName = com.faName;
+      co.id = com.id;
+      co.image = com.image;
+      co.foundYear = com.foundYear;
+      co.numberOfTeams = com.numberOfTeams;
+      co.currentMatchday = com.currentMatchday;
+      co.confedrasion = com.confedrasion;
+      co.country = com.country;
+      co.code = com.code;
+    });
+
+  }
   void get_competitions() {
     ApiProvider().competitions().then((value) {
       value.body.forEach(
@@ -102,6 +118,20 @@ class NewsController extends GetxController {
       update();
     });
   }
+  void get_news_with_tag(String tag) {
+    ApiProvider().news_with_tag(tag).then((value) {
+      news.clear();
+      value.body.forEach(
+            (element) {
+          news.add(News.fromJson(element));
+        },
+      );
+      show_loading(false);
+      update();
+      heigth(140);
+      update();
+    });
+  }
 }
 
 
@@ -110,6 +140,7 @@ class MatchesController extends GetxController {
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   void get_matches(String com_id,String match_day) {
+
     ApiProvider().matches(com_id,match_day).then((value) {
       matches.clear();
       value.body.forEach(
@@ -118,9 +149,7 @@ class MatchesController extends GetxController {
         },
       );
       show_loading(false);
-      update();
       heigth(150);
-      update();
     });
   }
 }

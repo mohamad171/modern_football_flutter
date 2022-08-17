@@ -24,6 +24,10 @@ class _MainScreenState extends State<MainScreen> {
   VideosController videosController = Get.put(VideosController());
   MatchesController matchesController = Get.put(MatchesController());
   String? selected_competition_title;
+  Competition? selected_competition;
+  int? selected_index = 0;
+  String? competition_title;
+  bool is_first = true;
 
   @override
   void initState() {
@@ -34,21 +38,30 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void league_changed(int index, CarouselPageChangedReason reason) {
+    competition_title = competitions_controller.competitions[index].faName.toString();
     Competition competition = competitions_controller.competitions[index];
     newsController
         .get_news(competitions_controller.competitions[index].id.toString());
 
     matchesController.get_matches(competition.id.toString(), competition.currentMatchday.toString());
+    competitions_controller.set_selected_competition(competitions_controller.competitions[index]);
+
 
     videosController
         .get_videos(competition.id.toString());
-    selected_competition_title =
-        competition.faName.toString();
+
     videosController
         .set_competition_id(competition.id);
     videosController.set_competition_title(
         competition.faName);
+
+    setState(() {
+      selected_competition_title =competition_title;
+      selected_competition = competitions_controller.competitions[index];
+
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -119,20 +132,29 @@ class _MainScreenState extends State<MainScreen> {
                   return CircularProgressIndicator(
                       color: Color(AppColors.primary));
                 } else {
-                  newsController.get_news(
-                      competitions_controller.competitions[0].id.toString());
+                  if(is_first){
+                    newsController.get_news(
+                        competitions_controller.competitions[0].id.toString());
 
-                  videosController.get_videos(
-                      competitions_controller.competitions[0].id.toString());
+                    videosController.get_videos(
+                        competitions_controller.competitions[0].id.toString());
 
-                  matchesController.get_matches(
-                      competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString());
+                    matchesController.get_matches(
+                        competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString());
+                    is_first = false;
+
+
+                    // competitions_controller.set_selected_competition(competitions_controller.competitions[0]);
+
+
+                  }
 
                   return CarouselSlider.builder(
                     itemCount: competitions_controller.competitions.length,
                     itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) =>
                         LeaguesItem(
+                            competitions_controller.competitions[itemIndex].image!,
                       competitions_controller.competitions[itemIndex].faName
                           .toString(),
                       competitions_controller.competitions[itemIndex].foundYear
@@ -174,8 +196,8 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 20,
             ),
-            MoreWidget("بازی های هفته جاری", "/matches",
-                "برنامه بازی های ${selected_competition_title}"),
+            Obx(() => MoreWidget("بازی های هفته جاری", "/matches",
+                "برنامه بازی های ${competitions_controller.competition.value.faName}",competitions_controller.competition.value)),
             SizedBox(
               height: 10,
             ),
@@ -215,7 +237,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 20,
             ),
             MoreWidget("جدیدترین اخبار لیگ", "/news",
-                "اخبار ${selected_competition_title}"),
+                "اخبار ${selected_competition_title}",selected_competition),
             SizedBox(
               height: 10,
             ),
@@ -265,7 +287,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 20,
             ),
             MoreWidget("جدیدترین ویدئو ها", "/videos",
-                "ویدئوهای ${selected_competition_title}"),
+                "ویدئوهای ${selected_competition_title}",selected_competition),
             SizedBox(
               height: 10,
             ),

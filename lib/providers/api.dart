@@ -57,7 +57,17 @@ class ApiProvider extends GetConnect {
 
   Future<Response> news(String com_id) async {
     var response =
-        await get(base_url + "News?com_id=${com_id}", headers: header);
+        await get(base_url + "News?competition=${com_id}", headers: header);
+    if (response.isOk) {
+      return response;
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
+
+  Future<Response> news_with_tag(String tag) async {
+    var response =
+    await get(base_url + "News?tags__name=${tag}", headers: header);
     if (response.isOk) {
       return response;
     } else {
@@ -67,7 +77,7 @@ class ApiProvider extends GetConnect {
 
   Future<Response> videos(String com_id) async {
     var response =
-        await get(base_url + "Videos?com_id=${com_id}", headers: header);
+        await get(base_url + "Videos?competition=${com_id}", headers: header);
     if (response.isOk) {
       return response;
     } else {

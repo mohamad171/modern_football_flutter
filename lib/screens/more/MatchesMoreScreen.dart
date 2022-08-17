@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/controllers/auth_api_controller.dart';
+import 'package:modern_football/models/response_models/competition.dart';
 import 'package:modern_football/widgets.dart';
 
 import '../../assets/values/AppColors.dart';
 
 class MatchesMoreScreen extends StatefulWidget {
   const MatchesMoreScreen({Key? key}) : super(key: key);
+
 
   @override
   State<MatchesMoreScreen> createState() => _MatchesMoreScreenState();
@@ -16,11 +19,39 @@ class MatchesMoreScreen extends StatefulWidget {
 class _MatchesMoreScreenState extends State<MatchesMoreScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late Competition competition;
+  MatchesController matchesController = Get.put(MatchesController(),tag: "controller_from_more");
+
+  void getCurrentMatches(int matchday){
+    matchesController.get_matches(competition.id.toString(), matchday.toString());
+  }
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    competition = Get.arguments["competition"];
+    _tabController.addListener(() {
+      print(_tabController.index);
+      if(_tabController.index == 1){
+        getCurrentMatches(competition.currentMatchday!);
+      }else if(_tabController.index == 0){
+        getCurrentMatches(competition.currentMatchday!+1);
+      }
+      else if(_tabController.index == 2){
+        if(competition.currentMatchday!>1){
+          getCurrentMatches(competition.currentMatchday!-1);
+        }
+
+      }
+    });
+    getCurrentMatches(competition.currentMatchday!);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Get.delete<MatchesController>();
+    super.dispose();
   }
 
   @override
@@ -127,25 +158,72 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    child: ListView(children: [
-                      // MatcheItem(),
-
-                    ]),
+                    child: Obx((){
+                      return ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: matchesController.matches.length,
+                        itemBuilder: (context, itemIndex) {
+                          return MatcheItem(
+                              itemIndex,
+                              matchesController.matches[itemIndex].homeTeam!,
+                              matchesController.matches[itemIndex].awayTeam!,
+                              matchesController.matches[itemIndex].homeTeamScore!,
+                              matchesController.matches[itemIndex].awayTeamScore!,
+                              matchesController.matches[itemIndex].matchDay!,
+                              matchesController.matches[itemIndex].matchDate!,
+                              matchesController.matches[itemIndex].matchtime!,
+                              matchesController.matches[itemIndex].j_matchdate!
+                          );
+                        },
+                      );
+                    }),
                   ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
-                      child: ListView(children: [
-                        // MatcheItem(),
+                      child: Obx((){
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: matchesController.matches.length,
+                          itemBuilder: (context, itemIndex) {
+                            return MatcheItem(
+                                itemIndex,
+                                matchesController.matches[itemIndex].homeTeam!,
+                                matchesController.matches[itemIndex].awayTeam!,
+                                matchesController.matches[itemIndex].homeTeamScore!,
+                                matchesController.matches[itemIndex].awayTeamScore!,
+                                matchesController.matches[itemIndex].matchDay!,
+                                matchesController.matches[itemIndex].matchDate!,
+                                matchesController.matches[itemIndex].matchtime!,
+                                matchesController.matches[itemIndex].j_matchdate!
+                            );
+                          },
+                        );
+                      })
 
-                      ])),
+                  ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
-                      child: ListView(children: [
-                        // MatcheItem(),
-
-                      ]))
+                      child: Obx((){
+                            return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: matchesController.matches.length,
+                            itemBuilder: (context, itemIndex) {
+                            return MatcheItem(
+                            itemIndex,
+                            matchesController.matches[itemIndex].homeTeam!,
+                            matchesController.matches[itemIndex].awayTeam!,
+                            matchesController.matches[itemIndex].homeTeamScore!,
+                            matchesController.matches[itemIndex].awayTeamScore!,
+                            matchesController.matches[itemIndex].matchDay!,
+                            matchesController.matches[itemIndex].matchDate!,
+                            matchesController.matches[itemIndex].matchtime!,
+                            matchesController.matches[itemIndex].j_matchdate!
+                            );
+                            },
+                            );
+                            }))
                 ],
                 controller: _tabController,
               ),

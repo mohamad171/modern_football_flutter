@@ -28,7 +28,7 @@ class Video {
     id = json['id'];
     timeago = json['timeago'];
     title = json['title'];
-    image = "https://modern-football.ir" + json['image'];
+    image = json['image'];
     duration = json['duration'];
     video = json['video'];
     createdAt = json['created_at'];

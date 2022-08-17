@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/models/response_models/competition.dart';
 import 'package:modern_football/models/response_models/team.dart';
 import 'package:modern_football/models/response_models/video.dart';
 import '../assets/values/AppColors.dart';
@@ -15,13 +16,14 @@ List<BoxShadow> box_shadow = [
 ];
 
 class LeaguesItem extends StatelessWidget {
+  String image;
   String title;
   String founded_date;
   String country;
   String confedrasion;
   String teams_count;
 
-  LeaguesItem(this.title, this.founded_date, this.country, this.confedrasion,
+  LeaguesItem(this.image,this.title, this.founded_date, this.country, this.confedrasion,
       this.teams_count,
       {Key? key})
       : super(key: key);
@@ -88,7 +90,7 @@ class LeaguesItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: SizedBox.fromSize(
               size: Size.fromRadius(60),
-              child: Image.asset('lib/assets/images/premier.png',
+              child: Image.network(this.image,
                   fit: BoxFit.cover),
             ),
           ),
@@ -137,7 +139,8 @@ class MoreWidget extends StatelessWidget {
   String text;
   String screen_path;
   String competition_title;
-  MoreWidget(this.text, this.screen_path, this.competition_title, {Key? key})
+  Competition? competition;
+  MoreWidget(this.text, this.screen_path, this.competition_title,this.competition, {Key? key})
       : super(key: key);
 
   @override
@@ -161,7 +164,7 @@ class MoreWidget extends StatelessWidget {
               ],
             ),
             onTap: () => Get.toNamed(this.screen_path,
-                arguments: {"title": competition_title}),
+                arguments: {"title": this.competition_title,"competition":competition}),
           ),
         ),
         Container(

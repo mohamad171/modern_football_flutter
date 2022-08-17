@@ -27,7 +27,7 @@ class News {
     title = json['title'];
     description = json['description'];
     shortdescription = json['shortdescription'];
-    image = "https://modern-football.ir" + json['image'];
+    image = json['image'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     source = json['source'];
