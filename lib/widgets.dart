@@ -506,8 +506,9 @@ class PreMatchItem extends StatelessWidget {
   int home_value;
   int away_value;
   String title_value;
+  bool big_better;
 
-  PreMatchItem(this.home_value, this.title_value, this.away_value, {Key? key})
+  PreMatchItem(this.home_value, this.title_value, this.away_value,this.big_better, {Key? key})
       : super(key: key);
 
   @override
@@ -522,6 +523,7 @@ class PreMatchItem extends StatelessWidget {
           ),
           boxShadow: box_shadow),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        (big_better == true) ?
         (home_value > away_value)
             ? CirclePrematchItem(
                 true,
@@ -532,11 +534,26 @@ class PreMatchItem extends StatelessWidget {
                 false,
                 (title_value == "احتمال برد"
                     ? home_value.toString() + "%"
-                    : home_value.toString())),
+                    : home_value.toString()))
+        :
+        (home_value < away_value)
+        ? CirclePrematchItem(
+        true,
+        (title_value == "احتمال برد"
+            ? home_value.toString() + "%"
+            : home_value.toString()))
+        : CirclePrematchItem(
+        false,
+        (title_value == "احتمال برد"
+            ? home_value.toString() + "%"
+            : home_value.toString())),
+
         Text(
           title_value,
           style: TextStyle(fontSize: 18),
         ),
+
+        (big_better == true) ?
         (home_value < away_value)
             ? CirclePrematchItem(
                 true,
@@ -548,6 +565,18 @@ class PreMatchItem extends StatelessWidget {
                 (title_value == "احتمال برد"
                     ? away_value.toString() + "%"
                     : away_value.toString()))
+            :
+        (home_value > away_value)
+            ? CirclePrematchItem(
+            true,
+            (title_value == "احتمال برد"
+                ? away_value.toString() + "%"
+                : away_value.toString()))
+            : CirclePrematchItem(
+            false,
+            (title_value == "احتمال برد"
+                ? away_value.toString() + "%"
+                : away_value.toString()))
       ]),
     );
   }

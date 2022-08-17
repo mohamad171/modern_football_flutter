@@ -1,3 +1,4 @@
+import 'package:modern_football/models/response_models/standing.dart';
 import 'package:modern_football/models/response_models/team.dart';
 
 class Match {
@@ -11,6 +12,9 @@ class Match {
   String? matchtime;
   int? matchDay;
 
+  Standing? home_standing;
+  Standing? away_standing;
+
   Match(
       {this.id,
         this.homeTeam,
@@ -20,7 +24,8 @@ class Match {
         this.matchDate,
         this.matchDay,
         this.matchtime,
-        this.j_matchdate});
+        this.j_matchdate,
+      this.home_standing,this.away_standing});
 
   Match.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,6 +34,12 @@ class Match {
         : null;
     awayTeam = json['away_team'] != null
         ? new Team.fromJson(json['away_team'])
+        : null;
+    home_standing = json['home_standing'] != null
+        ? new Standing.fromJson(json['home_standing'])
+        : null;
+    away_standing = json['away_standing'] != null
+        ? new Standing.fromJson(json['away_standing'])
         : null;
     homeTeamScore = json['home_team_score'];
     awayTeamScore = json['away_team_score'];
@@ -46,6 +57,12 @@ class Match {
     }
     if (this.awayTeam != null) {
       data['away_team'] = this.awayTeam!.toJson();
+    }
+    if (this.home_standing != null) {
+      data['home_standing'] = this.home_standing!.toJson();
+    }
+    if (this.away_standing != null) {
+      data['away_standing'] = this.away_standing!.toJson();
     }
     data['home_team_score'] = this.homeTeamScore;
     data['away_team_score'] = this.awayTeamScore;

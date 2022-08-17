@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
@@ -301,16 +303,17 @@ class _MatchesDetailsState extends State<MatchesDetails>
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
+                  child:
+                  ListView(
                     children: [
-                      PreMatchItem(1, "رتبه", 6),
-                      PreMatchItem(18, "برد", 12),
-                      PreMatchItem(5, "مساوی", 9),
-                      PreMatchItem(0, "باخت", 10),
-                      PreMatchItem(58, "گل زده", 23),
-                      PreMatchItem(12, "گل خورده", 32),
-                      PreMatchItem(65, "امتیاز", 35),
-                      PreMatchItem(90, "احتمال برد", 10),
+                      PreMatchItem(match.away_standing!.position!, "رتبه", match.home_standing!.position!,false),
+                      PreMatchItem(match.away_standing!.won!, "برد", match.home_standing!.won!,true),
+                      PreMatchItem(match.away_standing!.drawn!, "مساوی", match.home_standing!.drawn!,true),
+                      PreMatchItem(match.away_standing!.lost!, "باخت", match.home_standing!.lost!,false),
+                      PreMatchItem(match.away_standing!.goalsFor!, "گل زده", match.home_standing!.goalsFor!,true),
+                      PreMatchItem(match.away_standing!.goalsAgainst!, "گل خورده", match.home_standing!.goalsAgainst!,false),
+                      PreMatchItem(match.away_standing!.points!, "امتیاز", match.home_standing!.points!,true),
+                      // PreMatchItem(90, "احتمال برد", 10,true),
                     ],
                   ),
                 )
