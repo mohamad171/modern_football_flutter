@@ -28,7 +28,7 @@ class ModerFootballApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Modern Football',
+        title: 'مدرن فوتبال',
         theme: ThemeData(fontFamily: 'IranSans'),
         initialRoute: '/',
         routes: {
