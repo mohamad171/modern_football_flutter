@@ -2,7 +2,7 @@
     package="com.example.modern_football">
    <application
         android:label="modern_football"
-        android:name="${applicationName}"
+        android:name="مدرن فوتبال"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
