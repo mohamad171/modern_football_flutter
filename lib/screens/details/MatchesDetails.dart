@@ -124,16 +124,20 @@ class _MatchesDetailsState extends State<MatchesDetails>
                   Text(
                     "${match.homeTeam!.faName}",
                     style: TextStyle(fontWeight: FontWeight.bold),
-                  )
+                  ),
+
+
                 ],
               ),
+              Text("${(match.homeTeamScore! >= 0) ? match.homeTeamScore! : ''}",style: TextStyle(fontSize: 20),),
+
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:  [
-                      const Icon(Icons.calendar_month),
+
                       const SizedBox(
                         width: 5,
                       ),
@@ -162,6 +166,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                   )
                 ],
               ),
+              Text("${(match.awayTeamScore! >= 0) ? match.awayTeamScore! : ''}",style: TextStyle(fontSize: 20),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

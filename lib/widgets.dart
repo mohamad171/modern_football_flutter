@@ -34,7 +34,7 @@ class LeaguesItem extends StatelessWidget {
       margin: EdgeInsets.only(left: 10, bottom: 10),
       padding: EdgeInsets.all(10),
       width: 350,
-      height: 160,
+      height: 190,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
@@ -104,7 +104,8 @@ class MainButtonsItem extends StatelessWidget {
   String image_path;
   String text;
   String destination_path;
-  MainButtonsItem(this.image_path, this.text, this.destination_path, {Key? key})
+  int? competition_id;
+  MainButtonsItem(this.image_path, this.text, this.destination_path, {Key? key,this.competition_id})
       : super(key: key);
 
   @override
@@ -130,7 +131,7 @@ class MainButtonsItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => Get.toNamed(destination_path),
+      onTap: () => Get.toNamed(destination_path,arguments: {"competition_id":competition_id}),
     );
   }
 }
@@ -138,9 +139,8 @@ class MainButtonsItem extends StatelessWidget {
 class MoreWidget extends StatelessWidget {
   String text;
   String screen_path;
-  String competition_title;
-  Competition? competition;
-  MoreWidget(this.text, this.screen_path, this.competition_title,this.competition, {Key? key})
+
+  MoreWidget(this.text, this.screen_path, {Key? key})
       : super(key: key);
 
   @override
@@ -163,8 +163,7 @@ class MoreWidget extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () => Get.toNamed(this.screen_path,
-                arguments: {"title": this.competition_title,"competition":competition}),
+            onTap: () => Get.toNamed(this.screen_path),
           ),
         ),
         Container(
@@ -195,8 +194,9 @@ class MatcheItem extends StatelessWidget {
   String matchDate;
   String matchtime;
   String j_matchdate;
+  bool match_details;
 
-  MatcheItem(this.index,this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate,this.matchtime,this.j_matchdate);
+  MatcheItem(this.index,this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate,this.matchtime,this.j_matchdate,this.match_details);
 
   @override
   Widget build(BuildContext context) {
@@ -238,13 +238,13 @@ class MatcheItem extends StatelessWidget {
                   )
                 ],
               ),
+              Text("${(homeTeamScore >= 0) ? homeTeamScore : ''}",style: TextStyle(fontSize: 20),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children:  [
-                      const Icon(Icons.calendar_month),
                       const SizedBox(
                         width: 5,
                       ),
@@ -273,6 +273,7 @@ class MatcheItem extends StatelessWidget {
                   )
                 ],
               ),
+              Text("${(awayTeamScore >= 0) ? awayTeamScore : ''}",style: TextStyle(fontSize: 20),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -297,7 +298,26 @@ class MatcheItem extends StatelessWidget {
             ],
           ),
         ),
-        onTap: () => Get.toNamed("/matches-details",arguments: {"index": this.index}));
+        onTap: (){
+          if(match_details){
+            Get.toNamed("/matches-details",arguments: {"index": this.index});
+          }else{
+            Get.snackbar('اطلاع', 'جزئیات فقط برای هفته جاری امکان پذیر میباشد.',
+                snackPosition: SnackPosition.BOTTOM,
+                maxWidth: double.infinity - 30,
+                titleText: const Text(
+                  "اطلاع",
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+                messageText: const Text(
+                  "جزئیات فقط برای هفته جاری امکان پذیر میباشد.",
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ));
+          }
+
+        });
   }
 }
 

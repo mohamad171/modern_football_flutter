@@ -16,6 +16,7 @@ class VideosMoreScreen extends StatefulWidget {
 
 class _VideosMoreScreenState extends State<VideosMoreScreen> {
   VideosController videosController = Get.find();
+  CompetitionsController competitionsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
                     onTap: () => Get.back(),
                   ),
                   Obx(() => Text(
-                        "${videosController.competition_title}",
+                    "ویدئوهای ${competitionsController.competition.value.faName}",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

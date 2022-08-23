@@ -139,9 +139,11 @@ class MatchesController extends GetxController {
   final matches = <matchmodel.Match>[].obs;
   var show_loading = true.obs;
   var heigth = 40.0.obs;
-  void get_matches(String com_id,String match_day) {
-
+  void get_matches(String com_id,String match_day,bool clear) {
+    if(clear)
+      matches.clear();
     ApiProvider().matches(com_id,match_day).then((value) {
+      if(!clear)
       matches.clear();
       value.body.forEach(
             (element) {

@@ -16,6 +16,7 @@ class NewsMoreScreen extends StatefulWidget {
 
 class _NewsMoreScreenState extends State<NewsMoreScreen> {
   NewsController newsController = Get.find();
+  CompetitionsController competitionsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,7 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
                     onTap: () => Get.back(),
                   ),
                   Text(
-                    "${Get.arguments["title"]}",
+                    "اخبار ${competitionsController.competition.value.faName}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -19,17 +19,17 @@ class MatchesMoreScreen extends StatefulWidget {
 class _MatchesMoreScreenState extends State<MatchesMoreScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  late Competition competition;
+  CompetitionsController competitionsController = Get.find();
   MatchesController matchesController = Get.put(MatchesController(),tag: "controller_from_more");
-
+  late Competition competition;
   void getCurrentMatches(int matchday){
-    matchesController.get_matches(competition.id.toString(), matchday.toString());
+    matchesController.get_matches(competition.id.toString(), matchday.toString(),true);
   }
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
-    competition = Get.arguments["competition"];
+    competition = competitionsController.competition.value;
     _tabController.addListener(() {
       print(_tabController.index);
       if(_tabController.index == 1){
@@ -89,7 +89,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                     onTap: () => Get.back(),
                   ),
                   Text(
-                    "${Get.arguments["title"]}",
+                    "برنامه بازی های ${competition.faName}",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -172,7 +172,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                               matchesController.matches[itemIndex].matchDay!,
                               matchesController.matches[itemIndex].matchDate!,
                               matchesController.matches[itemIndex].matchtime!,
-                              matchesController.matches[itemIndex].j_matchdate!
+                              matchesController.matches[itemIndex].j_matchdate!,
+                            false
                           );
                         },
                       );
@@ -195,7 +196,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                                 matchesController.matches[itemIndex].matchDay!,
                                 matchesController.matches[itemIndex].matchDate!,
                                 matchesController.matches[itemIndex].matchtime!,
-                                matchesController.matches[itemIndex].j_matchdate!
+                                matchesController.matches[itemIndex].j_matchdate!,
+                              true
                             );
                           },
                         );
@@ -219,7 +221,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                             matchesController.matches[itemIndex].matchDay!,
                             matchesController.matches[itemIndex].matchDate!,
                             matchesController.matches[itemIndex].matchtime!,
-                            matchesController.matches[itemIndex].j_matchdate!
+                            matchesController.matches[itemIndex].j_matchdate!,
+                              false
                             );
                             },
                             );

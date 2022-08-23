@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     newsController
         .get_news(competitions_controller.competitions[index].id.toString());
 
-    matchesController.get_matches(competition.id.toString(), competition.currentMatchday.toString());
+    matchesController.get_matches(competition.id.toString(), competition.currentMatchday.toString(),false);
     competitions_controller.set_selected_competition(competitions_controller.competitions[index]);
 
 
@@ -140,7 +140,7 @@ class _MainScreenState extends State<MainScreen> {
                         competitions_controller.competitions[0].id.toString());
 
                     matchesController.get_matches(
-                        competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString());
+                        competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString(),false);
                     is_first = false;
 
 
@@ -188,7 +188,7 @@ class _MainScreenState extends State<MainScreen> {
                 MainButtonsItem("lib/assets/images/football_icon.png",
                     "برترین گلزنان", "/main"),
                 MainButtonsItem(
-                    "lib/assets/images/ranking.png", "جدول لیگ", "/main"),
+                    "lib/assets/images/ranking.png", "جدول لیگ", "/competition-standing",competition_id: competitions_controller.competition.value.id,),
                 MainButtonsItem("lib/assets/images/soccer_ic.png",
                     "برنامه بازی ها", "/matches")
               ],
@@ -196,8 +196,7 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 20,
             ),
-            Obx(() => MoreWidget("بازی های هفته جاری", "/matches",
-                "برنامه بازی های ${competitions_controller.competition.value.faName}",competitions_controller.competition.value)),
+            MoreWidget("بازی های هفته جاری", "/matches",),
             SizedBox(
               height: 10,
             ),
@@ -220,7 +219,8 @@ class _MainScreenState extends State<MainScreen> {
                             matchesController.matches[itemIndex].matchDay!,
                             matchesController.matches[itemIndex].matchDate!,
                             matchesController.matches[itemIndex].matchtime!,
-                            matchesController.matches[itemIndex].j_matchdate!
+                            matchesController.matches[itemIndex].j_matchdate!,
+                          true
                         ),
                     options: CarouselOptions(
                       height: 150.0,
@@ -236,8 +236,7 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 20,
             ),
-            MoreWidget("جدیدترین اخبار لیگ", "/news",
-                "اخبار ${selected_competition_title}",selected_competition),
+            MoreWidget("جدیدترین اخبار لیگ", "/news"),
             SizedBox(
               height: 10,
             ),
@@ -286,8 +285,7 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 20,
             ),
-            MoreWidget("جدیدترین ویدئو ها", "/videos",
-                "ویدئوهای ${selected_competition_title}",selected_competition),
+            MoreWidget("جدیدترین ویدئو ها", "/videos"),
             SizedBox(
               height: 10,
             ),
