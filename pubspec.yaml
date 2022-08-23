@@ -41,6 +41,7 @@ dependencies:
   get_storage: ^2.0.3
   flutter_html: ^2.2.1
   flutter_launcher_icons: ^0.10.0
+  lottie: ^1.4.1
 
 flutter_icons:
   android: "ic_launcher"
