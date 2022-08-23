@@ -40,10 +40,22 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   flutter_html: ^2.2.1
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/images/logo_mf.png"
+  web:
+    generate: true
+    image_path: "assets/images/logo_mf.png"
+    background_color: "#43A047"
+    theme_color: "#43A047"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -81,6 +93,8 @@ flutter:
     - lib/assets/images/m_ch.jpg
     - lib/assets/images/logo.png
     - lib/assets/images/empty.png
+    - lib/assets/images/logo_mf.png
+    - lib/assets/images/logo_mf_zero_alpha.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
