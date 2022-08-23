@@ -85,7 +85,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              height: MediaQuery.of(context).size.height / 1.2,
+              height: MediaQuery.of(context).size.height / 1.25,
               width: MediaQuery.of(context).size.width - 40,
               decoration: BoxDecoration(
                 color: Colors.white,

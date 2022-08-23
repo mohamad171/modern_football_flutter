@@ -87,10 +87,15 @@ class CompetitionsController extends GetxController {
 
   }
   void get_competitions() {
+    int counter = 0;
     ApiProvider().competitions().then((value) {
       value.body.forEach(
         (element) {
+          if(counter == 0){
+            set_selected_competition(Competition.fromJson(element));
+          }
           competitions.add(Competition.fromJson(element));
+          counter++;
         },
       );
 

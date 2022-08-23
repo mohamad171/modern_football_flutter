@@ -69,12 +69,6 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: SafeArea(
-          child: Container(
-        width: MediaQuery.of(context).size.width / 1.5,
-        color: Colors.black,
-        height: MediaQuery.of(context).size.height,
-      )),
       backgroundColor: Color(AppColors.bg_gray),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -106,6 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     onTap: () => Get.toNamed("/profile"),
                   ),
+
                   const Text(
                     "مدرن فوتبال",
                     style: TextStyle(
@@ -113,13 +108,9 @@ class _MainScreenState extends State<MainScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => _scaffoldKey.currentState?.openEndDrawer(),
-                    child: const Icon(
-                      Icons.menu,
-                      size: 30,
-                    ),
-                  )
+                  Image.asset("lib/assets/images/logo_mf.png",width: 40,height: 40),
+
+
                 ],
               ),
             ),
