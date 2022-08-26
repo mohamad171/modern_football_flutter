@@ -55,11 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     videosController.set_competition_title(
         competition.faName);
 
-    setState(() {
-      selected_competition_title =competition_title;
-      selected_competition = competitions_controller.competitions[index];
 
-    });
   }
 
 
@@ -70,6 +66,17 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color(AppColors.bg_gray),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed("/today-matches");
+        },
+        backgroundColor: Color(AppColors.primary),
+        child: Column(children: [
+          SizedBox(height: 6,),
+          Icon(Icons.today),
+          Text("امروز")
+        ],),
+      ),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -193,6 +200,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Obx(
                   () {
+                    print(matchesController.show_loading );
                 if (matchesController.show_loading == true) {
                   return CircularProgressIndicator(
                       color: Color(AppColors.primary));
@@ -233,6 +241,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Obx(() {
               if (newsController.show_loading == true) {
+                print("ok");
                 return SizedBox(
                   height: newsController.heigth.toDouble(),
                   child: CircularProgressIndicator(

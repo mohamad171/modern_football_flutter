@@ -93,6 +93,15 @@ class ApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+  Future<Response> today_matches() async {
+    var response =
+    await get(base_url + "TodayMatches", headers: header);
+    if (response.isOk) {
+      return response;
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
   Future<Response> standings(String com_id) async {
     var response =
     await get(base_url + "Standings?competition=${com_id}", headers: header);

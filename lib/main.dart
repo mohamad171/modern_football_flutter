@@ -4,6 +4,7 @@ import 'package:modern_football/screens/Intro/Intro1.dart';
 import 'package:modern_football/screens/Intro/Intro2.dart';
 import 'package:modern_football/screens/Intro/Intro3.dart';
 import 'package:modern_football/screens/MainScreen.dart';
+import 'package:modern_football/screens/TodayMatches.dart';
 import 'package:modern_football/screens/auth/CodeScreen.dart';
 import 'package:modern_football/screens/auth/PhoneScreen.dart';
 import 'package:modern_football/screens/auth/ProfileScreen.dart';
@@ -46,6 +47,7 @@ class ModerFootballApp extends StatelessWidget {
           '/news-details': (context) => NewsDetailsScreen(),
           '/matches-details': (context) => MatchesDetails(),
           '/competition-standing': (context) => LeagueStandingScreen(),
+          '/today-matches': (context) => TodayMatchesScreen(),
         });
   }
 }
