@@ -200,7 +200,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Obx(
                   () {
-                    print(matchesController.show_loading );
+
                 if (matchesController.show_loading == true) {
                   return CircularProgressIndicator(
                       color: Color(AppColors.primary));
@@ -241,7 +241,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Obx(() {
               if (newsController.show_loading == true) {
-                print("ok");
                 return SizedBox(
                   height: newsController.heigth.toDouble(),
                   child: CircularProgressIndicator(

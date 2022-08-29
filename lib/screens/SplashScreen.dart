@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modern_football/controllers/CountDownTimerController.dart';
 import '../assets/values/AppColors.dart';
 import '../controllers/auth_api_controller.dart';
@@ -12,30 +13,42 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   var profile_controller = Get.put(ProfileController());
+  late final AnimationController _controller;
 
   @override
   void dispose() {
     super.dispose();
   }
-
+void ready(){
+  GetStorage storage = GetStorage();
+  var token = storage.read("token");
+  if (token == null) {
+    var is_seen_intro = storage.read("is_seen_intro");
+    if (is_seen_intro == null) {
+      Get.offAllNamed("/intro1");
+    } else {
+      Get.offAllNamed("/phone");
+    }
+  } else {
+    profile_controller.get_profile();
+  }
+}
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      GetStorage storage = GetStorage();
-      var token = storage.read("token");
-      if (token == null) {
-        var is_seen_intro = storage.read("is_seen_intro");
-        if (is_seen_intro == null) {
-          Get.offAllNamed("/intro1");
-        } else {
-          Get.offAllNamed("/phone");
-        }
-      } else {
-        profile_controller.get_profile();
+    _controller = AnimationController(vsync: this);
+    _controller.addStatusListener((status) {
+      if(status == AnimationStatus.completed) {
+       ready();
       }
+    });
+
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
+
     });
 
     // print("ok");
@@ -62,9 +75,27 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed('/intro1');
+                      Get.snackbar('توسعه دهنده', 'محمد محمدی',
+                          snackPosition: SnackPosition.BOTTOM,
+                          maxWidth: MediaQuery.of(context).size.width - 30,
+                          titleText: const Text(
+                            "توسعه دهنده",
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ),
+                          messageText: const Text(
+                            "محمد محمدی",
+                            style: TextStyle(color: Colors.black),
+                            textAlign: TextAlign.center,
+                          ));
+
                     },
-                    child: Image.asset("lib/assets/images/logo.png"),
+                    child: Lottie.asset('lib/assets/ball.zip',controller: _controller,onLoaded: (composition) {
+
+                      _controller.duration = composition.duration;
+                      _controller.forward();
+
+                    }),
                   ),
                   const SizedBox(
                     height: 30,

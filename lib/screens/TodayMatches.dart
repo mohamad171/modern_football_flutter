@@ -28,9 +28,10 @@ class _TodayMatchesScreenState extends State<TodayMatchesScreen>
 
   @override
   void initState() {
+    super.initState();
     competition = competitionsController.competition.value;
     getTodayMatches();
-    super.initState();
+
   }
 
   @override

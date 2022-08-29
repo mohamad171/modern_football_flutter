@@ -91,7 +91,7 @@ class LeaguesItem extends StatelessWidget {
             child: SizedBox.fromSize(
               size: Size.fromRadius(60),
               child: Image.network(this.image,
-                  fit: BoxFit.cover),
+                  fit: BoxFit.fill),
             ),
           ),
         ],

@@ -110,8 +110,11 @@ class NewsController extends GetxController {
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   void get_news(String com_id) {
-    show_loading(true);
-    heigth(40);
+    // show_loading(true);
+    // heigth(40);
+    show_loading = true.obs;
+    update();
+
 
     ApiProvider().news(com_id).then((value) {
       news.clear();
@@ -151,7 +154,6 @@ class MatchesController extends GetxController {
   void get_matches(String com_id,String match_day,bool clear) {
     if(clear)
       matches.clear();
-    show_loading(true);
     ApiProvider().matches(com_id,match_day).then((value) {
       if(!clear)
       matches.clear();
@@ -165,18 +167,17 @@ class MatchesController extends GetxController {
     });
   }
   void get_today_matches(bool clear) {
-    if(clear)
-      matches.clear();
-    show_loading(true);
+    // if(clear)
+    //   matches.clear();
+    // show_loading(true);
     ApiProvider().today_matches().then((value) {
-      if(!clear)
-        matches.clear();
+
+      matches.clear();
       value.body.forEach(
             (element) {
           matches.add(matchmodel.Match.fromJson(element));
         },
       );
-      show_loading(false);
     });
   }
 }
@@ -218,7 +219,6 @@ class VideosController extends GetxController {
   }
 
   void get_videos(String com_id) {
-    show_loading(true);
     ApiProvider().videos(com_id).then((value) {
       videos.clear();
 
