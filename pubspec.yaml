@@ -97,6 +97,7 @@ flutter:
     - lib/assets/images/logo_mf.png
     - lib/assets/images/logo_mf_zero_alpha.png
     - lib/assets/ball.zip
+    - lib/assets/images/ic_player_default.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

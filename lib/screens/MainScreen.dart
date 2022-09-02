@@ -184,7 +184,7 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 MainButtonsItem("lib/assets/images/football_icon.png",
-                    "برترین گلزنان", "/main"),
+                    "برترین گلزنان", "/top-goals"),
                 MainButtonsItem(
                     "lib/assets/images/ranking.png", "جدول لیگ", "/competition-standing",competition_id: competitions_controller.competition.value.id,),
                 MainButtonsItem("lib/assets/images/soccer_ic.png",

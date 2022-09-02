@@ -674,7 +674,112 @@ class StandingHeaderItem extends StatelessWidget {
     );
   }
 }
+class TopGoalsHeaderItem extends StatelessWidget {
+  const TopGoalsHeaderItem({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+      margin: EdgeInsets.only(right: 5, left: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: box_shadow,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Row(textDirection: TextDirection.rtl, children: [
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text("#"),
+            SizedBox(
+              width: 10,
+            ),
+            Text("نام بازیکن"),
+          ]),
+          flex: 3,
+        ),
+        Expanded(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              textDirection: TextDirection.rtl,
+              children: [
+                Text("تعداد گل"),
+                Text("تعداد پنالتی"),
+              ]),
+          flex: 2,
+        )
+      ]),
+    );
+  }
+}
+class TopGoalsItem extends StatelessWidget {
+  int rank;
+  String player_name;
+  String player_image;
+  String team_name;
+  int score;
+  int penalties;
+  TopGoalsItem(this.rank, this.player_name, this.team_name, this.player_image,
+      this.penalties, this.score,
+      {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+      margin: EdgeInsets.only(right: 5, left: 5, top: 5, bottom: 5),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: box_shadow,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      child: Row(textDirection: TextDirection.rtl, children: [
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text(this.rank.toString()),
+            SizedBox(
+              width: 10,
+            ),
+            Image.network(
+              player_image,
+              width: 40,
+              height: 40,
+              errorBuilder: (context, error, stackTrace) => Image.asset("lib/assets/images/ic_player_default.png",width: 40,
+                height: 40,),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text("${player_name.toString()}\n${team_name}",textAlign: TextAlign.center,),
+
+          ]),
+          flex: 5,
+        ),
+        Expanded(
+          child: Row(textDirection: TextDirection.rtl, children: [
+            Text(
+              score.toString(),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 40,
+            ),
+            Text(
+              penalties.toString(),
+              textAlign: TextAlign.right,
+            ),
+          ]),
+          flex: 2,
+        )
+      ]),
+    );
+  }
+}
 class StandingItem extends StatelessWidget {
   int rank;
   String team_logo;

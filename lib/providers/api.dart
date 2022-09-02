@@ -111,4 +111,13 @@ class ApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+  Future<Response> top_goals(String com_id) async {
+    var response =
+    await get(base_url + "TopGoals?competition=${com_id}", headers: header);
+    if (response.isOk) {
+      return response;
+    } else {
+      return Future.error(response.statusText!);
+    }
+  }
 }

@@ -7,6 +7,7 @@ import 'package:modern_football/models/response_models/check_code_response.dart'
 import 'package:modern_football/models/response_models/news.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
 import 'package:modern_football/models/response_models/standing.dart';
+import 'package:modern_football/models/response_models/top_goals.dart';
 import 'package:modern_football/models/response_models/video.dart';
 import 'package:modern_football/providers/api.dart';
 
@@ -230,6 +231,27 @@ class VideosController extends GetxController {
       show_loading(false);
       update();
       heigth(250);
+      update();
+    });
+  }
+}
+
+class TopGoalsController extends GetxController {
+  final top_goals = <TopGoals>[].obs;
+  var show_loading = true.obs;
+  var heigth = 40.0.obs;
+
+
+  void get_top_goals(String com_id) {
+    ApiProvider().top_goals(com_id).then((value) {
+      top_goals.clear();
+
+      value.body.forEach(
+            (element) {
+              top_goals.add(TopGoals.fromJson(element));
+        },
+      );
+      show_loading(false);
       update();
     });
   }
