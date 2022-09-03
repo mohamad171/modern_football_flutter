@@ -4,8 +4,9 @@ class User {
   String? firstName;
   String? lastName;
   String? email;
+  String? profile_image;
 
-  User({this.id, this.username, this.firstName, this.lastName, this.email});
+  User({this.id, this.username, this.firstName, this.lastName, this.email,this.profile_image});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -13,6 +14,7 @@ class User {
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];
+    profile_image = json['profile_image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +24,7 @@ class User {
     data['first_name'] = this.firstName;
     data['last_name'] = this.lastName;
     data['email'] = this.email;
+    data['profile_image'] = this.profile_image;
     return data;
   }
 }
