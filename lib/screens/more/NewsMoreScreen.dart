@@ -17,13 +17,18 @@ class NewsMoreScreen extends StatefulWidget {
 class _NewsMoreScreenState extends State<NewsMoreScreen> {
   NewsController newsController = Get.put(NewsController());
   CompetitionsController competitionsController = Get.find();
-  void get_news(){
-    newsController.get_news(competitionsController.competition.value.id.toString(), true);
+  void get_news(bool clean){
+    newsController.get_news(competitionsController.competition.value.id.toString(), clean);
   }
   @override
   void initState() {
-    get_news();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      get_news(true);
+    });
+
+
+
   }
 
   @override
@@ -113,12 +118,15 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
                   : ListView.builder(
                 itemCount: newsController.news.length,
                 itemBuilder: (context, index) {
-
-                  if(index >= newsController.news.length-1){
-                    newsController.add_page_number();
-                    get_news();
-                    print("Get new page");
+                  if(newsController.news.length > 0){
+                    if(index >= newsController.news.length-1){
+                      Future.delayed(Duration.zero,(){
+                        newsController.add_page_number();
+                        get_news(false);
+                      });
+                    }
                   }
+
                   return NewsItem(newsController.news[index], index);
 
                 },

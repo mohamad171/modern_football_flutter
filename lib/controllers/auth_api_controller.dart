@@ -121,6 +121,9 @@ class NewsController extends GetxController {
     show_loading = true.obs;
     update();
     print(page_number);
+    for(News n in news){
+      print(n.id);
+    }
 
 
 
@@ -133,7 +136,10 @@ class NewsController extends GetxController {
 
       value.body["results"].forEach(
         (element) {
-          news.add(News.fromJson(element));
+          var contains = news.where((p0) => p0.id == News.fromJson(element).id);
+          if(contains.length == 0){
+            news.add(News.fromJson(element));
+          }
         },
       );
       show_loading(false);
@@ -236,7 +242,11 @@ class VideosController extends GetxController {
 
       value.body["results"].forEach(
         (element) {
-          videos.add(Video.fromJson(element));
+          var contains = videos.where((p0) => p0.id == Video.fromJson(element).id);
+          if(contains.length == 0){
+            videos.add(Video.fromJson(element));
+          }
+
         },
       );
       show_loading(false);
