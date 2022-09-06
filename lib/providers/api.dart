@@ -76,9 +76,9 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> videos(String com_id) async {
+  Future<Response> videos(String com_id,int page_number) async {
     var response =
-        await get(base_url + "Videos?competition=${com_id}", headers: header);
+        await get(base_url + "Videos?competition=${com_id}&page=${page_number}", headers: header);
     if (response.isOk) {
       return response;
     } else {

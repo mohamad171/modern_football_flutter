@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
 
 
     videosController
-        .get_videos(competition.id.toString());
+        .get_videos(competition.id.toString(),true);
 
     videosController
         .set_competition_id(competition.id);
@@ -60,6 +60,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     Get.delete<NewsController>();
+    Get.delete<VideosController>();
     super.dispose();
   }
 
@@ -140,7 +141,7 @@ class _MainScreenState extends State<MainScreen> {
                         competitions_controller.competitions[0].id.toString(),true);
 
                     videosController.get_videos(
-                        competitions_controller.competitions[0].id.toString());
+                        competitions_controller.competitions[0].id.toString(),true);
 
                     matchesController.get_matches(
                         competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString(),false);

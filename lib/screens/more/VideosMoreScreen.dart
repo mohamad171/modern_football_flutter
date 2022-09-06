@@ -15,8 +15,25 @@ class VideosMoreScreen extends StatefulWidget {
 }
 
 class _VideosMoreScreenState extends State<VideosMoreScreen> {
-  VideosController videosController = Get.find();
+  VideosController videosController = Get.put(VideosController());
   CompetitionsController competitionsController = Get.find();
+
+  void get_videos(bool clean){
+    videosController.get_videos(competitionsController.competition.value.id.toString(), clean);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      get_videos(true);
+    });
+  }
+  @override
+  void dispose() {
+    Get.delete<VideosController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,30 +95,39 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
             SizedBox(
               height: 20,
             ),
-            SizedBox(
+            Obx(() => SizedBox(
               height: MediaQuery.of(context).size.height / 1.15,
               child: (videosController.videos.length > 0)
                   ? GridView.count(
-                      crossAxisCount: 2,
-                      children: List.generate(videosController.videos.length,
-                          (index) {
-                        return VideoItem(videosController.videos[index], index);
-                      }),
-                    )
+                crossAxisCount: 2,
+                children: List.generate(videosController.videos.length,
+                        (index) {
+                      if(videosController.videos.length > 0){
+                        if(index >= videosController.videos.length-1){
+                          Future.delayed(Duration.zero,(){
+                            videosController.add_page_number();
+                            get_videos(false);
+                          });
+                        }
+
+                      }
+                      return VideoItem(videosController.videos[index], index);
+                    }),
+              )
                   : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Image.asset(
-                            "lib/assets/images/empty.png",
-                            width: 50,
-                            height: 50,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(".ویدئویی برای نمایش وجود ندارد")
-                        ]),
-            ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "lib/assets/images/empty.png",
+                      width: 50,
+                      height: 50,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(".ویدئویی برای نمایش وجود ندارد")
+                  ]),
+            )),
             SizedBox(
               height: 80,
             )

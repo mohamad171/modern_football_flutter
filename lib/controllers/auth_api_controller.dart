@@ -115,23 +115,14 @@ class NewsController extends GetxController {
   void add_page_number(){
     page_number+=1;
     update();
-    print("update");
   }
   void get_news(String com_id,bool clear) {
     show_loading = true.obs;
     update();
-    print(page_number);
-    for(News n in news){
-      print(n.id);
-    }
-
-
-
     ApiProvider().news(com_id,page_number.toInt()).then((value) {
       if(clear){
         news.clear();
       }
-      print(page_number);
 
 
       value.body["results"].forEach(
@@ -226,6 +217,12 @@ class VideosController extends GetxController {
   var competition_id = -1.obs;
   var competition_title = "".obs;
   var heigth = 40.0.obs;
+  var page_number = 1.obs;
+
+  void add_page_number(){
+    page_number+=1;
+    update();
+  }
   void set_competition_id(competition_id) {
     competition_id = competition_id;
     update();
@@ -236,9 +233,12 @@ class VideosController extends GetxController {
     update();
   }
 
-  void get_videos(String com_id) {
-    ApiProvider().videos(com_id).then((value) {
-      videos.clear();
+  void get_videos(String com_id,bool clear) {
+    ApiProvider().videos(com_id,page_number.toInt()).then((value) {
+      if(clear){
+        videos.clear();
+      }
+
 
       value.body["results"].forEach(
         (element) {
