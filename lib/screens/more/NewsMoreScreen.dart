@@ -15,8 +15,22 @@ class NewsMoreScreen extends StatefulWidget {
 }
 
 class _NewsMoreScreenState extends State<NewsMoreScreen> {
-  NewsController newsController = Get.find();
+  NewsController newsController = Get.put(NewsController());
   CompetitionsController competitionsController = Get.find();
+  void get_news(){
+    newsController.get_news(competitionsController.competition.value.id.toString(), true);
+  }
+  @override
+  void initState() {
+    get_news();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<NewsController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,30 +93,37 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
             SizedBox(
               height: 20,
             ),
-            SizedBox(
+            Obx(() => SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.15,
               child: (newsController.news.length <= 0)
                   ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Image.asset(
-                            "lib/assets/images/empty.png",
-                            width: 50,
-                            height: 50,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(".اخباری برای نمایش وجود ندارد")
-                        ])
-                  : ListView.builder(
-                      itemCount: newsController.news.length,
-                      itemBuilder: (context, index) {
-                        return NewsItem(newsController.news[index], index);
-                      },
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "lib/assets/images/empty.png",
+                      width: 50,
+                      height: 50,
                     ),
-            )
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(".اخباری برای نمایش وجود ندارد")
+                  ])
+                  : ListView.builder(
+                itemCount: newsController.news.length,
+                itemBuilder: (context, index) {
+
+                  if(index >= newsController.news.length-1){
+                    newsController.add_page_number();
+                    get_news();
+                    print("Get new page");
+                  }
+                  return NewsItem(newsController.news[index], index);
+
+                },
+              ),
+            ))
           ],
         ),
       )),

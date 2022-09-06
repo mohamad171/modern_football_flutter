@@ -110,17 +110,28 @@ class NewsController extends GetxController {
   final news = <News>[].obs;
   var show_loading = true.obs;
   var heigth = 40.0.obs;
-  void get_news(String com_id) {
-    // show_loading(true);
-    // heigth(40);
+  var page_number = 1.obs;
+
+  void add_page_number(){
+    page_number+=1;
+    update();
+    print("update");
+  }
+  void get_news(String com_id,bool clear) {
     show_loading = true.obs;
     update();
+    print(page_number);
 
 
-    ApiProvider().news(com_id).then((value) {
-      news.clear();
 
-      value.body.forEach(
+    ApiProvider().news(com_id,page_number.toInt()).then((value) {
+      if(clear){
+        news.clear();
+      }
+      print(page_number);
+
+
+      value.body["results"].forEach(
         (element) {
           news.add(News.fromJson(element));
         },
@@ -134,7 +145,7 @@ class NewsController extends GetxController {
   void get_news_with_tag(String tag) {
     ApiProvider().news_with_tag(tag).then((value) {
       news.clear();
-      value.body.forEach(
+      value.body["results"].forEach(
             (element) {
           news.add(News.fromJson(element));
         },
@@ -223,7 +234,7 @@ class VideosController extends GetxController {
     ApiProvider().videos(com_id).then((value) {
       videos.clear();
 
-      value.body.forEach(
+      value.body["results"].forEach(
         (element) {
           videos.add(Video.fromJson(element));
         },

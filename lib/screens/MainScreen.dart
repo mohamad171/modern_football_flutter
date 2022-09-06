@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
     competition_title = competitions_controller.competitions[index].faName.toString();
     Competition competition = competitions_controller.competitions[index];
     newsController
-        .get_news(competitions_controller.competitions[index].id.toString());
+        .get_news(competitions_controller.competitions[index].id.toString(),true);
 
     matchesController.get_matches(competition.id.toString(), competition.currentMatchday.toString(),false);
     competitions_controller.set_selected_competition(competitions_controller.competitions[index]);
@@ -56,6 +56,11 @@ class _MainScreenState extends State<MainScreen> {
         competition.faName);
 
 
+  }
+  @override
+  void dispose() {
+    Get.delete<NewsController>();
+    super.dispose();
   }
 
 
@@ -132,7 +137,7 @@ class _MainScreenState extends State<MainScreen> {
                 } else {
                   if(is_first){
                     newsController.get_news(
-                        competitions_controller.competitions[0].id.toString());
+                        competitions_controller.competitions[0].id.toString(),true);
 
                     videosController.get_videos(
                         competitions_controller.competitions[0].id.toString());

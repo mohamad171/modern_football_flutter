@@ -55,9 +55,10 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> news(String com_id) async {
+  Future<Response> news(String com_id,int page) async {
+
     var response =
-        await get(base_url + "News?competition=${com_id}", headers: header);
+        await get(base_url + "News?competition=${com_id}&page=${page}", headers: header);
     if (response.isOk) {
       return response;
     } else {
