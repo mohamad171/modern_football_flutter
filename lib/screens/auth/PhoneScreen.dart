@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
-import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PhoneScreen extends StatefulWidget {
@@ -17,6 +16,7 @@ class PhoneScreen extends StatefulWidget {
 class _PhoneScreenState extends State<PhoneScreen> {
   var phone_controller = TextEditingController();
   var auth_controller = Get.put(AuthApiController());
+
 
   void submit_phone() {
     var phone = phone_controller.text;
@@ -242,14 +242,19 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                                 ),
                                               ],
                                             ),
-                                            child: const Center(
-                                              child: Text(
-                                                "ارسال کد تایید",
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
+                                            child: Center(
+                                              child: Obx(() {
+                                                if(auth_controller.is_loading.value)
+                                                  return CircularProgressIndicator(color: Colors.white,);
+                                                else
+                                                  return Text(
+                                                    "ارسال کد تایید",
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.white,
+                                                    ),
+                                                  );
+                                              }),
                                             ),
                                           ),
                                           onTap: () => submit_phone(),

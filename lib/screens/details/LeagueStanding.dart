@@ -123,6 +123,10 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     child:
                     Obx((){
+                      if(standingsController.show_loading.value)
+                        return Center(
+                          child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                        );
                       return  ListView.builder(
 
                         scrollDirection: Axis.vertical,
@@ -135,7 +139,7 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
                               standing.position!,
                               standing.team!.image!,
                               "${standing.team!.faName}",
-                              "${standing.recentMatch}",
+                              (standing.recentMatch != null) ? "${standing.recentMatch.toString()[standing.recentMatch!.length - 3]}${standing.recentMatch.toString()[standing.recentMatch!.length - 2]}${standing.recentMatch.toString()[standing.recentMatch!.length - 1]}" : "",
                               standing.played!,
                               standing.points!,
                               standing.goalDifference!,

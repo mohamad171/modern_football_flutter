@@ -159,6 +159,10 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: Obx((){
+                      if(matchesController.show_loading.value)
+                        return Center(
+                          child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                        );
                       return ListView.builder(
                         scrollDirection: Axis.vertical,
                         itemCount: matchesController.matches.length,
@@ -183,6 +187,10 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: Obx((){
+                        if(matchesController.show_loading.value)
+                          return Center(
+                            child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                          );
                         return ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: matchesController.matches.length,
@@ -208,6 +216,10 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: Obx((){
+                        if(matchesController.show_loading.value)
+                          return Center(
+                            child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                          );
                             return ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: matchesController.matches.length,

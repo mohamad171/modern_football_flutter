@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
-import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,15 +17,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final first_name_controller = TextEditingController();
   final last_name_controller = TextEditingController();
   final email_controller = TextEditingController();
+  ProfileController profile_controller = Get.find();
 
   @override
-  Widget build(BuildContext context) {
-    ProfileController profile_controller = Get.find();
+  void initState() {
+    super.initState();
+
     first_name_controller.text =
         profile_controller.user.value.firstName.toString();
     last_name_controller.text =
         profile_controller.user.value.lastName.toString();
     email_controller.text = profile_controller.user.value.email.toString();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: Color(AppColors.primary),
@@ -211,40 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     flex: 8,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  width: 250,
-                                  height: 40,
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                  ),
-                                  child: Expanded(
-                                    child: TextField(
-                                      style: const TextStyle(
-                                          decoration: TextDecoration.none,
-                                          color: Colors.black),
-                                      textAlign: TextAlign.center,
-                                      cursorColor: Colors.black,
-                                      decoration: const InputDecoration(
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14,
-                                        ),
-                                        contentPadding:
-                                            EdgeInsets.only(bottom: 10),
-                                        border: InputBorder.none,
-                                        hintText: "ایمیل خود را وارد کنید",
-                                      ),
-                                      controller: email_controller,
-                                    ),
-                                    flex: 8,
-                                  ),
-                                ),
+
                                 const SizedBox(
                                   height: 25,
                                 ),
@@ -276,17 +250,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                           ],
                                         ),
-                                        child: const Center(
-                                          child: Text(
-                                            "ثبت تغییرات",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                        child: Center(
+                                          child: Obx(() {
+                                            if(profile_controller.show_loading.value)
+                                              return CircularProgressIndicator(color: Colors.white,);
+                                            return Text(
+                                              "ثبت تغییرات",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                              ),
+                                            );
+                                          }),
                                         ),
                                       ),
-                                      onTap: () => Get.toNamed("/main"),
+                                      onTap: () => profile_controller.set_profile(first_name_controller.text, last_name_controller.text),
                                     ),
                                   ],
                                 ),

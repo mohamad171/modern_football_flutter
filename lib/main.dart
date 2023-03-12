@@ -30,14 +30,12 @@ class ModerFootballApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'مدرن فوتبال',
         theme: ThemeData(fontFamily: 'IranSans'),
         initialRoute: '/',
         routes: {
           '/': (context) => SplashScreen(),
-          '/intro1': (context) => Intro1(),
-          '/intro2': (context) => Intro2(),
-          '/intro3': (context) => Intro3(),
           '/phone': (context) => PhoneScreen(),
           '/code': (context) => CodeScreen(),
           '/profile': (context) => ProfileScreen(),

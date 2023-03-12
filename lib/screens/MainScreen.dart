@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import 'package:modern_football/models/response_models/competition.dart';
 import '../assets/values/AppColors.dart';
@@ -17,23 +18,31 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  CompetitionsController competitions_controller =
-      Get.put(CompetitionsController());
-
   NewsController newsController = Get.put(NewsController());
   VideosController videosController = Get.put(VideosController());
   MatchesController matchesController = Get.put(MatchesController());
+  CompetitionsController competitions_controller =
+      Get.put(CompetitionsController());
+
+
   String? selected_competition_title;
   Competition? selected_competition;
   int? selected_index = 0;
   String? competition_title;
   bool is_first = true;
+  CarouselController cc = CarouselController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       competitions_controller.get_competitions();
+
+
+
+
+
+
     });
   }
 
@@ -67,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CarouselController cc = CarouselController();
+
 
     return Scaffold(
       key: _scaffoldKey,
@@ -130,58 +139,45 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 25,
             ),
-            Obx(
-              () {
-                if (competitions_controller.show_loading == true) {
-                  return CircularProgressIndicator(
-                      color: Color(AppColors.primary));
-                } else {
-                  if(is_first){
-                    newsController.get_news(
-                        competitions_controller.competitions[0].id.toString(),true);
-
-                    videosController.get_videos(
-                        competitions_controller.competitions[0].id.toString(),true);
-
-                    matchesController.get_matches(
-                        competitions_controller.competitions[0].id.toString(),competitions_controller.competitions[0].currentMatchday.toString(),false);
-                    is_first = false;
+            Container(
+              child: Obx(
+                    () {
+                  if (competitions_controller.show_loading == true) {
+                    return CircularProgressIndicator(
+                        color: Color(AppColors.primary));
+                  } else {
 
 
-                    // competitions_controller.set_selected_competition(competitions_controller.competitions[0]);
-
-
-                  }
-
-                  return CarouselSlider.builder(
-                    itemCount: competitions_controller.competitions.length,
-                    itemBuilder: (BuildContext context, int itemIndex,
-                            int pageViewIndex) =>
-                        LeaguesItem(
+                    return CarouselSlider.builder(
+                      itemCount: competitions_controller.competitions.length,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                          LeaguesItem(
                             competitions_controller.competitions[itemIndex].image!,
-                      competitions_controller.competitions[itemIndex].faName
-                          .toString(),
-                      competitions_controller.competitions[itemIndex].foundYear
-                          .toString(),
-                      competitions_controller.competitions[itemIndex].country
-                          .toString(),
-                      competitions_controller
-                          .competitions[itemIndex].confedrasion
-                          .toString(),
-                      competitions_controller
-                          .competitions[itemIndex].numberOfTeams
-                          .toString(),
-                    ),
-                    options: CarouselOptions(
-                        enlargeCenterPage: true,
-                        height: 180.0,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 0.9,
-                        onPageChanged: league_changed),
-                    carouselController: cc,
-                  );
-                }
-              },
+                            competitions_controller.competitions[itemIndex].faName
+                                .toString(),
+                            competitions_controller.competitions[itemIndex].foundYear
+                                .toString(),
+                            competitions_controller.competitions[itemIndex].country
+                                .toString(),
+                            competitions_controller
+                                .competitions[itemIndex].confedrasion
+                                .toString(),
+                            competitions_controller
+                                .competitions[itemIndex].numberOfTeams
+                                .toString(),
+                          ),
+                      options: CarouselOptions(
+                          enlargeCenterPage: true,
+                          height: 180.0,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 0.9,
+                          onPageChanged: league_changed),
+                      carouselController: cc,
+                    );
+                  }
+                },
+              ),
             ),
             const SizedBox(
               height: 30,
@@ -207,33 +203,49 @@ class _MainScreenState extends State<MainScreen> {
             Obx(
                   () {
 
-                if (matchesController.show_loading == true) {
+                if (matchesController.show_loading.value) {
                   return CircularProgressIndicator(
                       color: Color(AppColors.primary));
                 } else {
-                  return CarouselSlider.builder(
-                    itemCount: matchesController.matches.length,
-                    itemBuilder: (BuildContext context, int itemIndex,
-                        int pageViewIndex) =>
-                        MatcheItem(
-                            itemIndex,
-                            matchesController.matches[itemIndex].homeTeam!,
-                            matchesController.matches[itemIndex].awayTeam!,
-                            matchesController.matches[itemIndex].homeTeamScore!,
-                            matchesController.matches[itemIndex].awayTeamScore!,
-                            matchesController.matches[itemIndex].matchDay!,
-                            matchesController.matches[itemIndex].matchDate!,
-                            matchesController.matches[itemIndex].matchtime!,
-                            matchesController.matches[itemIndex].j_matchdate!,
-                          true
-                        ),
-                    options: CarouselOptions(
-                      height: 150.0,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 0.9,
-                    ),
-                    carouselController: cc,
-                  );
+                  if(matchesController.matches.length > 0){
+                    return ListView.builder(
+                      itemCount: matchesController.matches.length,
+                      itemBuilder: (context, index) {
+                        return MatcheItem(
+                            index,
+                            matchesController.matches[index].homeTeam!,
+                            matchesController.matches[index].awayTeam!,
+                            matchesController.matches[index].homeTeamScore!,
+                            matchesController.matches[index].awayTeamScore!,
+                            matchesController.matches[index].matchDay!,
+                            matchesController.matches[index].matchDate!,
+                            matchesController.matches[index].matchtime!,
+                            matchesController.matches[index].j_matchdate!,
+                            true
+                        );
+                      },);
+
+                  }else{
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height / 5,
+                      child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "lib/assets/images/empty.png",
+                                width: 50,
+                                height: 50,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(".بازی برای نمایش وجود ندارد")
+                            ]),
+                      ),
+                    );
+                  }
+
                 }
               },
             ),
@@ -246,16 +258,13 @@ class _MainScreenState extends State<MainScreen> {
               height: 10,
             ),
             Obx(() {
-              if (newsController.show_loading == true) {
-                return SizedBox(
-                  height: newsController.heigth.toDouble(),
-                  child: CircularProgressIndicator(
-                      color: Color(AppColors.primary)),
-                );
+              if (newsController.show_loading.value) {
+                return CircularProgressIndicator(
+                    color: Color(AppColors.primary));
               } else {
                 if (newsController.news.length > 0) {
                   return SizedBox(
-                    height: newsController.heigth.toDouble(),
+                    height: MediaQuery.of(context).size.height / 6,
                     child: ListView.builder(
                       reverse: true,
                       scrollDirection: Axis.horizontal,
@@ -294,48 +303,48 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 10,
             ),
-            Obx((() {
-              if (newsController.show_loading == true) {
-                return SizedBox(
-                  height: videosController.heigth.toDouble(),
-                  child: CircularProgressIndicator(
-                      color: Color(AppColors.primary)),
-                );
-              } else {
-                if (videosController.videos.length > 0) {
-                  return SizedBox(
-                    height: videosController.heigth.toDouble(),
-                    child: ListView.builder(
-                      reverse: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: videosController.videos.length,
-                      itemBuilder: (context, index) {
-                        return VideoItem(videosController.videos[index], index);
-                      },
-                    ),
-                  );
+            Container(
+
+              child: Obx((() {
+                if (videosController.show_loading.value) {
+                  return CircularProgressIndicator(
+                      color: Color(AppColors.primary));
                 } else {
-                  return SizedBox(
-                    height: videosController.heigth.toDouble(),
-                    child: Center(
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "lib/assets/images/empty.png",
-                              width: 50,
-                              height: 50,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(".ویدئویی برای نمایش وجود ندارد")
-                          ]),
-                    ),
-                  );
+                  if (videosController.videos.length > 0) {
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height / 4.2,
+                      child: ListView.builder(
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: videosController.videos.length,
+                        itemBuilder: (context, index) {
+                          return VideoItem(videosController.videos[index], index);
+                        },
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: videosController.heigth.toDouble(),
+                      child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "lib/assets/images/empty.png",
+                                width: 50,
+                                height: 50,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(".ویدئویی برای نمایش وجود ندارد")
+                            ]),
+                      ),
+                    );
+                  }
                 }
-              }
-            }))
+              })),
+            )
           ],
         ),
       )),

@@ -16,12 +16,18 @@ import '../models/response_models/user.dart';
 import 'package:modern_football/models/response_models/match.dart' as matchmodel;
 
 class AuthApiController extends GetxController {
+  var is_loading = false.obs;
   void SendCode(String phone_number) {
+    is_loading(true);
     ApiProvider().send_code(phone_number).then((value) {
+      is_loading(false);
       var server_response = ServerResponse.fromJson(value.body);
       if (server_response.status == "ok") {
         Get.toNamed('/code', arguments: phone_number);
       }
+    }).onError((error, stackTrace)  {
+      ApiProvider().error_message("خطایی رخ داده با پشتیبانی تماس بگیرید.");
+    is_loading(false);
     });
   }
 
@@ -29,19 +35,7 @@ class AuthApiController extends GetxController {
     ApiProvider().check_code(phone_number, code).then((value) {
       var response = CheckCodeResponse.fromJson(value.body);
       if (response.status == "expire" || response.status == "invalid") {
-        Get.snackbar('خطا', 'کد وارد شده صحیح نمیباشد',
-            snackPosition: SnackPosition.BOTTOM,
-            maxWidth: double.infinity - 30,
-            titleText: const Text(
-              "خطا",
-              style: TextStyle(color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
-            messageText: const Text(
-              "کد وارد شده صحیح نمیباشد",
-              style: TextStyle(color: Colors.black),
-              textAlign: TextAlign.center,
-            ));
+        ApiProvider().error_message("کد وارد شده صحیح نمیباشد");
       } else {
         GetStorage storage = GetStorage();
         storage.write("token", response.token);
@@ -53,6 +47,7 @@ class AuthApiController extends GetxController {
 
 class ProfileController extends GetxController {
   final user = User().obs;
+  var show_loading = false.obs;
   void get_profile() {
     ApiProvider().profile().then((value) {
       user.update((user) {
@@ -65,6 +60,20 @@ class ProfileController extends GetxController {
 
       Get.offNamed("/main");
     });
+  }
+  void set_profile(String first_name,String last_name){
+    show_loading(true);
+    ApiProvider().set_profile(first_name, last_name).then((value){
+      show_loading(false);
+      if(value.statusCode == 200){
+        get_profile();
+        ApiProvider().success_message("پروفایل با موفقیت ویرایش شد");
+      }
+    }).onError((error, stackTrace){
+      show_loading(false);
+      ApiProvider().error_message("خطا در ویرایش پروفایل");
+    });
+    
   }
 }
 
@@ -99,6 +108,20 @@ class CompetitionsController extends GetxController {
           counter++;
         },
       );
+      var newsController = Get.find<NewsController>();
+      var videosController = Get.find<VideosController>();
+
+      var matchesController = Get.find<MatchesController>();
+      if(competitions.length > 0){
+        newsController.get_news(competitions[0].id.toString(),true);
+
+        videosController.get_videos(competitions[0].id.toString(),true);
+
+        matchesController.get_matches(competitions[0].id.toString(),competitions[0].currentMatchday.toString(),false);
+        set_selected_competition(competitions[0]);
+      }
+
+
 
       show_loading(false);
       update();
@@ -117,9 +140,10 @@ class NewsController extends GetxController {
     update();
   }
   void get_news(String com_id,bool clear) {
-    show_loading = true.obs;
+    show_loading(true);
     update();
     ApiProvider().news(com_id,page_number.toInt()).then((value) {
+      show_loading(false);
       if(clear){
         news.clear();
       }
@@ -140,6 +164,7 @@ class NewsController extends GetxController {
     });
   }
   void get_news_with_tag(String tag) {
+    show_loading(true);
     ApiProvider().news_with_tag(tag).then((value) {
       news.clear();
       value.body["results"].forEach(
@@ -161,6 +186,7 @@ class MatchesController extends GetxController {
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   void get_matches(String com_id,String match_day,bool clear) {
+    show_loading(true);
     if(clear)
       matches.clear();
     ApiProvider().matches(com_id,match_day).then((value) {
@@ -196,7 +222,9 @@ class StandingsController extends GetxController {
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   void get_standings(String com_id) {
+    show_loading(true);
     ApiProvider().standings(com_id).then((value) {
+      show_loading(false);
       standings.clear();
       value.body.forEach(
             (element) {
@@ -234,12 +262,14 @@ class VideosController extends GetxController {
   }
 
   void get_videos(String com_id,bool clear) {
+    show_loading(true);
     ApiProvider().videos(com_id,page_number.toInt()).then((value) {
+      show_loading(false);
       if(clear){
         videos.clear();
       }
 
-
+      print(value.body);
       value.body["results"].forEach(
         (element) {
           var contains = videos.where((p0) => p0.id == Video.fromJson(element).id);
@@ -264,6 +294,7 @@ class TopGoalsController extends GetxController {
 
 
   void get_top_goals(String com_id) {
+    show_loading(true);
     ApiProvider().top_goals(com_id).then((value) {
       top_goals.clear();
 

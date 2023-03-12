@@ -124,6 +124,11 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     child:
                     Obx((){
+                      if(topGoalsController.show_loading.value){
+                        return Center(
+                          child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                        );
+                      }
                       return  ListView.builder(
 
                         scrollDirection: Axis.vertical,

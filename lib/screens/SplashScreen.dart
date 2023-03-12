@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:lottie/lottie.dart';
-import 'package:modern_football/controllers/CountDownTimerController.dart';
 import '../assets/values/AppColors.dart';
 import '../controllers/auth_api_controller.dart';
 
@@ -13,9 +11,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
   var profile_controller = Get.put(ProfileController());
-  late final AnimationController _controller;
 
   @override
   void dispose() {
@@ -27,7 +24,9 @@ void ready(){
   if (token == null) {
     var is_seen_intro = storage.read("is_seen_intro");
     if (is_seen_intro == null) {
-      Get.offAllNamed("/intro1");
+      // Get.offAllNamed("/intro1");
+      print("Go to phone");
+      Get.offAllNamed("/phone");
     } else {
       Get.offAllNamed("/phone");
     }
@@ -38,18 +37,19 @@ void ready(){
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
-    _controller.addStatusListener((status) {
-      if(status == AnimationStatus.completed) {
-       ready();
-      }
-    });
+    if(mounted){
+      // ready();
+    }
 
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
+    WidgetsBinding.instance
+        .addPostFrameCallback((_){
+      ready();
 
     });
+
+
+
+
 
     // print("ok");
     // count_controller.start_timer();
@@ -90,12 +90,7 @@ void ready(){
                           ));
 
                     },
-                    child: Lottie.asset('lib/assets/ball.zip',controller: _controller,onLoaded: (composition) {
-
-                      _controller.duration = composition.duration;
-                      _controller.forward();
-
-                    }),
+                    child: Image.asset("lib/assets/images/splash_image.png"),
                   ),
                   const SizedBox(
                     height: 30,
