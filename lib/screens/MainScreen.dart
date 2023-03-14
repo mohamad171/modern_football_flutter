@@ -56,8 +56,8 @@ class _MainScreenState extends State<MainScreen> {
     competitions_controller.set_selected_competition(competitions_controller.competitions[index]);
 
 
-    videosController
-        .get_videos(competition.id.toString(),true);
+    // videosController
+    //     .get_videos(competition.id.toString(),true);
 
     videosController
         .set_competition_id(competition.id);
@@ -68,8 +68,8 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   void dispose() {
-    Get.delete<NewsController>();
-    Get.delete<VideosController>();
+    // Get.delete<NewsController>();
+    // Get.delete<VideosController>();
     super.dispose();
   }
 
@@ -81,17 +81,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Color(AppColors.bg_gray),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed("/today-matches");
-        },
-        backgroundColor: Color(AppColors.primary),
-        child: Column(children: [
-          SizedBox(height: 6,),
-          Icon(Icons.today),
-          Text("امروز")
-        ],),
-      ),
+
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -130,7 +120,10 @@ class _MainScreenState extends State<MainScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Image.asset("lib/assets/images/logo_mf.png",width: 40,height: 40),
+                  InkWell(
+                    child: Icon(Icons.today,color: Color(AppColors.primary),size: 30,),
+                    onTap: () => Get.toNamed("/today-matches"),
+                  )
 
 
                 ],
@@ -208,22 +201,28 @@ class _MainScreenState extends State<MainScreen> {
                       color: Color(AppColors.primary));
                 } else {
                   if(matchesController.matches.length > 0){
-                    return ListView.builder(
-                      itemCount: matchesController.matches.length,
-                      itemBuilder: (context, index) {
-                        return MatcheItem(
-                            index,
-                            matchesController.matches[index].homeTeam!,
-                            matchesController.matches[index].awayTeam!,
-                            matchesController.matches[index].homeTeamScore!,
-                            matchesController.matches[index].awayTeamScore!,
-                            matchesController.matches[index].matchDay!,
-                            matchesController.matches[index].matchDate!,
-                            matchesController.matches[index].matchtime!,
-                            matchesController.matches[index].j_matchdate!,
-                            true
-                        );
-                      },);
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height / 5.5,
+                      child: ListView.builder(
+                        reverse: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: matchesController.matches.length,
+                        itemBuilder: (context, index) {
+                          return MatcheItem(
+                              index,
+                              matchesController.matches[index].homeTeam!,
+                              matchesController.matches[index].awayTeam!,
+                              matchesController.matches[index].homeTeamScore!,
+                              matchesController.matches[index].awayTeamScore!,
+                              matchesController.matches[index].matchDay!,
+                              matchesController.matches[index].matchDate!,
+                              matchesController.matches[index].matchtime!,
+                              matchesController.matches[index].j_matchdate!,
+                              true
+                          );
+                        },),
+                    );
+
 
                   }else{
                     return SizedBox(
@@ -296,55 +295,56 @@ class _MainScreenState extends State<MainScreen> {
                 }
               }
             }),
-            SizedBox(
-              height: 20,
-            ),
-            MoreWidget("جدیدترین ویدئو ها", "/videos"),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-
-              child: Obx((() {
-                if (videosController.show_loading.value) {
-                  return CircularProgressIndicator(
-                      color: Color(AppColors.primary));
-                } else {
-                  if (videosController.videos.length > 0) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height / 4.2,
-                      child: ListView.builder(
-                        reverse: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: videosController.videos.length,
-                        itemBuilder: (context, index) {
-                          return VideoItem(videosController.videos[index], index);
-                        },
-                      ),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: videosController.heigth.toDouble(),
-                      child: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "lib/assets/images/empty.png",
-                                width: 50,
-                                height: 50,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(".ویدئویی برای نمایش وجود ندارد")
-                            ]),
-                      ),
-                    );
-                  }
-                }
-              })),
-            )
+            // TODO Videos is here
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // MoreWidget("جدیدترین ویدئو ها", "/videos"),
+            // SizedBox(
+            //   height: 10,
+            // ),
+            // Container(
+            //
+            //   child: Obx((() {
+            //     if (videosController.show_loading.value) {
+            //       return CircularProgressIndicator(
+            //           color: Color(AppColors.primary));
+            //     } else {
+            //       if (videosController.videos.length > 0) {
+            //         return SizedBox(
+            //           height: MediaQuery.of(context).size.height / 4.2,
+            //           child: ListView.builder(
+            //             reverse: true,
+            //             scrollDirection: Axis.horizontal,
+            //             itemCount: videosController.videos.length,
+            //             itemBuilder: (context, index) {
+            //               return VideoItem(videosController.videos[index], index);
+            //             },
+            //           ),
+            //         );
+            //       } else {
+            //         return SizedBox(
+            //           height: videosController.heigth.toDouble(),
+            //           child: Center(
+            //             child: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Image.asset(
+            //                     "lib/assets/images/empty.png",
+            //                     width: 50,
+            //                     height: 50,
+            //                   ),
+            //                   SizedBox(
+            //                     height: 15,
+            //                   ),
+            //                   Text(".ویدئویی برای نمایش وجود ندارد")
+            //                 ]),
+            //           ),
+            //         );
+            //       }
+            //     }
+            //   })),
+            // )
           ],
         ),
       )),

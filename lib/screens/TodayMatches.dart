@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import 'package:modern_football/models/response_models/competition.dart';
 import 'package:modern_football/widgets.dart';
@@ -20,7 +21,7 @@ class _TodayMatchesScreenState extends State<TodayMatchesScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   CompetitionsController competitionsController = Get.find();
-  MatchesController matchesController = Get.put(MatchesController());
+  MatchesController matchesController = Get.find();
   late Competition competition;
   void getTodayMatches(){
     matchesController.get_today_matches(true);
@@ -29,8 +30,11 @@ class _TodayMatchesScreenState extends State<TodayMatchesScreen>
   @override
   void initState() {
     super.initState();
-    competition = competitionsController.competition.value;
-    getTodayMatches();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      competition = competitionsController.competition.value;
+      getTodayMatches();
+    });
+
 
   }
 
@@ -91,25 +95,27 @@ class _TodayMatchesScreenState extends State<TodayMatchesScreen>
 
             Expanded(
               child:
-              (matchesController.matches.length > 0)?
+              (matchesController.today_matches.length > 0)?
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Obx((){
+                  if(matchesController.show_loading.value)
+                    return Center(child: CircularProgressIndicator(color: Color(AppColors.primary),),);
                   return ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount: matchesController.matches.length,
+                    itemCount: matchesController.today_matches.length,
                     itemBuilder: (context, itemIndex) {
                       return MatcheItem(
                           itemIndex,
-                          matchesController.matches[itemIndex].homeTeam!,
-                          matchesController.matches[itemIndex].awayTeam!,
-                          matchesController.matches[itemIndex].homeTeamScore!,
-                          matchesController.matches[itemIndex].awayTeamScore!,
-                          matchesController.matches[itemIndex].matchDay!,
-                          matchesController.matches[itemIndex].matchDate!,
-                          matchesController.matches[itemIndex].matchtime!,
-                          matchesController.matches[itemIndex].j_matchdate!,
+                          matchesController.today_matches[itemIndex].homeTeam!,
+                          matchesController.today_matches[itemIndex].awayTeam!,
+                          matchesController.today_matches[itemIndex].homeTeamScore!,
+                          matchesController.today_matches[itemIndex].awayTeamScore!,
+                          matchesController.today_matches[itemIndex].matchDay!,
+                          matchesController.today_matches[itemIndex].matchDate!,
+                          matchesController.today_matches[itemIndex].matchtime!,
+                          matchesController.today_matches[itemIndex].j_matchdate!,
                           true
                       );
                     },

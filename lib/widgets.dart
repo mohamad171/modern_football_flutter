@@ -348,7 +348,7 @@ class NewsItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: SizedBox.fromSize(
                 size: Size(90, 100),
-                child: Image.network(news.image!, fit: BoxFit.cover),
+                child: Image.network(news.image!, fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Icon(Icons.image_outlined,size: 50,color: Colors.grey.withOpacity(0.6),)),
               ),
             ),
             const SizedBox(
@@ -458,7 +458,7 @@ class VideoItem extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       child: SizedBox.fromSize(
                         size: const Size(190, 110),
-                        child: Image.network(video.image!, fit: BoxFit.cover),
+                        child: Image.network(video.image!, fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Icon(Icons.image_outlined,size: 50,color: Colors.grey.withOpacity(0.6),),),
                       ),
                     ),
                   ),

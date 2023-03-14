@@ -15,7 +15,7 @@ class NewsMoreScreen extends StatefulWidget {
 }
 
 class _NewsMoreScreenState extends State<NewsMoreScreen> {
-  NewsController newsController = Get.put(NewsController());
+  NewsController newsController = Get.find<NewsController>();
   CompetitionsController competitionsController = Get.find();
   void get_news(bool clean){
     newsController.get_news(competitionsController.competition.value.id.toString(), clean);
@@ -33,7 +33,7 @@ class _NewsMoreScreenState extends State<NewsMoreScreen> {
 
   @override
   void dispose() {
-    Get.delete<NewsController>();
+    // Get.delete<NewsController>();
     super.dispose();
   }
 

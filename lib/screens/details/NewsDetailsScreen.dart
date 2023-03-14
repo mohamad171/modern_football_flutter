@@ -105,7 +105,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                         borderRadius: BorderRadius.circular(8),
                         child: SizedBox.fromSize(
                           size: const Size(120, 110),
-                          child: Image.network(news.image!, fit: BoxFit.cover),
+                          child: Image.network(news.image!, fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Icon(Icons.image_outlined,size: 50,color: Colors.grey.withOpacity(0.6),)),
                         ),
                       ),
                       const SizedBox(

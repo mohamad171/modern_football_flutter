@@ -148,9 +148,9 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> news_with_tag(String tag) async {
+  Future<Response> news_with_tag(String tag,int page) async {
     var response =
-    await get(base_url + "News?tags__name=${tag}", headers: header);
+    await get(base_url + "News?tags=${tag}&page=${page}", headers: header);
     if (response.isOk) {
       return response;
     } else {

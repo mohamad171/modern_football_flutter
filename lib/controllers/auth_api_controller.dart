@@ -134,11 +134,17 @@ class NewsController extends GetxController {
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   var page_number = 1.obs;
+  var tags_page_number = 1.obs;
 
   void add_page_number(){
     page_number+=1;
     update();
   }
+  void add_tags_page_number(){
+    tags_page_number+=1;
+    update();
+  }
+
   void get_news(String com_id,bool clear) {
     show_loading(true);
     update();
@@ -165,7 +171,7 @@ class NewsController extends GetxController {
   }
   void get_news_with_tag(String tag) {
     show_loading(true);
-    ApiProvider().news_with_tag(tag).then((value) {
+    ApiProvider().news_with_tag(tag,tags_page_number.toInt()).then((value) {
       news.clear();
       value.body["results"].forEach(
             (element) {
@@ -174,8 +180,6 @@ class NewsController extends GetxController {
       );
       show_loading(false);
       update();
-      heigth(140);
-      update();
     });
   }
 }
@@ -183,6 +187,7 @@ class NewsController extends GetxController {
 
 class MatchesController extends GetxController {
   final matches = <matchmodel.Match>[].obs;
+  final today_matches = <matchmodel.Match>[].obs;
   var show_loading = true.obs;
   var heigth = 40.0.obs;
   void get_matches(String com_id,String match_day,bool clear) {
@@ -204,15 +209,16 @@ class MatchesController extends GetxController {
   void get_today_matches(bool clear) {
     // if(clear)
     //   matches.clear();
-    // show_loading(true);
+    show_loading(true);
     ApiProvider().today_matches().then((value) {
 
-      matches.clear();
+      today_matches.clear();
       value.body.forEach(
             (element) {
-          matches.add(matchmodel.Match.fromJson(element));
+              today_matches.add(matchmodel.Match.fromJson(element));
         },
       );
+      show_loading(false);
     });
   }
 }

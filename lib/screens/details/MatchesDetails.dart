@@ -20,8 +20,10 @@ class _MatchesDetailsState extends State<MatchesDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
   MatchesController matchesController = Get.find();
+  NewsController newsController = Get.find();
   StandingsController standingsController = Get.put(StandingsController());
   late Match match;
+  String tag = "";
 
   void getStandings(){
 
@@ -39,10 +41,13 @@ class _MatchesDetailsState extends State<MatchesDetails>
   @override
   void initState() {
     match = matchesController.matches[Get.arguments["index"]];
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 3);
+    tag = "${match.homeTeam!.faName},${match.awayTeam!.faName}";
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 2);
     _tabController.addListener(() {
       if(_tabController.index == 0){
         getStandings();
+      }else if(_tabController.index == 1){
+        newsController.get_news_with_tag("${match.homeTeam!.faName},${match.awayTeam!.faName}");
       }
     });
     super.initState();
@@ -218,9 +223,9 @@ class _MatchesDetailsState extends State<MatchesDetails>
                 Tab(
                   text: 'جدول لیگ',
                 ),
-                Tab(
-                  text: 'ویدئوها',
-                ),
+                // Tab(
+                //   text: 'ویدئوها',
+                // ),
                 Tab(
                   text: 'اخبار',
                 ),
@@ -253,6 +258,10 @@ class _MatchesDetailsState extends State<MatchesDetails>
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     child:
                     Obx((){
+                      if(standingsController.show_loading.value)
+                        return Center(
+                          child: CircularProgressIndicator(color: Color(AppColors.primary),),
+                        );
                       return  ListView.builder(
 
                         scrollDirection: Axis.vertical,
@@ -267,7 +276,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                                 standing.position!,
                                 standing.team!.image!,
                                 "${standing.team!.faName}",
-                                "${standing.recentMatch}",
+                                (standing.recentMatch != null) ? "${standing.recentMatch.toString()[standing.recentMatch!.length - 3]}${standing.recentMatch.toString()[standing.recentMatch!.length - 2]}${standing.recentMatch.toString()[standing.recentMatch!.length - 1]}" : "",
                                 standing.played!,
                                 standing.points!,
                                 standing.goalDifference!,
@@ -277,7 +286,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                                 standing.position!,
                                 standing.team!.image!,
                                 "${standing.team!.faName}",
-                                "${standing.recentMatch}",
+                                (standing.recentMatch != null) ? "${standing.recentMatch.toString()[standing.recentMatch!.length - 3]}${standing.recentMatch.toString()[standing.recentMatch!.length - 2]}${standing.recentMatch.toString()[standing.recentMatch!.length - 1]}" : "",
                                 standing.played!,
                                 standing.points!,
                                 standing.goalDifference!,
@@ -291,13 +300,14 @@ class _MatchesDetailsState extends State<MatchesDetails>
 
                   ),
                 ),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      children: [],
-                    )),
+                // TODO Videos
+                // SizedBox(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: MediaQuery.of(context).size.height,
+                //     child: GridView.count(
+                //       crossAxisCount: 2,
+                //       children: [],
+                //     )),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
@@ -308,7 +318,45 @@ class _MatchesDetailsState extends State<MatchesDetails>
                         boxShadow: box_shadow,
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(16))),
-                    child: ListView(children: []),
+                    child: Obx(() {
+                      if (newsController.show_loading.value) {
+                        return Center(child: CircularProgressIndicator(
+                            color: Color(AppColors.primary)),);
+                      } else {
+                        if (newsController.news.length > 0) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: newsController.news.length,
+                              itemBuilder: (context, index) {
+
+                                return NewsItem(newsController.news[index], index);
+                              },
+                            ),
+                          );
+                        } else {
+                          return SizedBox(
+                            height: newsController.heigth.toDouble(),
+                            child: Center(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "lib/assets/images/empty.png",
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(".اخباری برای نمایش وجود ندارد")
+                                  ]),
+                            ),
+                          );
+                        }
+                      }
+                    }),
                   ),
                 ),
                 SizedBox(

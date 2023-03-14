@@ -15,7 +15,7 @@ class VideosMoreScreen extends StatefulWidget {
 }
 
 class _VideosMoreScreenState extends State<VideosMoreScreen> {
-  VideosController videosController = Get.put(VideosController());
+  VideosController videosController = Get.find<VideosController>();
   CompetitionsController competitionsController = Get.find();
 
   void get_videos(bool clean){
@@ -31,7 +31,7 @@ class _VideosMoreScreenState extends State<VideosMoreScreen> {
   }
   @override
   void dispose() {
-    Get.delete<VideosController>();
+    // Get.delete<VideosController>();
     super.dispose();
   }
 

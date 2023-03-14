@@ -111,7 +111,8 @@ void ready(){
                     color: Colors.white,
                   ),
                   const Text(
-                    "بروزترین مرجع اخبار و اطلاعات فوتبالی",
+                    "هیچ خبر و مسابقه فوتبالی رو از دست نده...",
+                    textDirection: TextDirection.rtl,
                     style: TextStyle(
                       fontFamily: "IranSans",
                       color: Colors.white,
