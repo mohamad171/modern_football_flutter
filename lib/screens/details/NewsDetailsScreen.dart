@@ -32,7 +32,7 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10, right: 10),
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -48,17 +48,16 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     ),
                   ]),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 25,
+                  IconButton(
+                    iconSize: 20,
+                    splashRadius: 25,
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
                     ),
-                    onTap: () => Get.back(),
+                    onPressed: () => Get.back(),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 120,
+                  Expanded(
                     child: Text(
                       news.title!,
                       style: TextStyle(
@@ -68,13 +67,12 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                       overflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.rtl,
                     ),
-                    alignment: Alignment.center,
                   ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed("/main"),
-                    child: const Icon(
+                  IconButton(
+                    iconSize: 25,
+                    onPressed: () => Get.toNamed("/main"),
+                    icon: const Icon(
                       Icons.home_outlined,
-                      size: 30,
                     ),
                   )
                 ],
@@ -101,11 +99,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     textDirection: TextDirection.rtl,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: SizedBox.fromSize(
-                          size: const Size(120, 110),
-                          child: Image.network(news.image!, fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Icon(Icons.image_outlined,size: 50,color: Colors.grey.withOpacity(0.6),)),
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: SizedBox.fromSize(
+                            size: const Size(120, 110),
+                            child: Image.network(news.image!, fit: BoxFit.cover,errorBuilder: (context, error, stackTrace) => Icon(Icons.image_outlined,size: 50,color: Colors.grey.withOpacity(0.6),)),
+                          ),
                         ),
                       ),
                       const SizedBox(

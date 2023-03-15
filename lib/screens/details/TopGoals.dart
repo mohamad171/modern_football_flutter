@@ -42,13 +42,13 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(AppColors.bg_gray),
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(AppColors.bg_gray),
+        body: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10, right: 10),
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -66,12 +66,11 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 25,
+                  IconButton(iconSize: 20,
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
                     ),
-                    onTap: () => Get.back(),
+                    onPressed: () => Get.back(),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width - 120,
@@ -86,11 +85,10 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
                     ),
                     alignment: Alignment.center,
                   ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed("/main"),
-                    child: const Icon(
+                  IconButton(iconSize: 25,
+                    onPressed: () => Get.toNamed("/main"),
+                    icon: const Icon(
                       Icons.home_outlined,
-                      size: 30,
                     ),
                   )
                 ],
@@ -101,7 +99,7 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-
+    
               width: MediaQuery.of(context).size.width - 20,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -130,25 +128,25 @@ class _TopGoalsScreenState extends State<TopGoalsScreen> {
                         );
                       }
                       return  ListView.builder(
-
+    
                         scrollDirection: Axis.vertical,
                         itemCount: topGoalsController.top_goals.length,
                         itemBuilder: (context, index) {
-
+    
                           TopGoals top_goal = topGoalsController.top_goals[index];
                           return TopGoalsItem(index+1, top_goal.name!, top_goal.team!.faName!, top_goal.image!, top_goal.penalty!, top_goal.score!);
-
-
+    
+    
                         },
                       );
                     }),
-
-
+    
+    
                   ),
                 )
-
+    
               ],),
-
+    
             ),
           ],
         ),

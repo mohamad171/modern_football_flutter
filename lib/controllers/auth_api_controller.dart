@@ -23,7 +23,7 @@ class AuthApiController extends GetxController {
       is_loading(false);
       var server_response = ServerResponse.fromJson(value.body);
       if (server_response.status == "ok") {
-        Get.toNamed('/code', arguments: phone_number);
+        Get.offNamed('/code', arguments: phone_number);
       }
     }).onError((error, stackTrace)  {
       ApiProvider().error_message("خطایی رخ داده با پشتیبانی تماس بگیرید.");

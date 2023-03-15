@@ -41,13 +41,13 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(AppColors.bg_gray),
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(AppColors.bg_gray),
+        body: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10, right: 10),
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -65,16 +65,14 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    child: const Icon(
+                  IconButton(iconSize: 20,
+                    icon: const Icon(
                       Icons.arrow_back_ios,
-                      size: 25,
                     ),
-                    onTap: () => Get.back(),
+                    onPressed: () => Get.back(),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 120,
-                    child: Text(
+                  Expanded(
+                    child: Text(textAlign:TextAlign.center,
                       "جدول ${competitionsController.competition.value.faName}",
                       style: TextStyle(
                         fontSize: 14,
@@ -83,13 +81,11 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
                       overflow: TextOverflow.ellipsis,
                       textDirection: TextDirection.rtl,
                     ),
-                    alignment: Alignment.center,
                   ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed("/main"),
-                    child: const Icon(
+                  IconButton(iconSize: 25,
+                    onPressed: () => Get.toNamed("/main"),
+                    icon: const Icon(
                       Icons.home_outlined,
-                      size: 30,
                     ),
                   )
                 ],
@@ -100,7 +96,7 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-
+    
               width: MediaQuery.of(context).size.width - 20,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -128,13 +124,13 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
                           child: CircularProgressIndicator(color: Color(AppColors.primary),),
                         );
                       return  ListView.builder(
-
+    
                         scrollDirection: Axis.vertical,
                         itemCount: standingsController.standings.length,
                         itemBuilder: (context, index) {
-
+    
                           Standing standing = standingsController.standings[index];
-
+    
                           return StandingItem(
                               standing.position!,
                               standing.team!.image!,
@@ -144,18 +140,18 @@ class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
                               standing.points!,
                               standing.goalDifference!,
                               false);
-
-
+    
+    
                         },
                       );
                     }),
-
-
+    
+    
                   ),
                 )
-
+    
               ],),
-
+    
             ),
           ],
         ),

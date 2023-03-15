@@ -56,14 +56,14 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(AppColors.bg_gray),
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(AppColors.bg_gray),
+        body: Column(
           textDirection: TextDirection.rtl,
           children: [
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10, right: 10),
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -81,12 +81,11 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
+                  IconButton(splashRadius: 1,iconSize: 20,
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
                     ),
-                    onTap: () => Get.back(),
+                    onPressed: () => Get.back(),
                   ),
                   Text(
                     "برنامه بازی های ${competition.faName}",
@@ -95,11 +94,10 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => print("ok"),
-                    child: const Icon(
+                  IconButton(iconSize: 25,splashRadius: 1,
+                    onPressed: () => print("ok"),
+                    icon: const Icon(
                       Icons.filter_alt_outlined,
-                      size: 25,
                     ),
                   )
                 ],
@@ -167,7 +165,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                         scrollDirection: Axis.vertical,
                         itemCount: matchesController.matches.length,
                         itemBuilder: (context, itemIndex) {
-                          return MatcheItem(
+                          return MatcheItem(30,
+                            10,
                               itemIndex,
                               matchesController.matches[itemIndex].homeTeam!,
                               matchesController.matches[itemIndex].awayTeam!,
@@ -196,6 +195,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                           itemCount: matchesController.matches.length,
                           itemBuilder: (context, itemIndex) {
                             return MatcheItem(
+                              30,
+                              10,
                                 itemIndex,
                                 matchesController.matches[itemIndex].homeTeam!,
                                 matchesController.matches[itemIndex].awayTeam!,
@@ -210,7 +211,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                           },
                         );
                       })
-
+    
                   ),
                   SizedBox(
                       width: MediaQuery.of(context).size.width,
@@ -225,6 +226,8 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                             itemCount: matchesController.matches.length,
                             itemBuilder: (context, itemIndex) {
                             return MatcheItem(
+                              30,
+                              10,
                             itemIndex,
                             matchesController.matches[itemIndex].homeTeam!,
                             matchesController.matches[itemIndex].awayTeam!,

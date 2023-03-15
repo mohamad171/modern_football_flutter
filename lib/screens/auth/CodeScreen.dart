@@ -37,197 +37,190 @@ class _CodeScreenState extends State<CodeScreen> {
     count_controller.start_timer();
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
           backgroundColor: Color(AppColors.primary),
-          body: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Column(children: [
-                  Expanded(
-                    child: Stack(children: [
-                      Positioned(
-                        left: 20,
-                        top: 90,
-                        child: Image.asset("lib/assets/images/football.png"),
-                      ),
-                      Positioned(
-                        right: 20,
-                        top: 90,
-                        child: Image.asset("lib/assets/images/goal.png"),
-                      ),
-                      Positioned(
-                        right: 20,
-                        bottom: 0,
-                        child: Image.asset("lib/assets/images/football_2.png"),
-                      ),
-                      Positioned(
-                        left: 20,
-                        bottom: 25,
-                        child: Image.asset("lib/assets/images/soccer.png"),
-                      ),
-                      Positioned(
-                        left: MediaQuery.of(context).size.width / 3,
-                        top: MediaQuery.of(context).size.height / 6,
-                        child:
-                            Image.asset("lib/assets/images/soccer_player.png"),
-                      ),
-                      Positioned(
-                        left: MediaQuery.of(context).size.width / 4,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(10),
-                          width: 190,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(
-                              0.15,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(15),
-                            ),
-                          ),
-                          child: const Text(
-                            "مدرن فوتبال",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: CustomPaint(
-                        size: Size(MediaQuery.of(context).size.width,
-                            MediaQuery.of(context).size.height),
-                        painter: WhiteWave(),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(top: 70),
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "کد پیامک شده را وارد کنید",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(5),
-                                          child: VerificationCode(
-                                            fullBorder: true,
-                                            keyboardType: TextInputType.number,
-                                            underlineColor: Colors.black,
-                                            length: 4,
-                                            cursorColor: Colors.blue,
-                                            onCompleted: (String value) {
-                                              setState(() {
-                                                _code = value;
-                                                CheckCode();
-                                              });
-                                            },
-                                            onEditing: (bool value) {
-                                              setState(() {
-                                                _onEditing = value;
-                                              });
-                                              if (!_onEditing)
-                                                FocusScope.of(context)
-                                                    .unfocus();
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          alignment: Alignment.topRight,
-                                          margin: const EdgeInsets.only(
-                                              right: 75, top: 10),
-                                          child: Text(
-                                            "کد چهار رقمی به شماره 0${data} ارسال شد",
-                                            style: TextStyle(fontSize: 12),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 55,
-                                        ),
-                                        GestureDetector(
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                right: 60, left: 60),
-                                            height: 45,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(15),
-                                              ),
-                                              border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 3),
-                                              color: Color(AppColors.primary),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.5),
-                                                  spreadRadius: 0,
-                                                  blurRadius: 3,
-                                                  offset: const Offset(0,
-                                                      1), // changes position of shadow
-                                                ),
-                                              ],
-                                            ),
-                                            child: Center(
-                                              child: Obx(() {
-                                                if(auth_controller.is_loading.value)
-                                                  return CircularProgressIndicator(color: Colors.white,);
-                                                else
-                                                  return Text(
-                                                    "بررسی کد تایید",
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.white,
-                                                    ),
-                                                  );
-                                              }),
-                                            ),
-                                          ),
-                                          onTap: () => CheckCode(),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Obx(() => Text(
-                                  "ارسال مجدد کد تایید: ${count_controller.SCount}"))
-                            ]),
-                      ),
-                    ),
-                    flex: 1,
-                  ),
-                ]),
+          body: 
+              Column(children: [
+                Container(width: Get.width,height: Get.height*.4,
+              child: Stack(children: [
+              Positioned(
+                left: 20,
+                top: Get.height*.06,
+                child: Image.asset("lib/assets/images/football.png"),
               ),
-            ],
-          )),
+              Positioned(
+                right: 20,
+                top: Get.height*.06,
+                child: Image.asset("lib/assets/images/goal.png"),
+              ),
+              Positioned(
+                right: 20,
+                bottom: 0,
+                child: Image.asset(height: 80,width:80,"lib/assets/images/football_2.png"),
+              ),
+              Positioned(
+                left: 20,
+                bottom: Get.height*.05,
+                child: Image.asset(height: 80,width:80,"lib/assets/images/soccer.png"),
+              ),
+              Positioned(
+                left: MediaQuery.of(context).size.width / 3,
+                top: MediaQuery.of(context).size.height / 7,
+                child:
+                    Image.asset("lib/assets/images/soccer_player.png"),
+              ),
+              Positioned(
+                left: MediaQuery.of(context).size.width / 4,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
+                  width: 190,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(
+                      0.15,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: const Text(
+                    "مدرن فوتبال",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                    ),
+                  ),
+                ),
+              ),
+              ]),
+            ),
+            Expanded(
+                  child: Container(
+                    child: CustomPaint(
+                      size: Size(MediaQuery.of(context).size.width,
+                          MediaQuery.of(context).size.height),
+                      painter: WhiteWave(),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 50),
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "کد پیامک شده را وارد کنید",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(5),
+                                        child: VerificationCode(
+                                          fullBorder: true,
+                                          keyboardType: TextInputType.number,
+                                          underlineColor: Colors.black,
+                                          length: 4,
+                                          cursorColor: Colors.blue,
+                                          onCompleted: (String value) {
+                                            setState(() {
+                                              _code = value;
+                                              CheckCode();
+                                            });
+                                          },
+                                          onEditing: (bool value) {
+                                            setState(() {
+                                              _onEditing = value;
+                                            });
+                                            if (!_onEditing)
+                                              FocusScope.of(context)
+                                                  .unfocus();
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        margin: const EdgeInsets.only(
+                                            right: 75, top: 10),
+                                        child: Text(
+                                          "کد چهار رقمی به شماره 0${data} ارسال شد",
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 55,
+                                      ),
+                                      GestureDetector(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(
+                                              right: 60, left: 60),
+                                          height: 45,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(15),
+                                            ),
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width: 3),
+                                            color: Color(AppColors.primary),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 0,
+                                                blurRadius: 3,
+                                                offset: const Offset(0,
+                                                    1), // changes position of shadow
+                                              ),
+                                            ],
+                                          ),
+                                          child: Center(
+                                            child: Obx(() {
+                                              if(auth_controller.is_loading.value)
+                                                return CircularProgressIndicator(color: Colors.white,);
+                                              else
+                                                return Text(
+                                                  "بررسی کد تایید",
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.white,
+                                                  ),
+                                                );
+                                            }),
+                                          ),
+                                        ),
+                                        onTap: () => CheckCode(),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Obx(() => Text(
+                                "ارسال مجدد کد تایید: ${count_controller.SCount}"))
+                          ]),
+                    ),
+                  ),
+                ),
+              ]),),
     );
   }
 }

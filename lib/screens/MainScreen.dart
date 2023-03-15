@@ -76,206 +76,169 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int flex = 25;
 
 
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: Color(AppColors.bg_gray),
-
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 0,
-                      blurRadius: 3,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    child: const Icon(
-                      Icons.person_outline_rounded,
-                      size: 30,
-                    ),
-                    onTap: () => Get.toNamed("/profile"),
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Color(AppColors.bg_gray),
+    
+        body: SingleChildScrollView(
+          child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            height: 50,
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0,
+                    blurRadius: 3,
+                    offset: Offset(0, 3), // changes position of shadow
                   ),
-
-                  const Text(
-                    "مدرن فوتبال",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  InkWell(
-                    child: Icon(Icons.today,color: Color(AppColors.primary),size: 30,),
-                    onTap: () => Get.toNamed("/today-matches"),
-                  )
-
-
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-              child: Obx(
-                    () {
-                  if (competitions_controller.show_loading == true) {
-                    return CircularProgressIndicator(
-                        color: Color(AppColors.primary));
-                  } else {
-
-
-                    return CarouselSlider.builder(
-                      itemCount: competitions_controller.competitions.length,
-                      itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                          LeaguesItem(
-                            competitions_controller.competitions[itemIndex].image!,
-                            competitions_controller.competitions[itemIndex].faName
-                                .toString(),
-                            competitions_controller.competitions[itemIndex].foundYear
-                                .toString(),
-                            competitions_controller.competitions[itemIndex].country
-                                .toString(),
-                            competitions_controller
-                                .competitions[itemIndex].confedrasion
-                                .toString(),
-                            competitions_controller
-                                .competitions[itemIndex].numberOfTeams
-                                .toString(),
-                          ),
-                      options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          height: 180.0,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 0.9,
-                          onPageChanged: league_changed),
-                      carouselController: cc,
-                    );
-                  }
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                ]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MainButtonsItem("lib/assets/images/football_icon.png",
-                    "برترین گلزنان", "/top-goals"),
-                MainButtonsItem(
-                    "lib/assets/images/ranking.png", "جدول لیگ", "/competition-standing",competition_id: competitions_controller.competition.value.id,),
-                MainButtonsItem("lib/assets/images/soccer_ic.png",
-                    "برنامه بازی ها", "/matches")
+                IconButton(iconSize: 27,splashRadius: 1,
+                  icon: const Icon(
+                    Icons.person_outline_rounded,
+                    color: Colors.black87,
+                  ),
+                  onPressed: () => Get.toNamed("/profile"),
+                ),
+    
+                const Text(
+                  "مدرن فوتبال",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconButton(iconSize: 25,splashRadius: 1,
+                  icon: Icon(Icons.today,color: Color(AppColors.primary),),
+                  onPressed: () => Get.toNamed("/today-matches"),
+                )
+    
+    
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            MoreWidget("بازی های هفته جاری", "/matches",),
-            SizedBox(
-              height: 10,
-            ),
-            Obx(
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Container(
+            child: Obx(
                   () {
-
-                if (matchesController.show_loading.value) {
-                  return CircularProgressIndicator(
+                if (competitions_controller.show_loading == true) {
+                  return CircularProgressIndicator(strokeWidth: 2,
                       color: Color(AppColors.primary));
                 } else {
-                  if(matchesController.matches.length > 0){
-                    return SizedBox(
-                        height: MediaQuery.of(context).size.height / 5.5,
-                      child: ListView.builder(
-                        reverse: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: matchesController.matches.length,
-                        itemBuilder: (context, index) {
-                          return MatcheItem(
-                              index,
-                              matchesController.matches[index].homeTeam!,
-                              matchesController.matches[index].awayTeam!,
-                              matchesController.matches[index].homeTeamScore!,
-                              matchesController.matches[index].awayTeamScore!,
-                              matchesController.matches[index].matchDay!,
-                              matchesController.matches[index].matchDate!,
-                              matchesController.matches[index].matchtime!,
-                              matchesController.matches[index].j_matchdate!,
-                              true
-                          );
-                        },),
-                    );
-
-
-                  }else{
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height / 5,
-                      child: Center(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "lib/assets/images/empty.png",
-                                width: 50,
-                                height: 50,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(".بازی برای نمایش وجود ندارد")
-                            ]),
-                      ),
-                    );
-                  }
-
+    
+    
+                  return CarouselSlider.builder(
+                    itemCount: competitions_controller.competitions.length,
+                    itemBuilder: (BuildContext context, int itemIndex,
+                        int pageViewIndex) =>
+                        LeaguesItem(
+                          competitions_controller.competitions[itemIndex].image!,
+                          competitions_controller.competitions[itemIndex].faName
+                              .toString(),
+                          competitions_controller.competitions[itemIndex].foundYear
+                              .toString(),
+                          competitions_controller.competitions[itemIndex].country
+                              .toString(),
+                          competitions_controller
+                              .competitions[itemIndex].confedrasion
+                              .toString(),
+                          competitions_controller
+                              .competitions[itemIndex].numberOfTeams
+                              .toString(),
+                        ),
+                    options: CarouselOptions(
+                        enlargeCenterPage: true,
+                        height: 180.0,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.9,
+                        onPageChanged: league_changed),
+                    carouselController: cc,
+                  );
                 }
               },
             ),
-
-            SizedBox(
-              height: 20,
-            ),
-            MoreWidget("جدیدترین اخبار لیگ", "/news"),
-            SizedBox(
-              height: 10,
-            ),
-            Obx(() {
-              if (newsController.show_loading.value) {
-                return CircularProgressIndicator(
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              
+              Expanded(child: Container(),flex: 1,),
+              Expanded(flex: flex,
+                child: MainButtonsItem("lib/assets/images/ic_goal.png",
+                    "برترین گلزنان", "/top-goals"),
+              ),
+              Expanded(child: Container(),flex: 1,),
+              Expanded(flex: flex,
+                child: MainButtonsItem(
+                    "lib/assets/images/ic_league.png", "جدول لیگ", "/competition-standing",competition_id: competitions_controller.competition.value.id,),
+              ),
+              Expanded(child: Container(),flex: 1,),
+              Expanded(flex: flex,
+                child: MainButtonsItem("lib/assets/images/ic_plan.png",
+                    "برنامه بازی ها", "/matches"),
+              ),
+            
+              Expanded(child: Container(),flex: 1,)],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          MoreWidget("بازی های هفته جاری", "/matches",),
+          SizedBox(
+            height: 10,
+          ),
+          Obx(
+                () {
+    
+              if (matchesController.show_loading.value) {
+                return CircularProgressIndicator(strokeWidth: 2,
                     color: Color(AppColors.primary));
               } else {
-                if (newsController.news.length > 0) {
+                if(matchesController.matches.length > 0){
                   return SizedBox(
-                    height: MediaQuery.of(context).size.height / 6,
+                      height: MediaQuery.of(context).size.height / 5.5,
                     child: ListView.builder(
+                      padding: EdgeInsets.only(right: 10,left: 20),
                       reverse: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: newsController.news.length,
+                      itemCount: matchesController.matches.length,
                       itemBuilder: (context, index) {
-                        return NewsItem(newsController.news[index], index);
-                      },
-                    ),
+                        return MatcheItem(
+                          20,
+                          0,
+                            index,
+                            matchesController.matches[index].homeTeam!,
+                            matchesController.matches[index].awayTeam!,
+                            matchesController.matches[index].homeTeamScore!,
+                            matchesController.matches[index].awayTeamScore!,
+                            matchesController.matches[index].matchDay!,
+                            matchesController.matches[index].matchDate!,
+                            matchesController.matches[index].matchtime!,
+                            matchesController.matches[index].j_matchdate!,
+                            true
+                        );
+                      },),
                   );
-                } else {
+    
+    
+                }else{
                   return SizedBox(
-                    height: newsController.heigth.toDouble(),
+                    height: MediaQuery.of(context).size.height / 5,
                     child: Center(
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -288,66 +251,118 @@ class _MainScreenState extends State<MainScreen> {
                             SizedBox(
                               height: 15,
                             ),
-                            Text(".اخباری برای نمایش وجود ندارد")
+                            Text(".بازی برای نمایش وجود ندارد")
                           ]),
                     ),
                   );
                 }
+    
               }
-            }),
-            // TODO Videos is here
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // MoreWidget("جدیدترین ویدئو ها", "/videos"),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // Container(
-            //
-            //   child: Obx((() {
-            //     if (videosController.show_loading.value) {
-            //       return CircularProgressIndicator(
-            //           color: Color(AppColors.primary));
-            //     } else {
-            //       if (videosController.videos.length > 0) {
-            //         return SizedBox(
-            //           height: MediaQuery.of(context).size.height / 4.2,
-            //           child: ListView.builder(
-            //             reverse: true,
-            //             scrollDirection: Axis.horizontal,
-            //             itemCount: videosController.videos.length,
-            //             itemBuilder: (context, index) {
-            //               return VideoItem(videosController.videos[index], index);
-            //             },
-            //           ),
-            //         );
-            //       } else {
-            //         return SizedBox(
-            //           height: videosController.heigth.toDouble(),
-            //           child: Center(
-            //             child: Column(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   Image.asset(
-            //                     "lib/assets/images/empty.png",
-            //                     width: 50,
-            //                     height: 50,
-            //                   ),
-            //                   SizedBox(
-            //                     height: 15,
-            //                   ),
-            //                   Text(".ویدئویی برای نمایش وجود ندارد")
-            //                 ]),
-            //           ),
-            //         );
-            //       }
-            //     }
-            //   })),
-            // )
-          ],
+            },
+          ),
+    
+          SizedBox(
+            height: 20,
+          ),
+          MoreWidget("جدیدترین اخبار لیگ", "/news"),
+          SizedBox(
+            height: 10,
+          ),
+          Obx(() {
+            if (newsController.show_loading.value) {
+              return CircularProgressIndicator(strokeWidth: 2,
+                  color: Color(AppColors.primary));
+            } else {
+              if (newsController.news.length > 0) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height / 5.8,
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    reverse: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: newsController.news.length,
+                    itemBuilder: (context, index) {
+                      return NewsItem(newsController.news[index], index);
+                    },
+                  ),
+                );
+              } else {
+                return SizedBox(
+                  height: newsController.heigth.toDouble(),
+                  child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "lib/assets/images/empty.png",
+                            width: 50,
+                            height: 50,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(".اخباری برای نمایش وجود ندارد")
+                        ]),
+                  ),
+                );
+              }
+            }
+          }),
+          SizedBox(height: 20,)
+          // TODO Videos is here
+          // SizedBox(
+          //   height: 20,
+          // ),
+          // MoreWidget("جدیدترین ویدئو ها", "/videos"),
+          // SizedBox(
+          //   height: 10,
+          // ),
+          // Container(
+          //
+          //   child: Obx((() {
+          //     if (videosController.show_loading.value) {
+          //       return CircularProgressIndicator(
+          //           color: Color(AppColors.primary));
+          //     } else {
+          //       if (videosController.videos.length > 0) {
+          //         return SizedBox(
+          //           height: MediaQuery.of(context).size.height / 4.2,
+          //           child: ListView.builder(
+          //             reverse: true,
+          //             scrollDirection: Axis.horizontal,
+          //             itemCount: videosController.videos.length,
+          //             itemBuilder: (context, index) {
+          //               return VideoItem(videosController.videos[index], index);
+          //             },
+          //           ),
+          //         );
+          //       } else {
+          //         return SizedBox(
+          //           height: videosController.heigth.toDouble(),
+          //           child: Center(
+          //             child: Column(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 children: [
+          //                   Image.asset(
+          //                     "lib/assets/images/empty.png",
+          //                     width: 50,
+          //                     height: 50,
+          //                   ),
+          //                   SizedBox(
+          //                     height: 15,
+          //                   ),
+          //                   Text(".ویدئویی برای نمایش وجود ندارد")
+          //                 ]),
+          //           ),
+          //         );
+          //       }
+          //     }
+          //   })),
+          // )
+        ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

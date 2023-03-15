@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/screens/Intro/Intro1.dart';
 import 'package:modern_football/screens/Intro/Intro2.dart';
@@ -20,6 +21,7 @@ import 'package:get/get.dart';
 
 main() async {
   await GetStorage.init();
+  changestatusbarcolor();
   runApp(const ModerFootballApp());
 }
 
@@ -50,4 +52,8 @@ class ModerFootballApp extends StatelessWidget {
           '/top-goals': (context) => TopGoalsScreen(),
         });
   }
+}
+changestatusbarcolor() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light, statusBarColor: Color.fromARGB(255, 0, 89, 46)));
 }

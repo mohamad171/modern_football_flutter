@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modern_football/models/response_models/competition.dart';
 import 'package:modern_football/models/response_models/team.dart';
 import 'package:modern_football/models/response_models/video.dart';
@@ -8,10 +9,9 @@ import 'models/response_models/news.dart';
 
 List<BoxShadow> box_shadow = [
   BoxShadow(
-    color: Colors.grey.withOpacity(0.5),
-    spreadRadius: 0,
-    blurRadius: 3,
-    offset: Offset(0, 2), // changes position of shadow
+    color: Colors.grey.withOpacity(0.1),
+    blurRadius: 5,
+    offset: Offset(2, 2), // changes position of shadow
   ),
 ];
 
@@ -31,7 +31,7 @@ class LeaguesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10, bottom: 10),
+      margin: EdgeInsets.only(left: 10, bottom: 40),
       padding: EdgeInsets.all(10),
       width: 350,
       height: 190,
@@ -46,11 +46,9 @@ class LeaguesItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const SizedBox(
-                height: 10,
-              ),
               Text(
                 this.title,
                 style: TextStyle(
@@ -76,10 +74,12 @@ class LeaguesItem extends StatelessWidget {
                 style: TextStyle(),
                 textAlign: TextAlign.right,
               ),
-              Text(
-                "تعداد تیم های لیگ: ${teams_count} تیم",
-                style: TextStyle(),
-                textAlign: TextAlign.right,
+              Expanded(
+                child: Text(
+                  "تعداد تیم های لیگ: ${teams_count} تیم",
+                  style: TextStyle(),
+                  textAlign: TextAlign.right,
+                ),
               )
             ],
           ),
@@ -91,7 +91,7 @@ class LeaguesItem extends StatelessWidget {
             child: SizedBox.fromSize(
               size: Size.fromRadius(60),
               child: Image.network(this.image,
-                  fit: BoxFit.fill),
+                  fit: BoxFit.scaleDown),
             ),
           ),
         ],
@@ -112,7 +112,6 @@ class MainButtonsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: 120,
         height: 50,
         padding: const EdgeInsets.only(right: 5, left: 5, top: 10, bottom: 10),
         decoration: BoxDecoration(
@@ -122,12 +121,15 @@ class MainButtonsItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              text,
-              style: TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.only(top:3.0),
+              child: Text(
+                text,
+                style: TextStyle(color: Colors.white,fontSize: 13),
+                textAlign: TextAlign.center,
+              ),
             ),
-            Image.asset(this.image_path),
+            Container(width: 20,height: 20,child: Image.asset(this.image_path)),
           ],
         ),
       ),
@@ -155,7 +157,7 @@ class MoreWidget extends StatelessWidget {
             child: Row(
               children: const [
                 Icon(
-                  Icons.arrow_back_ios,
+                  Icons.arrow_back_ios_new_rounded,
                   size: 18,
                 ),
                 Text(
@@ -166,10 +168,12 @@ class MoreWidget extends StatelessWidget {
             onTap: () => Get.toNamed(this.screen_path),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(color: Colors.grey),
-          height: 1,
-          width: MediaQuery.of(context).size.width / 2,
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(color: Colors.grey),
+            height: 1,
+          ),
         ),
         Container(
           alignment: Alignment.centerRight,
@@ -195,16 +199,18 @@ class MatcheItem extends StatelessWidget {
   String matchtime;
   String j_matchdate;
   bool match_details;
+  double margin_right;
+  double width;
 
-  MatcheItem(this.index,this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate,this.matchtime,this.j_matchdate,this.match_details);
+  MatcheItem(this.width,this.margin_right,this.index,this.home_team,this.away_team,this.homeTeamScore,this.awayTeamScore,this.matchDay,this.matchDate,this.matchtime,this.j_matchdate,this.match_details);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
-          margin: EdgeInsets.only(left: 10, bottom: 10),
+          margin: EdgeInsets.only(left: 10, bottom: 10,right: margin_right),
           padding: EdgeInsets.all(10),
-          width: 350,
+          width: Get.width-width,
           height: 140,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(
@@ -218,23 +224,20 @@ class MatcheItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: SizedBox.fromSize(
-                      size: Size(80, 80),
-                      child: Image.network(
-                          this.home_team.image!,
-                          fit: BoxFit.cover),
+                  Image.network(
+                      width: Get.width*.2,
+                      height:Get.width*.2,
+                      this.home_team.image!,
+                      fit: BoxFit.scaleDown),
+                      SizedBox(height: 5,),
+                  Expanded(
+                    child: Text(
+                      "${this.home_team.faName}",
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "${this.home_team.faName}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -259,15 +262,18 @@ class MatcheItem extends StatelessWidget {
                     height: 5,
                   ),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.access_time_rounded),
+                      Container(width: 20,height:20,child: Lottie.asset('lib/assets/images/ic_clock_animation.json')),
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        "${this.matchtime}",
-                        textAlign: TextAlign.center,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          "${this.matchtime}",
+                          textAlign: TextAlign.center,
+                        ),
                       )
                     ],
                   )
@@ -277,21 +283,16 @@ class MatcheItem extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: SizedBox.fromSize(
-                      size: Size(60, 60),
-                      child: Image.network(
-                          this.away_team.image!,
-                          fit: BoxFit.cover),
+                  Image.network(width: Get.width*.2,
+                  height:Get.width*.2,
+                      this.away_team.image!,
+                      fit: BoxFit.scaleDown),
+                      SizedBox(height: 5,),
+                  Expanded(
+                    child: Text(
+                      "${this.away_team.faName}",
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "${this.away_team.faName}",
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               )
@@ -354,7 +355,7 @@ class NewsItem extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            Flexible(
+            Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -381,7 +382,7 @@ class NewsItem extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                Flexible(
+                Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -830,12 +831,14 @@ class StandingItem extends StatelessWidget {
         ),
         Expanded(
           child: Row(textDirection: TextDirection.rtl, children: [
-            Text(
-              matches.toString(),
-              textAlign: TextAlign.left,
+            Expanded(
+              child: Text(
+                matches.toString(),
+                textAlign: TextAlign.left,
+              ),
             ),
             SizedBox(
-              width: 30,
+              width: 10,
             ),
             Text(
               score.toString(),
