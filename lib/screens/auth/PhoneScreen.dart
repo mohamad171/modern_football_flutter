@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
 import '../../assets/values/AppColors.dart';
+import '../../controllers/CountDownTimerController.dart';
 
 class PhoneScreen extends StatefulWidget {
   const PhoneScreen({Key? key}) : super(key: key);
@@ -16,9 +17,11 @@ class PhoneScreen extends StatefulWidget {
 class _PhoneScreenState extends State<PhoneScreen> {
   var phone_controller = TextEditingController();
   var auth_controller = Get.put(AuthApiController());
+  var count_controller = Get.put(CountDownTimerController());
 
 
   void submit_phone() {
+
     var phone = phone_controller.text;
     print(phone);
     var regex = RegExp(r"9\d{9}");

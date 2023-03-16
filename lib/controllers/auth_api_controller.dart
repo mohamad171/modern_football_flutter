@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:modern_football/controllers/CountDownTimerController.dart';
 import 'package:modern_football/models/response_models/check_code_response.dart';
 import 'package:modern_football/models/response_models/news.dart';
 import 'package:modern_football/models/response_models/server_response.dart';
@@ -17,12 +18,15 @@ import 'package:modern_football/models/response_models/match.dart' as matchmodel
 
 class AuthApiController extends GetxController {
   var is_loading = false.obs;
+
   void SendCode(String phone_number) {
+    var count_down = Get.find<CountDownTimerController>();
     is_loading(true);
     ApiProvider().send_code(phone_number).then((value) {
       is_loading(false);
       var server_response = ServerResponse.fromJson(value.body);
       if (server_response.status == "ok") {
+        count_down.start_timer();
         Get.offNamed('/code', arguments: phone_number);
       }
     }).onError((error, stackTrace)  {
@@ -32,6 +36,7 @@ class AuthApiController extends GetxController {
   }
 
   void CheckCode(String phone_number, String code) {
+    var count_down = Get.find<CountDownTimerController>();
     ApiProvider().check_code(phone_number, code).then((value) {
       var response = CheckCodeResponse.fromJson(value.body);
       if (response.status == "expire" || response.status == "invalid") {
@@ -39,7 +44,8 @@ class AuthApiController extends GetxController {
       } else {
         GetStorage storage = GetStorage();
         storage.write("token", response.token);
-        Get.toNamed("/");
+        count_down.stop_timer();
+        Get.offNamed("/");
       }
     });
   }

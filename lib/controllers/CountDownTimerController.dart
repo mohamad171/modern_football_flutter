@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 class CountDownTimerController extends GetxController {
   var SCount = 60.obs;
-  var default_value;
+  var default_value = 60;
   late Timer _timer;
 
-  CountDownTimerController(this.default_value);
+  CountDownTimerController();
 
   void start_timer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -22,13 +22,13 @@ class CountDownTimerController extends GetxController {
 
   void stop_timer() {
     _timer.cancel();
-    SCount = 60.obs;
+    SCount(default_value);
     update();
   }
 
   void reset_timer() {
     _timer.cancel();
-    SCount = default_value;
+    SCount(default_value);
     update();
   }
 }

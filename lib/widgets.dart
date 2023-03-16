@@ -31,7 +31,7 @@ class LeaguesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10, bottom: 40),
+      margin: EdgeInsets.only(left: 10, bottom: 15),
       padding: EdgeInsets.all(10),
       width: 350,
       height: 190,

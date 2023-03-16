@@ -229,7 +229,7 @@ class _MainScreenState extends State<MainScreen> {
                             matchesController.matches[index].matchDay!,
                             matchesController.matches[index].matchDate!,
                             matchesController.matches[index].matchtime!,
-                            matchesController.matches[index].j_matchdate!,
+                            matchesController.matches[index].get_date(),
                             true
                         );
                       },),

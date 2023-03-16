@@ -147,7 +147,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
                     const SizedBox(
                       width: 5,
                     ),
-                    Text("${match.j_matchdate}")
+                    Text("${match.get_date()}")
                   ],
                 ),
                 SizedBox(

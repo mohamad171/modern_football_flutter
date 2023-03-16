@@ -19,7 +19,7 @@ class _CodeScreenState extends State<CodeScreen> {
   bool _onEditing = true;
   String _code = "";
   var data = Get.arguments;
-  var count_controller = Get.put(CountDownTimerController(60));
+  var count_controller = Get.find<CountDownTimerController>();
   var auth_controller = Get.put(AuthApiController());
   void CheckCode() {
     auth_controller.CheckCode(data, _code);
@@ -34,7 +34,7 @@ class _CodeScreenState extends State<CodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    count_controller.start_timer();
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

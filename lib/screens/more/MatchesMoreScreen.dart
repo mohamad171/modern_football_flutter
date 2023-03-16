@@ -175,7 +175,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                               matchesController.matches[itemIndex].matchDay!,
                               matchesController.matches[itemIndex].matchDate!,
                               matchesController.matches[itemIndex].matchtime!,
-                              matchesController.matches[itemIndex].j_matchdate!,
+                              matchesController.matches[itemIndex].get_date(),
                             false
                           );
                         },
@@ -205,7 +205,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                                 matchesController.matches[itemIndex].matchDay!,
                                 matchesController.matches[itemIndex].matchDate!,
                                 matchesController.matches[itemIndex].matchtime!,
-                                matchesController.matches[itemIndex].j_matchdate!,
+                                matchesController.matches[itemIndex].get_date(),
                               true
                             );
                           },
@@ -236,7 +236,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
                             matchesController.matches[itemIndex].matchDay!,
                             matchesController.matches[itemIndex].matchDate!,
                             matchesController.matches[itemIndex].matchtime!,
-                            matchesController.matches[itemIndex].j_matchdate!,
+                            matchesController.matches[itemIndex].get_date(),
                               false
                             );
                             },

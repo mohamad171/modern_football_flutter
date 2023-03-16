@@ -1,4 +1,4 @@
-package com.example.modern_football
+package ir.moderndata.modern_football
 
 import io.flutter.embedding.android.FlutterActivity
 

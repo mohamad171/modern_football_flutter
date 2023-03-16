@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.modern_football">
+    package="ir.moderndata.modern_football">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="مدرن فوتبال"
         android:name="${applicationName}"
-        android:icon="@mipmap/logo_mf">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"

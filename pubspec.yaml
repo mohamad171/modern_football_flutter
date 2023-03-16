@@ -41,22 +41,25 @@ dependencies:
   get_storage: ^2.0.3
   flutter_html: ^3.0.0-alpha.6
   flutter_svg: ^2.0.3
-  flutter_launcher_icons: ^0.10.0
   lottie: ^2.3.0
+  shamsi_date: ^1.0.1
+  sentry_flutter: ^7.0.0
 
 flutter_icons:
   android: "ic_launcher"
   ios: true
-  image_path: "assets/images/logo_mf.png"
+
+  image_path: "lib/assets/images/logo_mf.png"
   web:
     generate: true
-    image_path: "assets/images/logo_mf.png"
+    image_path: "lib/assets/images/logo_mf.png"
     background_color: "#43A047"
     theme_color: "#43A047"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.12.0"
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

@@ -16,13 +16,21 @@ import 'package:modern_football/screens/details/TopGoals.dart';
 import 'package:modern_football/screens/more/MatchesMoreScreen.dart';
 import 'package:modern_football/screens/more/NewsMoreScreen.dart';
 import 'package:modern_football/screens/more/VideosMoreScreen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'screens/SplashScreen.dart';
 import 'package:get/get.dart';
 
 main() async {
   await GetStorage.init();
   changestatusbarcolor();
-  runApp(const ModerFootballApp());
+  await SentryFlutter.init(
+        (options) {
+      options.dsn = 'https://1135e9a70cca450382a41ca5298c069c@o331112.ingest.sentry.io/4504847231877120';
+      options.tracesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(ModerFootballApp()),
+  );
+
 }
 
 class ModerFootballApp extends StatelessWidget {

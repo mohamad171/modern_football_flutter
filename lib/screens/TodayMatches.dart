@@ -116,7 +116,7 @@ class _TodayMatchesScreenState extends State<TodayMatchesScreen>
                           matchesController.today_matches[itemIndex].matchDay!,
                           matchesController.today_matches[itemIndex].matchDate!,
                           matchesController.today_matches[itemIndex].matchtime!,
-                          matchesController.today_matches[itemIndex].j_matchdate!,
+                          matchesController.today_matches[itemIndex].get_date(),
                           true
                       );
                     },

@@ -1,5 +1,6 @@
 import 'package:modern_football/models/response_models/standing.dart';
 import 'package:modern_football/models/response_models/team.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 class Match {
   int? id;
@@ -71,5 +72,15 @@ class Match {
     data['matchtime'] = this.matchtime;
     data['j_matchdate'] = this.j_matchdate;
     return data;
+  }
+
+  String get_date(){
+    if(this.matchDate != null){
+      DateTime dateTime = DateTime.parse(this.matchDate!);
+      var j = dateTime.toJalali();
+      return "${j.formatter.wN} ${j.formatter.dd} ${j.formatter.mN}";
+    }
+    return "نامشخص";
+
   }
 }
