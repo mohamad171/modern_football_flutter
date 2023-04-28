@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/controllers/auth_api_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../assets/values/AppColors.dart';
 import '../../controllers/CountDownTimerController.dart';
 
@@ -49,6 +50,13 @@ class _PhoneScreenState extends State<PhoneScreen> {
   void dispose() {
     Get.delete<AuthApiController>();
     super.dispose();
+  }
+
+  Future<void> runUrl() async {
+    var url = Uri.parse("https://modern-football.ir/privacy");
+    if (!await launchUrl(url, mode: LaunchMode.platformDefault)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -258,40 +266,45 @@ class _PhoneScreenState extends State<PhoneScreen> {
                             ],
                           ),
                         ),
-                        Row(
-                          textDirection: TextDirection.rtl,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "شرایط استفاده از خدمات",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
+                        GestureDetector(
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                "شرایط استفاده از خدمات",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "و",
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "حریم خصوصی",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
+                              SizedBox(
+                                width: 5,
                               ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "را میپذیرم",
-                            )
-                          ],
+                              Text(
+                                "و",
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "حریم خصوصی",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "را میپذیرم",
+                              )
+                            ],
+                          ),
+                          onTap: (){
+                            runUrl();
+                          },
                         )
                       ]),
                 ),

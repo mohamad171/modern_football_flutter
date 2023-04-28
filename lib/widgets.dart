@@ -404,7 +404,7 @@ class NewsItem extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          news.timeage!,
+                          news.get_created_at(),
                           textDirection: TextDirection.rtl,
                           style: TextStyle(color: Colors.grey, fontSize: 11),
                         ),
