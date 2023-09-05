@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: [
                       const CircleAvatar(
-                        backgroundImage: AssetImage("lib/assets/images/my.jpg"),
+                        backgroundImage: AssetImage("lib/assets/images/ic_player_default.png"),
                         radius: 60,
                       ),
                       const SizedBox(
