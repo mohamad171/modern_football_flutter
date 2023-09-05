@@ -16,6 +16,7 @@ import 'package:modern_football/screens/details/TopGoals.dart';
 import 'package:modern_football/screens/more/MatchesMoreScreen.dart';
 import 'package:modern_football/screens/more/NewsMoreScreen.dart';
 import 'package:modern_football/screens/more/VideosMoreScreen.dart';
+import 'package:modern_football/screens/social/explore_social.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'screens/SplashScreen.dart';
 import 'package:get/get.dart';
@@ -43,9 +44,9 @@ class ModerFootballApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'مدرن فوتبال',
         theme: ThemeData(fontFamily: 'IranSans'),
-        initialRoute: '/',
+        initialRoute: '/explore',
         routes: {
-          '/': (context) => SplashScreen(),
+          '/splash': (context) => SplashScreen(),
           '/phone': (context) => PhoneScreen(),
           '/code': (context) => CodeScreen(),
           '/profile': (context) => ProfileScreen(),
@@ -58,6 +59,8 @@ class ModerFootballApp extends StatelessWidget {
           '/competition-standing': (context) => LeagueStandingScreen(),
           '/today-matches': (context) => TodayMatchesScreen(),
           '/top-goals': (context) => TopGoalsScreen(),
+          '/explore': (context) => ExploreSocialScreen(),
+          
         });
   }
 }
