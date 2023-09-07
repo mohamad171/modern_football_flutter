@@ -13,8 +13,10 @@ class FollowButtom extends StatelessWidget {
   Widget build(BuildContext context) {
     return is_follow == true
         ? TextButton(
+          
             onPressed: () {},
             child: Container(
+              margin: EdgeInsets.only(top: 6),
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 3),
               width: width_buttom ?? Get.width / 4.5,
