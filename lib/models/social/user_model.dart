@@ -1,12 +1,12 @@
-class User {
+class UserModel {
   int? _id;
   String? _socialUsername;
   String? _firstName;
   String? _lastName;
   String? _email;
-  Null? _profileImage;
+  String? _profileImage;
 
-  User(
+  UserModel(
       {int? id,
       String? socialUsername,
       String? firstName,
@@ -44,10 +44,10 @@ class User {
   set lastName(String? lastName) => _lastName = lastName;
   String? get email => _email;
   set email(String? email) => _email = email;
-  Null? get profileImage => _profileImage;
-  set profileImage(Null? profileImage) => _profileImage = profileImage;
+  String? get profileImage => _profileImage;
+  set profileImage(String? profileImage) => _profileImage = profileImage;
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _socialUsername = json['social_username'];
     _firstName = json['first_name'];

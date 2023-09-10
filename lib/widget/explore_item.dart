@@ -9,19 +9,20 @@ import 'more_buttom.dart';
 class ExploreItem extends StatelessWidget {
   Text? username;
   ImageProvider<Object>? image_profaile;
+  Image? logo_socialmedia;
   Text? title;
   Text? text_post;
-  Icon? icon;
+
   Text? day;
   Text? date;
   Image? image_post;
   Widget? widget;
   bool? has_image;
-  bool? has_icon;
+  bool? has_logo_socialmedia;
   ExploreItem({
     super.key,
     this.username,
-    this.icon,
+    this.logo_socialmedia,
     this.image_profaile,
     this.image_post,
     this.has_image,
@@ -29,14 +30,13 @@ class ExploreItem extends StatelessWidget {
     this.day,
     this.text_post,
     this.widget,
-    this.has_icon,
+    this.has_logo_socialmedia,
     this.title,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height/1.95,
       color: Colors.white,
       margin: EdgeInsets.only(
         top: 10,
@@ -48,40 +48,31 @@ class ExploreItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                (widget != null ) ? widget! : Container(),
+                (widget != null) ? widget! : Container(),
                 Row(
                   children: [
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Row(
-                            children: [
-                              has_icon == true
-                                  ? Container(
-                                      margin: EdgeInsets.only(bottom: 5),
-                                      child: icon ??
-                                          Icon(
-                                            Icons.telegram,
-                                            size: 20,
-                                            color: Color(AppColors.blue),
-                                          ),
-                                    )
-                                  : SizedBox(),
-                              title!,
-                            ],
-                          ),
+                          has_logo_socialmedia == true
+                              ? Row(
+                                  children: [
+                                    logo_socialmedia != null
+                                        ? logo_socialmedia!
+                                        : SizedBox(),
+                                    title!,
+                                  ],
+                                )
+                              : SizedBox(),
                           username!
                         ]),
                     SizedBox(
                       width: 10,
                     ),
                     SizedBox(
-                      height: 55,
+                      height: 55, 
                       width: 55,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            image_profaile ?? AssetImage("lib/assets/images/ff.jpg"),
-                      ),
+                      child: CircleAvatar( backgroundImage: image_profaile ?? AssetImage("lib/assets/images/ic_player_default.png"),),
                     ),
                   ],
                 )
@@ -94,13 +85,9 @@ class ExploreItem extends StatelessWidget {
               Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: text_post!),
-              has_image == true ? image_post! : SizedBox(),
-
-
-              // tarikh
-             
+              image_post != null ? image_post! : SizedBox(),
               Container(
-               margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: 5),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -127,10 +114,6 @@ class ExploreItem extends StatelessWidget {
                       Row(
                         children: [
                           IconButton(
-                             
-                              
-                              
-                           
                               onPressed: () {},
                               icon: Icon(Icons.send_outlined)),
                           Text("235",
@@ -140,9 +123,9 @@ class ExploreItem extends StatelessWidget {
                     ]),
               ),
               Container(
-                margin: EdgeInsets.only(left: 15,bottom: 1),
-                alignment: Alignment.topLeft,
-                child: day!),
+                  margin: EdgeInsets.only(left: 15, bottom: 1),
+                  alignment: Alignment.topLeft,
+                  child: day!),
             ],
           ),
         ],
@@ -150,5 +133,3 @@ class ExploreItem extends StatelessWidget {
     );
   }
 }
-
-
