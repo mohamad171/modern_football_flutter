@@ -13,6 +13,11 @@ import 'package:modern_football/models/response_models/server_response.dart';
 var base_url = "https://modern-football.ir/api/v1/";
 
 class ApiProvider extends GetConnect {
+  Future<Response> GetPost() async {
+    Response res = await get("https://modern-football.ir/api/v1/social/posts");
+    return res;
+  }
+
   void error_message(String message) {
     Get.defaultDialog(
         contentPadding: EdgeInsets.all(20),
@@ -110,15 +115,18 @@ class ApiProvider extends GetConnect {
       return Future.error(response.statusText!);
     }
   }
+
   Future<Response> set_profile(String first_name, String last_name) async {
-    var response = await post(
-        base_url + "Profile", {"first_name":first_name,"last_name":last_name},headers: header);
+    var response = await post(base_url + "Profile",
+        {"first_name": first_name, "last_name": last_name},
+        headers: header);
     if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);
     }
   }
+
   Future<Response> profile() async {
     var response = await get(base_url + "Profile", headers: header);
     if (response.isOk) {
@@ -137,10 +145,10 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> news(String com_id,int page) async {
-
-    var response =
-        await get(base_url + "News?competition=${com_id}&page=${page}", headers: header);
+  Future<Response> news(String com_id, int page) async {
+    var response = await get(
+        base_url + "News?competition=${com_id}&page=${page}",
+        headers: header);
     if (response.isOk) {
       return response;
     } else {
@@ -148,9 +156,9 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> news_with_tag(String tag,int page) async {
+  Future<Response> news_with_tag(String tag, int page) async {
     var response =
-    await get(base_url + "News?tags=${tag}&page=${page}", headers: header);
+        await get(base_url + "News?tags=${tag}&page=${page}", headers: header);
     if (response.isOk) {
       return response;
     } else {
@@ -158,47 +166,52 @@ class ApiProvider extends GetConnect {
     }
   }
 
-  Future<Response> videos(String com_id,int page_number) async {
+  Future<Response> videos(String com_id, int page_number) async {
     print(base_url + "Videos?competition=${com_id}&page=${page_number}");
     print(header);
-    var response =
-        await get(base_url + "Videos?competition=${com_id}&page=${page_number}", headers: header);
+    var response = await get(
+        base_url + "Videos?competition=${com_id}&page=${page_number}",
+        headers: header);
     if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);
     }
   }
-  Future<Response> matches(String com_id,String match_day) async {
-    var response =
-    await get(base_url + "Matches?competition=${com_id}&match_day=${match_day}", headers: header);
+
+  Future<Response> matches(String com_id, String match_day) async {
+    var response = await get(
+        base_url + "Matches?competition=${com_id}&match_day=${match_day}",
+        headers: header);
     if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);
     }
   }
+
   Future<Response> today_matches() async {
-    var response =
-    await get(base_url + "TodayMatches", headers: header);
+    var response = await get(base_url + "TodayMatches", headers: header);
     if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);
     }
   }
+
   Future<Response> standings(String com_id) async {
-    var response =
-    await get(base_url + "Standings?competition=${com_id}", headers: header);
+    var response = await get(base_url + "Standings?competition=${com_id}",
+        headers: header);
     if (response.isOk) {
       return response;
     } else {
       return Future.error(response.statusText!);
     }
   }
+
   Future<Response> top_goals(String com_id) async {
     var response =
-    await get(base_url + "TopGoals?competition=${com_id}", headers: header);
+        await get(base_url + "TopGoals?competition=${com_id}", headers: header);
     if (response.isOk) {
       return response;
     } else {

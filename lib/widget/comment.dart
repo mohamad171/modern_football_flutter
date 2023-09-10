@@ -9,29 +9,25 @@ class Comment extends StatelessWidget {
 
   ImageProvider<Object>? image_profaile;
   Comment(
-      {this.image_profaile, this.username,this.comment, this.date, super.key});
+      {this.image_profaile, this.username, this.comment, this.date, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      // color: Colors.red,
       child: Column(children: [
-       
         Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.only(right: 15,top: 8),
+          margin: EdgeInsets.only(right: 15, top: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
                 children: [
                   Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-              
                     username!,
-                     comment!,
+                    comment!,
                   ]),
-                  
                   SizedBox(
                     width: 10,
                   ),
@@ -48,8 +44,7 @@ class Comment extends StatelessWidget {
             ],
           ),
         ),
-        
-       Container(
+        Container(
           margin: EdgeInsets.only(left: 15),
           alignment: Alignment.topLeft,
           child: date,

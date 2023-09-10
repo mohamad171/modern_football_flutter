@@ -12,20 +12,16 @@ class FollowButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return is_follow == true
-        ? TextButton(
-          
-            onPressed: () {},
-            child: Container(
-              margin: EdgeInsets.only(top: 6),
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 3),
-              width: width_buttom ?? Get.width / 4.5,
-              child: Text("دنبال کردن",style: TextStyle(color: Colors.black),),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Color(AppColors.primary)),
-                  borderRadius: BorderRadius.circular(5)),
+        ? Container(
+          margin: EdgeInsets.only(top: 5),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              side: BorderSide(color: Color(AppColors.primary))
             ),
-          )
+              onPressed: () {},
+              child: Text("دنبال کردن",style: TextStyle(color: Colors.black),),
+            ),
+        )
         : SizedBox();
   }
 }

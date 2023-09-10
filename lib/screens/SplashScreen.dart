@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:modern_football/controllers/SocialController.dart';
 import '../assets/values/AppColors.dart';
 import '../controllers/auth_api_controller.dart';
 
@@ -13,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   var profile_controller = Get.put(ProfileController());
+   var socialController = Get.put(SocialController());
 
   @override
   void dispose() {

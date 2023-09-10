@@ -42,13 +42,20 @@ class PostDetailsScreen extends StatelessWidget {
             height: 1,
           ),
           Container(
-            child: Comment(
-              image_profaile: AssetImage("lib/assets/images/dd.jpg"),
-             comment: Text("بسیار عالی"),
-              username: Text("@edrismazhari",style: TextStyle(fontSize: 11),),
-              date: Text("2 ساعت پیش",
-              textDirection: TextDirection.rtl,style: TextStyle(fontSize: 11),
-
+            child: Expanded(
+              child: ListView.builder(
+                itemCount: 8,
+               itemBuilder: (context, index) {
+                 return Comment(
+                  image_profaile: AssetImage("lib/assets/images/dd.jpg"),
+                 comment: Text("بسیار عالی"),
+                  username: Text("@edrismazhari",style: TextStyle(fontSize: 11),),
+                  date: Text("3 ساعت پیش",
+                  textDirection: TextDirection.rtl,style: TextStyle(fontSize: 11,color: Colors.grey[500]),
+              
+                  ),
+                );
+               },
               ),
             ),
           )

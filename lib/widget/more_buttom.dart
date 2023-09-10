@@ -8,6 +8,7 @@ class MoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+     splashRadius: 1,
         onPressed: () {},
         icon: Icon(
           Icons.more_vert_outlined,

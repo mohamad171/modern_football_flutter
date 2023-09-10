@@ -45,7 +45,7 @@ class ModerFootballApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'مدرن فوتبال',
         theme: ThemeData(fontFamily: 'IranSans'),
-        initialRoute: '/post-details',
+        initialRoute: '/explore',
         routes: {
           '/splash': (context) => SplashScreen(),
           '/phone': (context) => PhoneScreen(),

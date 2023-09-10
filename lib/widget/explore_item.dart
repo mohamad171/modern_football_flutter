@@ -36,7 +36,7 @@ class ExploreItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height/1.98,
+      height: Get.height/1.95,
       color: Colors.white,
       margin: EdgeInsets.only(
         top: 10,
@@ -100,7 +100,7 @@ class ExploreItem extends StatelessWidget {
               // tarikh
              
               Container(
-               
+               margin: EdgeInsets.only(top: 5),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
