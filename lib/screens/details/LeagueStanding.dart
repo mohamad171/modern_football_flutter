@@ -19,7 +19,7 @@ class LeagueStandingScreen extends StatefulWidget {
 
 class _LeagueStandingScreenState extends State<LeagueStandingScreen> {
   CompetitionsController competitionsController = Get.find();
-  StandingsController standingsController = Get.put(StandingsController());
+  StandingsController standingsController = Get.find();
 
 
   @override

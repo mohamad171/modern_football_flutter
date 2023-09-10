@@ -22,7 +22,7 @@ class _MatchesDetailsState extends State<MatchesDetails>
   late TabController _tabController;
   MatchesController matchesController = Get.find();
   NewsController newsController = Get.find();
-  StandingsController standingsController = Get.put(StandingsController());
+  StandingsController standingsController = Get.find();
   late Match match;
   String tag = "";
 

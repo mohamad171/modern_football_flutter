@@ -18,9 +18,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  NewsController newsController = Get.put(NewsController());
-  VideosController videosController = Get.put(VideosController());
-  MatchesController matchesController = Get.put(MatchesController());
+  NewsController newsController = Get.find();
+  VideosController videosController = Get.find();
+  MatchesController matchesController = Get.find();
   CompetitionsController competitions_controller =
       Get.put(CompetitionsController());
 
@@ -68,8 +68,6 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   void dispose() {
-    // Get.delete<NewsController>();
-    // Get.delete<VideosController>();
     super.dispose();
   }
 

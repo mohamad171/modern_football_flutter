@@ -20,7 +20,7 @@ class _CodeScreenState extends State<CodeScreen> {
   String _code = "";
   var data = Get.arguments;
   var count_controller = Get.find<CountDownTimerController>();
-  var auth_controller = Get.put(AuthApiController());
+  var auth_controller = Get.find<AuthApiController>();
   void CheckCode() {
     auth_controller.CheckCode(data, _code);
   }

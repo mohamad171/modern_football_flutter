@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:modern_football/bindings.dart';
 import 'package:modern_football/screens/Intro/Intro1.dart';
 import 'package:modern_football/screens/Intro/Intro2.dart';
 import 'package:modern_football/screens/Intro/Intro3.dart';
@@ -25,13 +26,7 @@ import 'package:get/get.dart';
 main() async {
   await GetStorage.init();
   changestatusbarcolor();
-  await SentryFlutter.init(
-        (options) {
-      options.dsn = 'https://1135e9a70cca450382a41ca5298c069c@o331112.ingest.sentry.io/4504847231877120';
-      options.tracesSampleRate = 1.0;
-    },
-    appRunner: () => runApp(ModerFootballApp()),
-  );
+  runApp(ModerFootballApp());
 
 }
 
@@ -46,6 +41,8 @@ class ModerFootballApp extends StatelessWidget {
         title: 'مدرن فوتبال',
         theme: ThemeData(fontFamily: 'IranSans'),
         initialRoute: '/explore',
+        initialBinding: ModernfootballBinding(),
+
         routes: {
           '/splash': (context) => SplashScreen(),
           '/phone': (context) => PhoneScreen(),

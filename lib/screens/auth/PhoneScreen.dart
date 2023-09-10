@@ -17,8 +17,8 @@ class PhoneScreen extends StatefulWidget {
 
 class _PhoneScreenState extends State<PhoneScreen> {
   var phone_controller = TextEditingController();
-  var auth_controller = Get.put(AuthApiController());
-  var count_controller = Get.put(CountDownTimerController());
+  var auth_controller = Get.find<AuthApiController>();
+  var count_controller = Get.find<CountDownTimerController>();
 
 
   void submit_phone() {

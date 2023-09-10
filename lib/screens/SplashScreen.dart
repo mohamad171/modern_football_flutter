@@ -13,8 +13,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var profile_controller = Get.put(ProfileController());
-   var socialController = Get.put(SocialController());
+  var profile_controller = Get.find<ProfileController>();
+   var socialController = Get.find<SocialController>();
 
   @override
   void dispose() {

@@ -20,7 +20,7 @@ class _MatchesMoreScreenState extends State<MatchesMoreScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   CompetitionsController competitionsController = Get.find();
-  MatchesController matchesController = Get.put(MatchesController(),tag: "controller_from_more");
+  MatchesController matchesController = Get.find();
   late Competition competition;
   void getCurrentMatches(int matchday){
     matchesController.get_matches(competition.id.toString(), matchday.toString(),true);

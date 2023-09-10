@@ -20,7 +20,7 @@ class TopGoalsScreen extends StatefulWidget {
 
 class _TopGoalsScreenState extends State<TopGoalsScreen> {
   CompetitionsController competitionsController = Get.find();
-  TopGoalsController topGoalsController = Get.put(TopGoalsController());
+  TopGoalsController topGoalsController = Get.find();
 
 
   @override
