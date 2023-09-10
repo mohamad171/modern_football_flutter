@@ -69,11 +69,7 @@ class ExploreItem extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      height: 55, 
-                      width: 55,
-                      child: CircleAvatar( backgroundImage: image_profaile ?? AssetImage("lib/assets/images/ic_player_default.png"),),
-                    ),
+                    Container(height: 55, width: 55, margin: EdgeInsets.only(top: 5), child: CircleAvatar(  backgroundImage: image_profaile ?? AssetImage("lib/assets/images/ic_player_default.png"),)),
                   ],
                 )
               ],
