@@ -55,7 +55,7 @@ class ExploreSocialScreen extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )
                             : null,
-                        text_post: Text("${post.text}"),
+                        text_post: Text("${post.text}", textDirection:TextDirection.rtl ,),
                         day: Text(
                           "2 ساعت پیش",
                           textDirection: TextDirection.rtl,
