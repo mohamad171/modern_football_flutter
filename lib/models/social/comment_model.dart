@@ -1,20 +1,18 @@
-import 'package:modern_football/models/social/user_model.dart';
 
-class PostModel {
+
+import 'user_comment.dart';
+
+class CommentModel {
   int? _id;
-  UserModel? _user;
+  User? _user;
   String? _text;
-  String? _image;
-  Source? _source;
   String? _createdAt;
   String? _updatedAt;
 
-  PostModel(
+  CommentModel(
       {int? id,
-      UserModel? user,
+      User? user,
       String? text,
-      String? image,
-      Source? source,
       String? createdAt,
       String? updatedAt}) {
     if (id != null) {
@@ -26,12 +24,6 @@ class PostModel {
     if (text != null) {
       this._text = text;
     }
-    if (image != null) {
-      this._image = image;
-    }
-    if (source != null) {
-      this._source = source;
-    }
     if (createdAt != null) {
       this._createdAt = createdAt;
     }
@@ -42,26 +34,19 @@ class PostModel {
 
   int? get id => _id;
   set id(int? id) => _id = id;
-  UserModel? get user => _user;
-  set user(UserModel? user) => _user = user;
+  User? get user => _user;
+  set user(User? user) => _user = user;
   String? get text => _text;
   set text(String? text) => _text = text;
-  String? get image => _image;
-  set image(String? image) => _image = image;
-  Source? get source => _source;
-  set source(Source? source) => _source = source;
   String? get createdAt => _createdAt;
   set createdAt(String? createdAt) => _createdAt = createdAt;
   String? get updatedAt => _updatedAt;
   set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
 
-  PostModel.fromJson(Map<String, dynamic> json) {
+  CommentModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
-    _user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
+    _user = json['user'] != null ? new User.fromJson(json['user']) : null;
     _text = json['text'];
-    _image = json['image'];
-    _source =
-        json['source'] != null ? new Source.fromJson(json['source']) : null;
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
@@ -73,12 +58,9 @@ class PostModel {
       data['user'] = this._user!.toJson();
     }
     data['text'] = this._text;
-    data['image'] = this._image;
-    if (this._source != null) {
-      data['source'] = this._source!.toJson();
-    }
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
     return data;
   }
 }
+

@@ -92,7 +92,6 @@ flutter:
     - lib/assets/images/goal.png
     - lib/assets/images/soccer.png
     - lib/assets/images/soccer_player.png
-    - lib/assets/images/my.jpg
     - lib/assets/images/premier.png
     - lib/assets/images/football_icon.png
     - lib/assets/images/soccer_ic.png

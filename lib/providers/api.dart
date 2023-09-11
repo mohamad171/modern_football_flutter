@@ -18,6 +18,12 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
+  Future<Response> GetCooment() async {
+    Response res =
+        await get("https://modern-football.ir/api/v1/social/posts/1/comments");
+    return res;
+  }
+
   void error_message(String message) {
     Get.defaultDialog(
         contentPadding: EdgeInsets.all(20),

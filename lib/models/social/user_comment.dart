@@ -1,4 +1,4 @@
-class UserModel {
+class User {
   int? _id;
   String? _socialUsername;
   String? _firstName;
@@ -6,7 +6,7 @@ class UserModel {
   String? _email;
   String? _profileImage;
 
-  UserModel(
+  User(
       {int? id,
       String? socialUsername,
       String? firstName,
@@ -47,7 +47,7 @@ class UserModel {
   String? get profileImage => _profileImage;
   set profileImage(String? profileImage) => _profileImage = profileImage;
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _socialUsername = json['social_username'];
     _firstName = json['first_name'];
@@ -64,45 +64,6 @@ class UserModel {
     data['last_name'] = this._lastName;
     data['email'] = this._email;
     data['profile_image'] = this._profileImage;
-    return data;
-  }
-}
-
-class Source {
-  int? _id;
-  String? _name;
-  String? _logo;
-
-  Source({int? id, String? name, String? logo}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (name != null) {
-      this._name = name;
-    }
-    if (logo != null) {
-      this._logo = logo;
-    }
-  }
-
-  int? get id => _id;
-  set id(int? id) => _id = id;
-  String? get name => _name;
-  set name(String? name) => _name = name;
-  String? get logo => _logo;
-  set logo(String? logo) => _logo = logo;
-
-  Source.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _name = json['name'];
-    _logo = json['logo'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['name'] = this._name;
-    data['logo'] = this._logo;
     return data;
   }
 }

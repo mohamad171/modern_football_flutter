@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Comment extends StatelessWidget {
-  Text? date;
+  String? clock;
   Text? username;
   Text? comment;
-
-  ImageProvider<Object>? image_profaile;
+ImageProvider<Object>? provider;
+  String? image_profaile;
   Comment(
-      {this.image_profaile, this.username, this.comment, this.date, super.key});
+      {this.image_profaile, this.username, this.comment, this.clock,    this.provider, super.key}){
+        if(image_profaile == null){
+      provider = AssetImage('lib/assets/images/ic_player_default.png');
+    }else{
+      provider = NetworkImage(image_profaile!);
+    }
+
+      }
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +43,8 @@ class Comment extends StatelessWidget {
                     height: 40,
                     width: 40,
                     child: CircleAvatar(
-                      backgroundImage: image_profaile ??
-                          AssetImage("lib/assets/images/ff.jpg"),
+                      backgroundColor: Colors.white,
+                      backgroundImage: this.provider
                     ),
                   ),
                 ],
@@ -47,7 +55,9 @@ class Comment extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(left: 15),
           alignment: Alignment.topLeft,
-          child: date,
+          child: Text(clock!,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(fontSize: 11, color: Colors.grey[500])),
         ),
       ]),
     );

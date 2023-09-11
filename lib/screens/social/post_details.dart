@@ -2,40 +2,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/SocialController.dart';
 import '../../widget/comment.dart';
 import '../../widget/explore_item.dart';
 
 class PostDetailsScreen extends StatelessWidget {
-  const PostDetailsScreen({super.key});
-
+  PostDetailsScreen({super.key});
+  SocialController socialController = Get.find();
   @override
   Widget build(BuildContext context) {
+    socialController.GeneratComment();
     return SafeArea(
         child: Scaffold(
       body: Column(
         children: [
           ExploreItem(
-            username: Text("@ghazalefathi"),
-            title: Text(
-              " غزاله فتحی",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            has_image: true,
-            image_post: Image.asset(
-              "lib/assets/images/ff.jpg",
-              height: Get.height / 3.5,
-              width: Get.width,
-              fit: BoxFit.cover,
-            ),
-            text_post: Text(
-                textDirection: TextDirection.rtl,
-                "تبریک و خسته نباشید به اعضای تیم ملی بابت برد لبنان و تدوام صدر نشینی "),
-            day: Text(
-              "2 ساعت پیش",
-              textDirection: TextDirection.rtl,
-              style: TextStyle(fontSize: 11, color: Colors.grey[500]),
-            ),
-          ),
+              has_icon_back: true,
+              username: Text(
+                  "@${socialController.selectet_post.value.user!.socialUsername}"),
+              title: Text(
+                " غزاله فتحی",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              has_image: true,
+              imageAdress: socialController.selectet_post.value.image,
+              text_post: Text(
+                  textDirection: TextDirection.rtl,
+                  "${socialController.selectet_post.value.text}"),
+              clock: "2 ساعت پیش"),
           Container(
             width: Get.width,
             color: Colors.grey[300],
@@ -43,21 +37,23 @@ class PostDetailsScreen extends StatelessWidget {
           ),
           Container(
             child: Expanded(
-              child: ListView.builder(
-                itemCount: 8,
-               itemBuilder: (context, index) {
-                 return Comment(
-                  image_profaile: AssetImage("lib/assets/images/dd.jpg"),
-                 comment: Text("بسیار عالی"),
-                  username: Text("@edrismazhari",style: TextStyle(fontSize: 11),),
-                  date: Text("3 ساعت پیش",
-                  textDirection: TextDirection.rtl,style: TextStyle(fontSize: 11,color: Colors.grey[500]),
-              
-                  ),
-                );
-               },
+                child: Obx(
+              () => ListView.builder(
+                itemCount: socialController.lst_comment.length,
+                itemBuilder: (context, index) {
+                  var comment = socialController.lst_comment[index];
+                  return Comment(
+                    image_profaile: comment.user?.profileImage,
+                    comment: Text("${comment.text}"),
+                    username: Text(
+                      "@${comment.user!.socialUsername}",
+                      style: TextStyle(fontSize: 11),
+                    ),
+                    clock: "3 ساعت پیش",
+                  );
+                },
               ),
-            ),
+            )),
           )
         ],
       ),
