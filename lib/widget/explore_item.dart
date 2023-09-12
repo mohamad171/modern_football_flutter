@@ -19,10 +19,13 @@ class ExploreItem extends StatelessWidget {
   bool? has_icon_back;
   String? clock;
   Function()? fun;
-
+  Function()? onTapLike;
+  String? like;
+  String? comment;
   Widget? widget;
   bool? has_image;
   bool? has_logo_socialmedia;
+  bool? is_like;
   ImageProvider<Object>? provider;
 
   ExploreItem(
@@ -31,7 +34,11 @@ class ExploreItem extends StatelessWidget {
       this.imageAdress,
       this.logo_socialmedia,
       this.image_profaile,
+      this.onTapLike,
+      this.is_like,
       this.fun,
+      this.comment,
+      this.like,
       this.has_image,
       this.has_icon_back,
       this.clock,
@@ -136,10 +143,15 @@ class ExploreItem extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.favorite_outline_sharp)),
+                                onPressed: onTapLike,
+                                icon: is_like == true
+                                    ? Icon(
+                                        Icons.favorite_outlined,
+                                        color: Colors.red,
+                                      )
+                                    : Icon(Icons.favorite_outline_sharp)),
                             Text(
-                              "228",
+                              like!,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -151,7 +163,7 @@ class ExploreItem extends StatelessWidget {
                                   Get.toNamed('/post-details');
                                 },
                                 icon: Icon(Icons.mode_comment_outlined)),
-                            Text("569",
+                            Text(comment!,
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                           ],
                         ),

@@ -18,9 +18,10 @@ class ApiProvider extends GetConnect {
     return res;
   }
 
-  Future<Response> GetCooment() async {
+  Future<Response> GetCooment(var post_id) async {
+
     Response res =
-        await get("https://modern-football.ir/api/v1/social/posts/1/comments");
+        await get("https://modern-football.ir/api/v1/social/posts/${post_id}/comments");
     return res;
   }
 

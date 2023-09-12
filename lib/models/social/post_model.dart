@@ -1,84 +1,59 @@
 import 'package:modern_football/models/social/user_model.dart';
 
 class PostModel {
-  int? _id;
-  UserModel? _user;
-  String? _text;
-  String? _image;
-  Source? _source;
-  String? _createdAt;
-  String? _updatedAt;
+  int? id;
+  UserModel? user;
+  String? text;
+  int? comments;
+  int? likes;
+  bool? isLiked;
+  String? image;
+  Source? source;
+  String? createdAt;
+  String? updatedAt;
 
   PostModel(
-      {int? id,
-      UserModel? user,
-      String? text,
-      String? image,
-      Source? source,
-      String? createdAt,
-      String? updatedAt}) {
-    if (id != null) {
-      this._id = id;
-    }
-    if (user != null) {
-      this._user = user;
-    }
-    if (text != null) {
-      this._text = text;
-    }
-    if (image != null) {
-      this._image = image;
-    }
-    if (source != null) {
-      this._source = source;
-    }
-    if (createdAt != null) {
-      this._createdAt = createdAt;
-    }
-    if (updatedAt != null) {
-      this._updatedAt = updatedAt;
-    }
-  }
-
-  int? get id => _id;
-  set id(int? id) => _id = id;
-  UserModel? get user => _user;
-  set user(UserModel? user) => _user = user;
-  String? get text => _text;
-  set text(String? text) => _text = text;
-  String? get image => _image;
-  set image(String? image) => _image = image;
-  Source? get source => _source;
-  set source(Source? source) => _source = source;
-  String? get createdAt => _createdAt;
-  set createdAt(String? createdAt) => _createdAt = createdAt;
-  String? get updatedAt => _updatedAt;
-  set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
+      {this.id,
+      this.user,
+      this.text,
+      this.comments,
+      this.likes,
+      this.isLiked,
+      this.image,
+      this.source,
+      this.createdAt,
+      this.updatedAt});
 
   PostModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
-    _text = json['text'];
-    _image = json['image'];
-    _source =
+    id = json['id'];
+    user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
+    text = json['text'];
+    comments = json['comments'];
+    likes = json['likes'];
+    isLiked = json['is_liked'];
+    image = json['image'];
+    source =
         json['source'] != null ? new Source.fromJson(json['source']) : null;
-    _createdAt = json['created_at'];
-    _updatedAt = json['updated_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    if (this._user != null) {
-      data['user'] = this._user!.toJson();
+    data['id'] = this.id;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
     }
-    data['text'] = this._text;
-    data['image'] = this._image;
-    if (this._source != null) {
-      data['source'] = this._source!.toJson();
+    data['text'] = this.text;
+    data['comments'] = this.comments;
+    data['likes'] = this.likes;
+    data['is_liked'] = this.isLiked;
+    data['image'] = this.image;
+    if (this.source != null) {
+      data['source'] = this.source!.toJson();
     }
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

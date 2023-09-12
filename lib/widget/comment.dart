@@ -6,18 +6,21 @@ class Comment extends StatelessWidget {
   String? clock;
   Text? username;
   Text? comment;
-ImageProvider<Object>? provider;
+  ImageProvider<Object>? provider;
   String? image_profaile;
   Comment(
-      {this.image_profaile, this.username, this.comment, this.clock,    this.provider, super.key}){
-        if(image_profaile == null){
+      {this.image_profaile,
+      this.username,
+      this.comment,
+      this.clock,
+      this.provider,
+      super.key}) {
+    if (image_profaile == null) {
       provider = AssetImage('lib/assets/images/ic_player_default.png');
-    }else{
+    } else {
       provider = NetworkImage(image_profaile!);
     }
-
-      }
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +46,8 @@ ImageProvider<Object>? provider;
                     height: 40,
                     width: 40,
                     child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: this.provider
-                    ),
+                        backgroundColor: Colors.white,
+                        backgroundImage: this.provider),
                   ),
                 ],
               ),

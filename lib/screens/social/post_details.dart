@@ -12,23 +12,24 @@ class PostDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     socialController.GeneratComment();
+    var post = socialController.selectet_post.value;
     return SafeArea(
         child: Scaffold(
       body: Column(
         children: [
           ExploreItem(
+              is_like: post.isLiked,
+              comment: post.comments.toString(),
+              like: post.likes.toString(),
               has_icon_back: true,
-              username: Text(
-                  "@${socialController.selectet_post.value.user!.socialUsername}"),
+              username: Text("@${post.user!.socialUsername}"),
               title: Text(
                 " غزاله فتحی",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               has_image: true,
-              imageAdress: socialController.selectet_post.value.image,
-              text_post: Text(
-                  textDirection: TextDirection.rtl,
-                  "${socialController.selectet_post.value.text}"),
+              imageAdress: post.image,
+              text_post: Text(textDirection: TextDirection.rtl, "${post.text}"),
               clock: "2 ساعت پیش"),
           Container(
             width: Get.width,

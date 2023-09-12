@@ -32,7 +32,10 @@ class ExploreSocialScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       PostModel post = socialController.lst_post[index];
                       return ExploreItem(
-                        image_profaile: post.user?.profileImage,
+                          is_like: post.isLiked,
+                          comment: post.comments.toString(),
+                          like: post.likes.toString(),
+                          image_profaile: post.user?.profileImage,
                           fun: () {
                             socialController.selectet_post.value = post;
                             Get.toNamed('/post-details');
