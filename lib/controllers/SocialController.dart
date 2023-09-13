@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/models/social/comment_model.dart';
 import 'package:modern_football/models/social/post_model.dart';
@@ -6,6 +7,7 @@ import 'package:modern_football/providers/api.dart';
 class SocialController extends GetxController {
   var lst_post = <PostModel>[].obs;
   var lst_comment = <CommentModel>[].obs;
+  TextEditingController controllerTextFeild = TextEditingController();
   var selectet_post = PostModel().obs;
   var loading = false.obs;
   var indexPost = 0.obs;

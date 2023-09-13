@@ -12,7 +12,7 @@ class PostDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     socialController.GeneratComment();
-
+       var postComment = socialController.selectet_post.value;
     return SafeArea(
         child: Scaffold(
       body: Column(
@@ -20,7 +20,7 @@ class PostDetailsScreen extends StatelessWidget {
           Column(
             children: [
               Obx(() {
-                print('refresh');
+              
                 var post = socialController.selectet_post.value;
       
                 return ExploreItem(
@@ -80,7 +80,10 @@ class PostDetailsScreen extends StatelessWidget {
               },
             ),
           )),
-          BoxComment()
+          BoxComment(
+           hintText: "چیزی بنویسید",
+           controller: socialController.controllerTextFeild,
+          )
         ],
       ),
     ));
