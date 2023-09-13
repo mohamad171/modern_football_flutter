@@ -2,11 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
-import 'package:modern_football/models/social/post_model.dart';
-
 import '../controllers/SocialController.dart';
-import 'follow_buttom.dart';
-import 'more_buttom.dart';
 
 class ExploreItem extends StatelessWidget {
   SocialController socialController = Get.find();
@@ -149,7 +145,10 @@ class ExploreItem extends StatelessWidget {
                                         Icons.favorite_outlined,
                                         color: Colors.red,
                                       )
-                                    : Icon(Icons.favorite_outline_sharp)),
+                                    : Icon(
+                                        Icons.favorite_outline_sharp,
+                                        color: Colors.teal,
+                                      )),
                             Text(
                               like!,
                               style: TextStyle(fontWeight: FontWeight.bold),

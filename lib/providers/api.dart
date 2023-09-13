@@ -13,17 +13,7 @@ import 'package:modern_football/models/response_models/server_response.dart';
 var base_url = "https://modern-football.ir/api/v1/";
 
 class ApiProvider extends GetConnect {
-  Future<Response> GetPost() async {
-    Response res = await get("https://modern-football.ir/api/v1/social/posts");
-    return res;
-  }
 
-  Future<Response> GetCooment(var post_id) async {
-
-    Response res =
-        await get("https://modern-football.ir/api/v1/social/posts/${post_id}/comments");
-    return res;
-  }
 
   void error_message(String message) {
     Get.defaultDialog(
@@ -224,5 +214,17 @@ class ApiProvider extends GetConnect {
     } else {
       return Future.error(response.statusText!);
     }
+  }
+
+    Future<Response> GetPost() async {
+    Response res = await get("https://modern-football.ir/api/v1/social/posts",headers: header);
+    return res;
+  }
+
+  Future<Response> GetCooment(var post_id) async {
+
+    Response res = 
+        await get("https://modern-football.ir/api/v1/social/posts/${post_id}/comments",headers: header);
+    return res;
   }
 }

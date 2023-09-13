@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
 import 'package:modern_football/models/social/post_model.dart';
-
 import '../../controllers/SocialController.dart';
 import '../../widget/explore_item.dart';
 import '../../widget/follow_buttom.dart';
@@ -32,11 +31,19 @@ class ExploreSocialScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       PostModel post = socialController.lst_post[index];
                       return ExploreItem(
+                          onTapLike: () {
+                            if (post.isLiked == true) {
+                              socialController.dislike(index);
+                            } else {
+                              socialController.like(index);
+                            }
+                          },
                           is_like: post.isLiked,
                           comment: post.comments.toString(),
                           like: post.likes.toString(),
                           image_profaile: post.user?.profileImage,
                           fun: () {
+                            socialController.indexPost.value = index;
                             socialController.selectet_post.value = post;
                             Get.toNamed('/post-details');
                           },
