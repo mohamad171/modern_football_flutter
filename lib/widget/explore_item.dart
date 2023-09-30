@@ -16,6 +16,7 @@ class ExploreItem extends StatelessWidget {
   String? clock;
   Function()? fun;
   Function()? onTapLike;
+  Function()? onPressedButtonComment;
   String? like;
   String? comment;
   Widget? widget;
@@ -27,6 +28,7 @@ class ExploreItem extends StatelessWidget {
   ExploreItem(
       {super.key,
       this.username,
+      this.onPressedButtonComment,
       this.imageAdress,
       this.logo_socialmedia,
       this.image_profaile,
@@ -158,9 +160,7 @@ class ExploreItem extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                                onPressed: () {
-                                  Get.toNamed('/post-details');
-                                },
+                                onPressed: onPressedButtonComment,
                                 icon: Icon(Icons.mode_comment_outlined)),
                             Text(comment!,
                                 style: TextStyle(fontWeight: FontWeight.bold)),

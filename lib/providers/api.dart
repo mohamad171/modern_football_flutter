@@ -13,8 +13,6 @@ import 'package:modern_football/models/response_models/server_response.dart';
 var base_url = "https://modern-football.ir/api/v1/";
 
 class ApiProvider extends GetConnect {
-
-
   void error_message(String message) {
     Get.defaultDialog(
         contentPadding: EdgeInsets.all(20),
@@ -216,17 +214,38 @@ class ApiProvider extends GetConnect {
     }
   }
 
-    Future<Response> GetPost() async {
-    Response res = await get("https://modern-football.ir/api/v1/social/posts",headers: header);
+  Future<Response> GetPost() async {
+    Response res = await get("https://modern-football.ir/api/v1/social/posts",
+        headers: header);
     return res;
   }
 
   Future<Response> GetCooment(var post_id) async {
-
-    Response res = 
-        await get("https://modern-football.ir/api/v1/social/posts/${post_id}/comments",headers: header);
+    Response res = await get(
+        "https://modern-football.ir/api/v1/social/posts/$post_id/comments",
+        headers: header);
     return res;
   }
 
-  
+  Future<Response> Like(String id) async {
+    Response res = await post(
+        "https://modern-football.ir/api/v1/social/posts/$id/like", {},
+        headers: header);
+    return res;
+  }
+
+  Future<Response> Dislike(String id) async {
+    Response res = await post(
+        "https://modern-football.ir/api/v1/social/posts/$id/dislike", {},
+        headers: header);
+    return res;
+  }
+
+  Future<Response> sendComment(String id, String textComment) async {
+    Map m = {"comment": textComment};
+    Response res = await post(
+        "https://modern-football.ir/api/v1/social/posts/$id/sendComment", m,
+        headers: header);
+    return res;
+  }
 }

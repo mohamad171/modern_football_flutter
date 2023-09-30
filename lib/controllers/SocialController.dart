@@ -7,11 +7,12 @@ import 'package:modern_football/providers/api.dart';
 class SocialController extends GetxController {
   var lst_post = <PostModel>[].obs;
   var lst_comment = <CommentModel>[].obs;
-  TextEditingController controllerTextFeild = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   var selectet_post = PostModel().obs;
   var loading = false.obs;
   var indexPost = 0.obs;
-  
+  var loadingSendComment = false.obs;
+
   void GeneratFakePost() {
     loading(true);
     ApiProvider().GetPost().then((res) {
@@ -38,12 +39,36 @@ class SocialController extends GetxController {
   }
 
   void like(index) {
+    ApiProvider().Like(lst_post[index].id.toString()).then((res) {
+      print(res.body);
+    });
     lst_post[index].isLiked = true;
     lst_post.refresh();
   }
 
   void dislike(index) {
+    ApiProvider().Dislike(lst_post[index].id.toString()).then((res) {
+      print(res.body);
+    });
     lst_post[index].isLiked = false;
     lst_post.refresh();
+  }
+
+  void sendComment(id) {
+    if (commentController.text.isNotEmpty) {
+      loadingSendComment(true);
+      ApiProvider()
+          .sendComment(id.toString(), commentController.text)
+          .then((res) {
+        print(res.body);
+        print(id);
+        if (res.isOk) {
+          commentController.clear();
+          loadingSendComment(false);
+        }
+
+      });
+
+    }
   }
 }

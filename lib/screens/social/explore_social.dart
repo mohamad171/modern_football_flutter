@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:modern_football/assets/values/AppColors.dart';
 import 'package:modern_football/models/social/post_model.dart';
 import '../../controllers/SocialController.dart';
@@ -40,6 +41,11 @@ class ExploreSocialScreen extends StatelessWidget {
                           },
                           is_like: post.isLiked,
                           comment: post.comments.toString(),
+                          onPressedButtonComment: () {
+                            socialController.indexPost.value = index;
+                            socialController.selectet_post.value = post;
+                            Get.toNamed('/post-details');
+                          },
                           like: post.likes.toString(),
                           image_profaile: post.user?.profileImage,
                           fun: () {

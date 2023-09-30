@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/SocialController.dart';
@@ -12,7 +11,8 @@ class PostDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     socialController.GeneratComment();
-       var postComment = socialController.selectet_post.value;
+
+    var postComment = socialController.selectet_post.value;
     return SafeArea(
         child: Scaffold(
       body: Column(
@@ -20,9 +20,8 @@ class PostDetailsScreen extends StatelessWidget {
           Column(
             children: [
               Obx(() {
-              
                 var post = socialController.selectet_post.value;
-      
+
                 return ExploreItem(
                     onTapLike: () {
                       if (post.isLiked == true) {
@@ -80,10 +79,15 @@ class PostDetailsScreen extends StatelessWidget {
               },
             ),
           )),
-          BoxComment(
-           hintText: "چیزی بنویسید",
-           controller: socialController.controllerTextFeild,
-          )
+          Obx(() => BoxComment(isLoading: socialController.loadingSendComment.value,
+                onTapIconSend: () {
+                  socialController.sendComment(postComment.id);
+                },
+                imageProfaile:
+                    socialController.selectet_post.value.user?.profileImage,
+                hintText: "چیزی بنویسید",
+                controller: socialController.commentController,
+              ))
         ],
       ),
     ));
