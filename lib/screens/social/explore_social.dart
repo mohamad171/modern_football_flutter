@@ -15,12 +15,14 @@ class ExploreSocialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     socialController.GeneratFakePost();
+   
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: Column(
         children: [
           Expanded(child: Obx(() {
+           
             return socialController.loading.value == true
                 ? Center(
                     child: CircularProgressIndicator(
@@ -44,6 +46,7 @@ class ExploreSocialScreen extends StatelessWidget {
                           onPressedButtonComment: () {
                             socialController.indexPost.value = index;
                             socialController.selectet_post.value = post;
+                          
                             Get.toNamed('/post-details');
                           },
                           like: post.likes.toString(),
@@ -58,9 +61,19 @@ class ExploreSocialScreen extends StatelessWidget {
                           widget: Row(
                             children: [
                               MoreButton(),
+                                
                               FollowButtom(
-                                is_follow: true,
-                              ),
+                                is_Follow: post.isFollow,
+                                text: "دنبال کردن",
+                                fun: () {
+                                  if(post.isFollow == true){
+                                    socialController.unFollow(post.user?.id.toString(), index);
+                                  } else {
+                                    socialController.follow(post.user?.id.toString(), index);
+                                  }
+                                }, 
+                              
+                              ) 
                             ],
                           ),
                           username: Text("@${post.user!.socialUsername}"),

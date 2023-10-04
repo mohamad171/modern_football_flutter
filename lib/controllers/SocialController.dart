@@ -10,6 +10,8 @@ class SocialController extends GetxController {
   TextEditingController commentController = TextEditingController();
   var selectet_post = PostModel().obs;
   var loading = false.obs;
+  
+  var isLoadingComments = false.obs;
   var indexPost = 0.obs;
   var loadingSendComment = false.obs;
 
@@ -27,6 +29,7 @@ class SocialController extends GetxController {
   }
 
   void GeneratComment() {
+    isLoadingComments(true);
     lst_comment.clear();
     ApiProvider().GetCooment(selectet_post.value.id).then((res) {
       if (res.isOk) {
@@ -34,7 +37,9 @@ class SocialController extends GetxController {
         body.forEach((element) {
           lst_comment.add(CommentModel.fromJson(element));
         });
+          isLoadingComments(false);
       }
+    
     });
   }
 
@@ -60,15 +65,30 @@ class SocialController extends GetxController {
       ApiProvider()
           .sendComment(id.toString(), commentController.text)
           .then((res) {
-        print(res.body);
-        print(id);
+       
         if (res.isOk) {
           commentController.clear();
           loadingSendComment(false);
         }
-
       });
-
     }
+  }
+
+  void follow(id,int index){
+    print(id);
+    ApiProvider().follow(id).then((res) {
+      print(res.body);  
+      print(res.statusCode);  
+      print(res.statusText);  
+
+    });
+    lst_post[index].isFollow = true;
+    lst_post.refresh(); 
+  }
+
+  void unFollow(id, int index){
+    ApiProvider().unFollow(id).then((res) {});
+    lst_post[index].isFollow = false;
+    lst_post.refresh();
   }
 }

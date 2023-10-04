@@ -7,16 +7,18 @@ class PostModel {
   int? comments;
   int? likes;
   bool? isLiked;
+  bool? isFollow;
   String? image;
   Source? source;
   String? createdAt;
   String? updatedAt;
-
+  
   PostModel(
       {this.id,
       this.user,
       this.text,
       this.comments,
+      this.isFollow,
       this.likes,
       this.isLiked,
       this.image,
@@ -31,6 +33,7 @@ class PostModel {
     comments = json['comments'];
     likes = json['likes'];
     isLiked = json['is_liked'];
+    isFollow = json['is_follow'];
     image = json['image'];
     source =
         json['source'] != null ? new Source.fromJson(json['source']) : null;
@@ -48,6 +51,7 @@ class PostModel {
     data['comments'] = this.comments;
     data['likes'] = this.likes;
     data['is_liked'] = this.isLiked;
+    data['is_follow'] = this.isFollow;
     data['image'] = this.image;
     if (this.source != null) {
       data['source'] = this.source!.toJson();

@@ -248,4 +248,17 @@ class ApiProvider extends GetConnect {
         headers: header);
     return res;
   }
+  Future<Response> follow(String id,) async {
+  Map a = {"user_id":id};
+    Response res = await post(
+        "https://modern-football.ir/api/v1/social/follow",a, headers: header);
+    return res;
+  }
+Future<Response> unFollow(String id,) async {
+  Map a = {"user_id":id};
+    Response res = await post(
+        "https://modern-football.ir/api/v1/social/unfollow",a, headers: header);
+    return res;
+  }
+  
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modern_football/assets/values/AppColors.dart';
 import '../../controllers/SocialController.dart';
 import '../../widget/box_comment.dart';
 import '../../widget/comment.dart';
@@ -63,11 +64,15 @@ class PostDetailsScreen extends StatelessWidget {
           ),
           Expanded(
               child: Obx(
-            () => ListView.builder(
+            () => socialController.isLoadingComments == true ? 
+                 Center(child: CircularProgressIndicator(color: Color(AppColors.primary),strokeWidth: 1.5 ),) : 
+             ListView.builder(
+            
               itemCount: socialController.lst_comment.length,
-              itemBuilder: (context, index) {
+              itemBuilder: (context, index) { 
                 var comment = socialController.lst_comment[index];
-                return Comment(
+                return 
+                 Comment(
                   image_profaile: comment.user?.profileImage,
                   comment: Text("${comment.text}"),
                   username: Text(
@@ -75,7 +80,7 @@ class PostDetailsScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 11),
                   ),
                   clock: "3 ساعت پیش",
-                );
+                ) ;
               },
             ),
           )),

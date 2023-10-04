@@ -5,7 +5,7 @@ class UserModel {
   String? _lastName;
   String? _email;
   String? _profileImage;
-
+  
   UserModel(
       {int? id,
       String? socialUsername,
