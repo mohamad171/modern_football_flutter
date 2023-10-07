@@ -30,9 +30,9 @@ class ExploreSocialScreen extends StatelessWidget {
                     ),
                   )
                 : ListView.builder(
-                    itemCount: socialController.lst_post.length,
+                    itemCount: socialController.lstPost.length,
                     itemBuilder: (context, index) {
-                      PostModel post = socialController.lst_post[index];
+                      PostModel post = socialController.lstPost[index];
                       return ExploreItem(
                           onTapLike: () {
                             if (post.isLiked == true) {
@@ -45,7 +45,7 @@ class ExploreSocialScreen extends StatelessWidget {
                           comment: post.comments.toString(),
                           onPressedButtonComment: () {
                             socialController.indexPost.value = index;
-                            socialController.selectet_post.value = post;
+                            socialController.selectetPost.value = post;
                           
                             Get.toNamed('/post-details');
                           },
@@ -53,7 +53,7 @@ class ExploreSocialScreen extends StatelessWidget {
                           image_profaile: post.user?.profileImage,
                           fun: () {
                             socialController.indexPost.value = index;
-                            socialController.selectet_post.value = post;
+                            socialController.selectetPost.value = post;
                             Get.toNamed('/post-details');
                           },
                           logo_socialmedia: post.source!.logo,

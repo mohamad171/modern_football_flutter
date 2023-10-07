@@ -1,16 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart'; 
 import 'package:get/get.dart';
 import 'package:modern_football/models/social/comment_model.dart';
 import 'package:modern_football/models/social/post_model.dart';
 import 'package:modern_football/providers/api.dart';
 
 class SocialController extends GetxController {
-  var lst_post = <PostModel>[].obs;
-  var lst_comment = <CommentModel>[].obs;
+  var lstPost = <PostModel>[].obs;
+
+  var lstComment = <CommentModel>[].obs;
+
   TextEditingController commentController = TextEditingController();
-  var selectet_post = PostModel().obs;
+  var selectetPost = PostModel().obs;
   var loading = false.obs;
-  
+
   var isLoadingComments = false.obs;
   var indexPost = 0.obs;
   var loadingSendComment = false.obs;
@@ -21,7 +23,7 @@ class SocialController extends GetxController {
       if (res.isOk) {
         List body = res.body['results'];
         body.forEach((element) {
-          lst_post.add(PostModel.fromJson(element));
+          lstPost.add(PostModel.fromJson(element));
         });
         loading(false);
       }
@@ -30,33 +32,32 @@ class SocialController extends GetxController {
 
   void GeneratComment() {
     isLoadingComments(true);
-    lst_comment.clear();
-    ApiProvider().GetCooment(selectet_post.value.id).then((res) {
+    lstComment.clear();
+    ApiProvider().GetCooment(selectetPost.value.id).then((res) {
       if (res.isOk) {
         List body = res.body['results'];
         body.forEach((element) {
-          lst_comment.add(CommentModel.fromJson(element));
+          lstComment.add(CommentModel.fromJson(element));
         });
-          isLoadingComments(false);
+        isLoadingComments(false);
       }
-    
     });
   }
 
   void like(index) {
-    ApiProvider().Like(lst_post[index].id.toString()).then((res) {
+    ApiProvider().Like(lstPost[index].id.toString()).then((res) {
       print(res.body);
     });
-    lst_post[index].isLiked = true;
-    lst_post.refresh();
+    lstPost[index].isLiked = true;
+    lstPost.refresh();
   }
 
   void dislike(index) {
-    ApiProvider().Dislike(lst_post[index].id.toString()).then((res) {
+    ApiProvider().Dislike(lstPost[index].id.toString()).then((res) {
       print(res.body);
     });
-    lst_post[index].isLiked = false;
-    lst_post.refresh();
+    lstPost[index].isLiked = false;
+    lstPost.refresh();
   }
 
   void sendComment(id) {
@@ -65,8 +66,8 @@ class SocialController extends GetxController {
       ApiProvider()
           .sendComment(id.toString(), commentController.text)
           .then((res) {
-       
         if (res.isOk) {
+          GeneratComment();
           commentController.clear();
           loadingSendComment(false);
         }
@@ -74,21 +75,20 @@ class SocialController extends GetxController {
     }
   }
 
-  void follow(id,int index){
+  void follow(id, int index) {
     print(id);
     ApiProvider().follow(id).then((res) {
-      print(res.body);  
-      print(res.statusCode);  
-      print(res.statusText);  
-
+      print(res.body);
+      print(res.statusCode);
+      print(res.statusText);
     });
-    lst_post[index].isFollow = true;
-    lst_post.refresh(); 
+    lstPost[index].isFollow = true;
+    lstPost.refresh();
   }
 
-  void unFollow(id, int index){
+  void unFollow(id, int index) {
     ApiProvider().unFollow(id).then((res) {});
-    lst_post[index].isFollow = false;
-    lst_post.refresh();
+    lstPost[index].isFollow = false;
+    lstPost.refresh();
   }
 }

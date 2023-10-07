@@ -13,7 +13,7 @@ class PostDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     socialController.GeneratComment();
 
-    var postComment = socialController.selectet_post.value;
+    var postComment = socialController.selectetPost.value;
     return SafeArea(
         child: Scaffold(
       body: Column(
@@ -21,24 +21,24 @@ class PostDetailsScreen extends StatelessWidget {
           Column(
             children: [
               Obx(() {
-                var post = socialController.selectet_post.value;
+                var post = socialController.selectetPost.value;
 
                 return ExploreItem(
                     onTapLike: () {
                       if (post.isLiked == true) {
                         socialController
                             .dislike(socialController.indexPost.value);
-                        socialController.selectet_post.update((val) {
+                        socialController.selectetPost.update((val) {
                           val!.isLiked = false;
                         });
                       } else {
                         socialController.like(socialController.indexPost.value);
-                        socialController.selectet_post.update((val) {
+                        socialController.selectetPost.update((val) {
                           val!.isLiked = true;
                         });
                       }
                       socialController.update();
-                      socialController.lst_post.refresh();
+                      socialController.lstPost.refresh();
                     },
                     is_like: post.isLiked,
                     comment: post.comments.toString(),
@@ -68,9 +68,9 @@ class PostDetailsScreen extends StatelessWidget {
                  Center(child: CircularProgressIndicator(color: Color(AppColors.primary),strokeWidth: 1.5 ),) : 
              ListView.builder(
             
-              itemCount: socialController.lst_comment.length,
+              itemCount: socialController.lstComment.length,
               itemBuilder: (context, index) { 
-                var comment = socialController.lst_comment[index];
+                var comment = socialController.lstComment[index];
                 return 
                  Comment(
                   image_profaile: comment.user?.profileImage,
@@ -87,9 +87,11 @@ class PostDetailsScreen extends StatelessWidget {
           Obx(() => BoxComment(isLoading: socialController.loadingSendComment.value,
                 onTapIconSend: () {
                   socialController.sendComment(postComment.id);
+                  
+
                 },
                 imageProfaile:
-                    socialController.selectet_post.value.user?.profileImage,
+                    socialController.selectetPost.value.user?.profileImage,
                 hintText: "چیزی بنویسید",
                 controller: socialController.commentController,
               ))
